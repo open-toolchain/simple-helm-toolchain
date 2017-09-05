@@ -1,8 +1,8 @@
-# ![Icon](./.bluemix/secure-lock-kubernetes.png) Secure Kubernetes toolchain
+# ![Icon](./.bluemix/secure-lock-kubernetes.png) Secure Helm toolchain
 
 
-### Continuously deliver a secure Docker app to a Kubernetes Cluster
-This Hello World application uses Docker with Node.js and includes a DevOps toolchain that is preconfigured for continuous delivery with Vulnerability Advisor, source control, issue tracking, and online editing, and deployment to the IBM Bluemix Containers service.
+### Continuously deliver a secure Docker app to a Kubernetes Cluster with Helm Charts
+This Hello World application uses Docker with Node.js and includes a DevOps toolchain that is preconfigured for continuous delivery with Vulnerability Advisor, source control, issue tracking, and online editing, and deployment to the IBM Bluemix Containers service using Helm Charts.
 
 ![Icon](./.bluemix/toolchain.png)
 
@@ -12,8 +12,8 @@ This Hello World application uses Docker with Node.js and includes a DevOps tool
 ---
 ### Learn more 
 
-* Blog [Continuously deliver your app to Kubernetes with Bluemix](https://www.ibm.com/blogs/bluemix/2017/07/continuously-deliver-your-app-to-kubernetes-with-bluemix/)
-* Step by step [tutorial](https://www.ibm.com/devops/method/tutorials/tc_secure_kube)
+* TBD Blog [Continuously deliver your app to Kubernetes with Bluemix](https://www.ibm.com/blogs/bluemix/2017/07/continuously-deliver-your-app-to-kubernetes-with-bluemix/)
+* TBD Step by step [tutorial](https://www.ibm.com/devops/method/tutorials/tc_secure_kube)
 * **First-time IBM Container Service users**: Make sure that your container image registry is correctly set up with a [namespace](https://console.bluemix.net/docs/services/Registry/index.html).
 * [Getting started with Bluemix clusters](https://console.bluemix.net/docs/containers/container_index.html?pos=2)
 * [Getting started with toolchains](https://bluemix.net/devops/getting-started)

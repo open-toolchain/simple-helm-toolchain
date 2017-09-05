@@ -13,11 +13,11 @@ template:
     - hello-world-repo
   info:
     git url: >-
-      [https://github.com/open-toolchain/secure-kube-toolchain](https://github.com/open-toolchain/secure-kube-toolchain)
+      [https://github.com/open-toolchain/secure-helm-toolchain](https://github.com/open-toolchain/secure-helm-toolchain)
     git branch: >-
-      [master](https://github.com/open-toolchain/secure-kube-toolchain/tree/master)
+      [master](https://github.com/open-toolchain/secure-helm-toolchain/tree/master)
 toolchain:
-  name: 'secure-kubernetes-toolchain-{{timestamp}}'
+  name: 'secure-helm-toolchain-{{timestamp}}'
   template:
     getting_started:
       $ref: "#/messages/template.gettingStarted" 
@@ -25,8 +25,8 @@ services:
   hello-world-repo:
     service_id: hostedgit
     parameters:
-      repo_name: 'hello-containers-{{timestamp}}'
-      repo_url: 'https://github.com/open-toolchain/hello-containers'
+      repo_name: 'hello-helm-{{timestamp}}'
+      repo_url: 'https://github.com/open-toolchain/hello-helm'
       type: clone
       has_issues: true
       enable_traceability: true
