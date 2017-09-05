@@ -73,7 +73,7 @@ stages:
       # Copy any artifacts that will be needed for deployment and testing to $WORKSPACE    #
       ######################################################################################
       echo "FULL_IMAGE_NAME=${FULL_REPOSITORY_NAME}" >> $ARCHIVE_DIR/build.properties
-      echo "REGISTRY_URL=${REGISTRY_URL" >> $ARCHIVE_DIR/build.properties
+      echo "REGISTRY_URL=${REGISTRY_URL}" >> $ARCHIVE_DIR/build.properties
       echo "IMAGE_NAME=${IMAGE_NAME}" >> $ARCHIVE_DIR/build.properties
       echo "IMAGE_TAG=${APPLICATION_VERSION}" >> $ARCHIVE_DIR/build.properties
       # FULL_REPOSITORY_NAME=${REGISTRY_URL}/${IMAGE_NAME}:${APPLICATION_VERSION} 
