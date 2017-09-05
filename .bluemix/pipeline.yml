@@ -68,21 +68,26 @@ stages:
           echo -e "${red}Dockerfile not found at the repository root${no_color}"
           exit 1
       fi  
-      
+
       ######################################################################################
       # Copy any artifacts that will be needed for deployment and testing to $WORKSPACE    #
       ######################################################################################
-      echo "IMAGE_NAME=${FULL_REPOSITORY_NAME}" >> $ARCHIVE_DIR/build.properties
-      if [ -f deployment.yml ]; then
-          #Update deployment.yml with image name
-          echo "UPDATING DEPLOYMENT MANIFEST:"
-          sed -i "s~^\([[:blank:]]*\)image:.*$~\1image: ${FULL_REPOSITORY_NAME}~" deployment.yml
-          cat deployment.yml
-          cp deployment.yml $ARCHIVE_DIR/
+      echo "FULL_IMAGE_NAME=${FULL_REPOSITORY_NAME}" >> $ARCHIVE_DIR/build.properties
+      echo "REGISTRY_URL=${REGISTRY_URL" >> $ARCHIVE_DIR/build.properties
+      echo "IMAGE_NAME=${IMAGE_NAME}" >> $ARCHIVE_DIR/build.properties
+      echo "IMAGE_TAG=${APPLICATION_VERSION}" >> $ARCHIVE_DIR/build.properties
+      # FULL_REPOSITORY_NAME=${REGISTRY_URL}/${IMAGE_NAME}:${APPLICATION_VERSION} 
+      if [ -f ./helm/hello/values.yaml ]; then
+          #Update Helm chart values.yml with image name and tag
+          echo "UPDATING CHART VALUES:"
+          sed -i "s~^\([[:blank:]]*\)repository:.*$~\1repository: ${REGISTRY_URL}/${IMAGE_NAME}~" ./helm/hello/values.yaml
+          sed -i "s~^\([[:blank:]]*\)tag:.*$~\1tag: ${APPLICATION_VERSION}~" ./helm/hello/values.yaml
+          cat ./helm/hello/values.yaml
+          cp -r ./helm/hello/ $ARCHIVE_DIR/
       else 
-          echo -e "${red}Kubernetes deployment file 'deployment.yml' not found at the repository root${no_color}"
+          echo -e "${red}Helm chart values for Kubernetes deployment (/helm/hello/values.yaml) not found.${no_color}"
           exit 1
-      fi      
+      fi     
 - name: VALIDATE
   inputs:
   - type: job
@@ -121,6 +126,13 @@ stages:
       #!/bin/bash
       #set -x
 
+      #Read build properties
+      while IFS== read -r VAR1 VAR2
+      do
+        echo "$var1=$var2"
+        export "$var1=$var2"
+      done < build.properties
+
       #Check cluster availability
       ip_addr=$(bx cs workers $PIPELINE_KUBERNETES_CLUSTER_NAME | grep normal | awk '{ print $2 }')
       if [ -z $ip_addr ]; then
@@ -128,21 +140,31 @@ stages:
         exit 1
       fi
 
-      #Connect to a different container-service api by uncommenting and specifying an api endpoint
-      #bx cs init --host https://us-south.containers.bluemix.net
-      echo ""
-      echo "DEPLOYING USING MANIFEST:"
-      cat deployment.yml
-      kubectl apply -f deployment.yml  
+      # Check Helm/Tiller
+      echo "CHECKING TILLER (Helm's server component)"
+      helm init --upgrade
+      while true; do
+        tiller_deployed=$(kubectl --namespace=kube-system get pods | grep tiller | grep Running | grep 1/1 )
+        if [[ "${tiller_deployed}" != "" ]]; then
+          echo "Tiller ready."
+          break; 
+        fi
+        echo "Waiting for Tiller to be ready."
+        sleep 1
+      done
+
+      echo "DEPLOYING..."
+      release=${IMAGE_NAME}
+      helm upgrade ${release} ./helm/hello --install --debug
 
       echo ""
       echo "DEPLOYED SERVICE:"
-      kubectl describe services hello-service
+      kubectl describe services ${release}-hello
 
       echo ""
       echo "DEPLOYED PODS:"
-      kubectl describe pods --selector app=hello-app
+      kubectl describe pods --selector app=hello
 
-      port=$(kubectl get services | grep hello-service | sed 's/.*:\([0-9]*\).*/\1/g')
+      port=$(kubectl get services | grep ${release}-hello | sed 's/.*:\([0-9]*\).*/\1/g')
       echo ""
       echo "VIEW THE APPLICATION AT: http://$ip_addr:$port"
