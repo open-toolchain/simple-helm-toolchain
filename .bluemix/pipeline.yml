@@ -114,7 +114,7 @@ stages:
     stage: BUILD
     job: Container build
   jobs:
-  - name: Deploy Kubernetes Pod
+  - name: Deploy Helm Chart
     type: deployer
     target:
       region_id: ${PROD_REGION_ID}
