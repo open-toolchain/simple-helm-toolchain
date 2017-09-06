@@ -83,7 +83,7 @@ stages:
           sed -i "s~^\([[:blank:]]*\)repository:.*$~\1repository: ${REGISTRY_URL}/${IMAGE_NAME}~" ./helm/hello/values.yaml
           sed -i "s~^\([[:blank:]]*\)tag:.*$~\1tag: ${APPLICATION_VERSION}~" ./helm/hello/values.yaml
           cat ./helm/hello/values.yaml
-          cp -r ./helm/hello/ $ARCHIVE_DIR/
+          cp -r ./helm/ $ARCHIVE_DIR/
       else 
           echo -e "${red}Helm chart values for Kubernetes deployment (/helm/hello/values.yaml) not found.${no_color}"
           exit 1
@@ -113,6 +113,10 @@ stages:
   - type: job
     stage: BUILD
     job: Container build
+  properties:
+  - name: build properties
+    value: build.properties
+    type: file    
   jobs:
   - name: Deploy Helm Chart
     type: deployer
@@ -126,12 +130,8 @@ stages:
       #!/bin/bash
       #set -x
 
-      #Read build properties
-      while IFS== read -r VAR1 VAR2
-      do
-        echo "$var1=$var2"
-        export "$var1=$var2"
-      done < build.properties
+      #View build properties
+      cat build.properties
 
       #Check cluster availability
       ip_addr=$(bx cs workers $PIPELINE_KUBERNETES_CLUSTER_NAME | grep normal | awk '{ print $2 }')
