@@ -72,11 +72,10 @@ stages:
       ######################################################################################
       # Copy any artifacts that will be needed for deployment and testing to $WORKSPACE    #
       ######################################################################################
-      echo "FULL_IMAGE_NAME=${FULL_REPOSITORY_NAME}" >> $ARCHIVE_DIR/build.properties
-      echo "REGISTRY_URL=${REGISTRY_URL}" >> $ARCHIVE_DIR/build.properties
-      echo "IMAGE_NAME=${IMAGE_NAME}" >> $ARCHIVE_DIR/build.properties
-      echo "IMAGE_TAG=${APPLICATION_VERSION}" >> $ARCHIVE_DIR/build.properties
       # FULL_REPOSITORY_NAME=${REGISTRY_URL}/${IMAGE_NAME}:${APPLICATION_VERSION} 
+      echo "FULL_IMAGE_NAME=${FULL_REPOSITORY_NAME}" >> $ARCHIVE_DIR/build.properties
+      # Hint: Do use IMAGE_NAME as a build property, as it would conflict with a Vulnerability Advisor job env variable.
+      echo "SHORT_IMAGE_NAME=${IMAGE_NAME}" >> $ARCHIVE_DIR/build.properties
       if [ -f ./helm/hello/values.yaml ]; then
           #Update Helm chart values.yml with image name and tag
           echo "UPDATING CHART VALUES:"
@@ -154,7 +153,7 @@ stages:
       done
 
       echo "DEPLOYING..."
-      release=${IMAGE_NAME}
+      release=${SHORT_IMAGE_NAME}
       helm upgrade ${release} ./helm/hello --install --debug
 
       echo ""
