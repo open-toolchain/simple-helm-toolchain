@@ -72,10 +72,10 @@ stages:
       ######################################################################################
       # Copy any artifacts that will be needed for deployment and testing to $WORKSPACE    #
       ######################################################################################
-      # FULL_REPOSITORY_NAME=${REGISTRY_URL}/${IMAGE_NAME}:${APPLICATION_VERSION} 
-      echo "FULL_IMAGE_NAME=${FULL_REPOSITORY_NAME}" >> $ARCHIVE_DIR/build.properties
-      # Hint: Do use IMAGE_NAME as a build property, as it would conflict with a Vulnerability Advisor job env variable.
-      echo "SHORT_IMAGE_NAME=${IMAGE_NAME}" >> $ARCHIVE_DIR/build.properties
+      # IMAGE_NAME from build.properties is used by Vulnerability Advisor job to reference the image qualified location in registry
+      echo "IMAGE_NAME=${FULL_REPOSITORY_NAME}" >> $ARCHIVE_DIR/build.properties
+      # RELEASE_NAME from build.properties is used in Helm Chart deployment to set the release name
+      echo "RELEASE_NAME=${IMAGE_NAME}" >> $ARCHIVE_DIR/build.properties
       if [ -f ./helm/hello/values.yaml ]; then
           #Update Helm chart values.yml with image name and tag
           echo "UPDATING CHART VALUES:"
@@ -153,17 +153,16 @@ stages:
       done
 
       echo "DEPLOYING..."
-      release=${SHORT_IMAGE_NAME}
-      helm upgrade ${release} ./helm/hello --install --debug
+      helm upgrade ${RELEASE_NAME} ./helm/hello --install --debug
 
       echo ""
       echo "DEPLOYED SERVICE:"
-      kubectl describe services ${release}-hello
+      kubectl describe services ${RELEASE_NAME}-hello
 
       echo ""
       echo "DEPLOYED PODS:"
       kubectl describe pods --selector app=hello
 
-      port=$(kubectl get services | grep ${release}-hello | sed 's/.*:\([0-9]*\).*/\1/g')
+      port=$(kubectl get services | grep ${RELEASE_NAME}-hello | sed 's/.*:\([0-9]*\).*/\1/g')
       echo ""
       echo "VIEW THE APPLICATION AT: http://$ip_addr:$port"
