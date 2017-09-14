@@ -139,6 +139,12 @@ stages:
         exit 1
       fi
 
+      #Check cluster target namespace 
+      cluster_namespace=${CF_SPACE}
+      if ! kubectl get namespace $cluster_namespace; then
+        kubectl create namespace $cluster_namespace  
+      fi
+
       # Check Helm/Tiller
       echo "CHECKING TILLER (Helm's server component)"
       helm init --upgrade
@@ -151,9 +157,10 @@ stages:
         echo "Waiting for Tiller to be ready."
         sleep 1
       done
+      helm version
 
-      echo "DEPLOYING..."
-      helm upgrade ${RELEASE_NAME} ./helm/hello --install --debug
+      echo "DEPLOYING into: $PIPELINE_KUBERNETES_CLUSTER_NAME/$cluster_namespace."
+      helm upgrade ${RELEASE_NAME} ./helm/hello --namespace $cluster_namespace --install --debug
 
       echo ""
       echo "DEPLOYED SERVICE:"
