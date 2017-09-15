@@ -47,6 +47,7 @@ services:
           PROD_ORG_NAME: '{{form.pipeline.parameters.prod-organization}}'
           PROD_REGION_ID: '{{form.pipeline.parameters.prod-region}}'
           PROD_CLUSTER_NAME: '{{form.pipeline.parameters.prod-cluster-name}}'
+          PROD_CLUSTER_NAMESPACE: '{{form.pipeline.parameters.prod-cluster-namespace}}'
           API_KEY: '{{form.pipeline.parameters.api-key}}'
         execute: true
   webide:

@@ -36,7 +36,12 @@
             "type": "string",
             "pattern": "\\S"
         },
-       "app-name": {
+        "prod-cluster-namespace": {
+          "description": "The cluster namespace to use for this environment (if new, will be automatically created and configured).",
+          "type": "string",
+          "pattern": "\\S"
+      },
+     "app-name": {
             "description": {
               "$ref": "#/messages/deploy.appDescription"
             },
@@ -44,7 +49,7 @@
             "pattern": "\\S"
         }
     },
-    "required": ["prod-region", "prod-organization", "prod-space", "api-key", "cluster-name", "app-name"],
+    "required": ["prod-region", "prod-organization", "prod-space", "api-key", "cluster-name", "app-name", "prod-cluster-namespace"],
     "form": [
        {
           "type": "validator",
@@ -63,8 +68,8 @@
           "key": "api-key"
         },{
             "type": "table",
-            "columnCount": 5,
-            "widths": ["15%", "20%", "20%", "20%", "20%"],
+            "columnCount": 6,
+            "widths": ["15%", "20%", "20%", "20%", "20%", "20%"],
             "items": [
                 {
                   "type": "label",
@@ -98,6 +103,10 @@
                 },{
                   "type": "text",
                   "key": "prod-cluster-name",
+                  "readonly": false
+                },{
+                  "type": "text",
+                  "key": "prod-cluster-namespace",
                   "readonly": false
                 },{
                   "type": "select",

@@ -115,8 +115,11 @@ stages:
   properties:
   - name: buildprops
     value: build.properties
-    type: file    
-  jobs:
+    type: file  
+    - name: CLUSTER_NAMESPACE
+    value: ${PROD_CLUSTER_NAMESPACE}
+    type: text  
+    jobs:
   - name: Deploy Helm Chart
     type: deployer
     target:
@@ -140,17 +143,17 @@ stages:
       fi
 
       #Check cluster target namespace 
-      cluster_namespace=${CF_SPACE}
-      if ! kubectl get namespace $cluster_namespace; then
-        kubectl create namespace $cluster_namespace
+      CLUSTER_NAMESPACE=${CF_SPACE}
+      if ! kubectl get namespace $CLUSTER_NAMESPACE; then
+        kubectl create namespace $CLUSTER_NAMESPACE
       fi
-      # Grant access to private image registry from namespace $cluster_namespace
-      if ! kubectl get secret bluemix-default-secret --namespace $cluster_namespace; then
+      # Grant access to private image registry from namespace $CLUSTER_NAMESPACE
+      if ! kubectl get secret bluemix-default-secret --namespace $CLUSTER_NAMESPACE; then
         # copy the existing default secret into the new namespace
-        kubectl get secret bluemix-default-secret -o yaml |  sed "s~^\([[:blank:]]*\)namespace:.*$~\1namespace: ${cluster_namespace}~" | kubectl -n $cluster_namespace create -f -
+        kubectl get secret bluemix-default-secret -o yaml |  sed "s~^\([[:blank:]]*\)namespace:.*$~\1namespace: ${CLUSTER_NAMESPACE}~" | kubectl -n $CLUSTER_NAMESPACE create -f -
         # enable default serviceaccount to use the pull secret
-        kubectl patch -n $cluster_namespace serviceaccount/default -p '{"imagePullSecrets":[{"name":"bluemix-default-secret"}]}'
-        echo "Namespace $cluster_namespace is now authorized to pull from the private image registry"
+        kubectl patch -n $CLUSTER_NAMESPACE serviceaccount/default -p '{"imagePullSecrets":[{"name":"bluemix-default-secret"}]}'
+        echo "Namespace $CLUSTER_NAMESPACE is now authorized to pull from the private image registry"
       fi
 
       # Check Helm/Tiller
@@ -167,17 +170,17 @@ stages:
       done
       helm version
 
-      echo "DEPLOYING into: $PIPELINE_KUBERNETES_CLUSTER_NAME/$cluster_namespace."
-      helm upgrade ${RELEASE_NAME} ./chart/hello --namespace $cluster_namespace --install --debug
+      echo "DEPLOYING into: $PIPELINE_KUBERNETES_CLUSTER_NAME/$CLUSTER_NAMESPACE."
+      helm upgrade ${RELEASE_NAME} ./chart/hello --namespace $CLUSTER_NAMESPACE --install --debug
 
       echo ""
       echo "DEPLOYED SERVICE:"
-      kubectl describe services ${RELEASE_NAME}-hello --namespace $cluster_namespace
+      kubectl describe services ${RELEASE_NAME}-hello --namespace $CLUSTER_NAMESPACE
 
       echo ""
       echo "DEPLOYED PODS:"
-      kubectl describe pods --selector app=hello --namespace $cluster_namespace
+      kubectl describe pods --selector app=hello --namespace $CLUSTER_NAMESPACE
 
-      port=$(kubectl get services | grep ${RELEASE_NAME}-hello --namespace $cluster_namespace | sed 's/.*:\([0-9]*\).*/\1/g')
+      port=$(kubectl get services | grep ${RELEASE_NAME}-hello --namespace $CLUSTER_NAMESPACE | sed 's/.*:\([0-9]*\).*/\1/g')
       echo ""
       echo "VIEW THE APPLICATION AT: http://$ip_addr:$port"
