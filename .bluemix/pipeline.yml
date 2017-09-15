@@ -76,15 +76,15 @@ stages:
       echo "IMAGE_NAME=${FULL_REPOSITORY_NAME}" >> $ARCHIVE_DIR/build.properties
       # RELEASE_NAME from build.properties is used in Helm Chart deployment to set the release name
       echo "RELEASE_NAME=${IMAGE_NAME}" >> $ARCHIVE_DIR/build.properties
-      if [ -f ./helm/hello/values.yaml ]; then
+      if [ -f ./chart/hello/values.yaml ]; then
           #Update Helm chart values.yml with image name and tag
           echo "UPDATING CHART VALUES:"
-          sed -i "s~^\([[:blank:]]*\)repository:.*$~\1repository: ${REGISTRY_URL}/${IMAGE_NAME}~" ./helm/hello/values.yaml
-          sed -i "s~^\([[:blank:]]*\)tag:.*$~\1tag: ${APPLICATION_VERSION}~" ./helm/hello/values.yaml
-          cat ./helm/hello/values.yaml
-          cp -r ./helm/ $ARCHIVE_DIR/
+          sed -i "s~^\([[:blank:]]*\)repository:.*$~\1repository: ${REGISTRY_URL}/${IMAGE_NAME}~" ./chart/hello/values.yaml
+          sed -i "s~^\([[:blank:]]*\)tag:.*$~\1tag: ${APPLICATION_VERSION}~" ./chart/hello/values.yaml
+          cat ./chart/hello/values.yaml
+          cp -r ./chart/ $ARCHIVE_DIR/
       else 
-          echo -e "${red}Helm chart values for Kubernetes deployment (/helm/hello/values.yaml) not found.${no_color}"
+          echo -e "${red}Helm chart values for Kubernetes deployment (/chart/hello/values.yaml) not found.${no_color}"
           exit 1
       fi     
 - name: VALIDATE
@@ -113,7 +113,7 @@ stages:
     stage: BUILD
     job: Container build
   properties:
-  - name: build properties
+  - name: buildprops
     value: build.properties
     type: file    
   jobs:
@@ -142,7 +142,15 @@ stages:
       #Check cluster target namespace 
       cluster_namespace=${CF_SPACE}
       if ! kubectl get namespace $cluster_namespace; then
-        kubectl create namespace $cluster_namespace  
+        kubectl create namespace $cluster_namespace
+      fi
+      # Grant access to private image registry from namespace $cluster_namespace
+      if ! kubectl get secret bluemix-default-secret --namespace $cluster_namespace; then
+        # copy the existing default secret into the new namespace
+        kubectl get secret bluemix-default-secret -o yaml |  sed "s~^\([[:blank:]]*\)namespace:.*$~\1namespace: ${cluster_namespace}~" | kubectl -n $cluster_namespace create -f -
+        # enable default serviceaccount to use the pull secret
+        kubectl patch -n $cluster_namespace serviceaccount/default -p '{"imagePullSecrets":[{"name":"bluemix-default-secret"}]}'
+        echo "Namespace $cluster_namespace is now authorized to pull from the private image registry"
       fi
 
       # Check Helm/Tiller
@@ -160,16 +168,16 @@ stages:
       helm version
 
       echo "DEPLOYING into: $PIPELINE_KUBERNETES_CLUSTER_NAME/$cluster_namespace."
-      helm upgrade ${RELEASE_NAME} ./helm/hello --namespace $cluster_namespace --install --debug
+      helm upgrade ${RELEASE_NAME} ./chart/hello --namespace $cluster_namespace --install --debug
 
       echo ""
       echo "DEPLOYED SERVICE:"
-      kubectl describe services ${RELEASE_NAME}-hello
+      kubectl describe services ${RELEASE_NAME}-hello --namespace $cluster_namespace
 
       echo ""
       echo "DEPLOYED PODS:"
-      kubectl describe pods --selector app=hello
+      kubectl describe pods --selector app=hello --namespace $cluster_namespace
 
-      port=$(kubectl get services | grep ${RELEASE_NAME}-hello | sed 's/.*:\([0-9]*\).*/\1/g')
+      port=$(kubectl get services | grep ${RELEASE_NAME}-hello --namespace $cluster_namespace | sed 's/.*:\([0-9]*\).*/\1/g')
       echo ""
       echo "VIEW THE APPLICATION AT: http://$ip_addr:$port"
