@@ -119,7 +119,7 @@ stages:
   - name: CLUSTER_NAMESPACE
     value: ${PROD_CLUSTER_NAMESPACE}
     type: text  
-    jobs:
+  jobs:
   - name: Deploy Helm Chart
     type: deployer
     target:
