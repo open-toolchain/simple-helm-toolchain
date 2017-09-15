@@ -116,7 +116,7 @@ stages:
   - name: buildprops
     value: build.properties
     type: file  
-    - name: CLUSTER_NAMESPACE
+  - name: CLUSTER_NAMESPACE
     value: ${PROD_CLUSTER_NAMESPACE}
     type: text  
     jobs:
