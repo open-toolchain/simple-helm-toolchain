@@ -112,10 +112,12 @@ stages:
   - type: job
     stage: BUILD
     job: Container build
+  triggers:
+  - type: stage
   properties:
   - name: buildprops
     value: build.properties
-    type: file  
+    type: file
   - name: CLUSTER_NAMESPACE
     value: ${PROD_CLUSTER_NAMESPACE}
     type: text  
