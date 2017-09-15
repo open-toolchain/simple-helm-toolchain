@@ -188,6 +188,6 @@ stages:
       echo "DEPLOYED PODS:"
       kubectl describe pods --selector app=hello --namespace $CLUSTER_NAMESPACE
 
-      port=$(kubectl get services | grep ${RELEASE_NAME}-hello --namespace $CLUSTER_NAMESPACE | sed 's/.*:\([0-9]*\).*/\1/g')
+      port=$(kubectl get services --namespace $CLUSTER_NAMESPACE | grep ${RELEASE_NAME}-hello | sed 's/.*:\([0-9]*\).*/\1/g')
       echo ""
       echo "VIEW THE APPLICATION AT: http://$ip_addr:$port"
