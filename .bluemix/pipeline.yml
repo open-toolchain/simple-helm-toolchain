@@ -143,7 +143,6 @@ stages:
       fi
 
       #Check cluster target namespace 
-      CLUSTER_NAMESPACE=${CF_SPACE}
       if ! kubectl get namespace $CLUSTER_NAMESPACE; then
         kubectl create namespace $CLUSTER_NAMESPACE
       fi
