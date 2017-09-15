@@ -43,12 +43,12 @@ services:
         env:
           GIT_REPO: hello-world-repo
           CF_APP_NAME: '{{form.pipeline.parameters.app-name}}'
-          PROD_SPACE_NAME: '{{form.pipeline.parameters.prod-space}}'
-          PROD_ORG_NAME: '{{form.pipeline.parameters.prod-organization}}'
           PROD_REGION_ID: '{{form.pipeline.parameters.prod-region}}'
+          API_KEY: '{{form.pipeline.parameters.api-key}}'
           PROD_CLUSTER_NAME: '{{form.pipeline.parameters.prod-cluster-name}}'
           PROD_CLUSTER_NAMESPACE: '{{form.pipeline.parameters.prod-cluster-namespace}}'
-          API_KEY: '{{form.pipeline.parameters.api-key}}'
+          PROD_ORG_NAME: '{{form.pipeline.parameters.prod-organization}}'
+          PROD_SPACE_NAME: '{{form.pipeline.parameters.prod-space}}'
         execute: true
   webide:
     service_id: orion
@@ -56,5 +56,6 @@ form:
   pipeline:
     parameters:
       app-name: '{{services.hello-world-repo.parameters.repo_name}}'
+      prod-cluster-namespace: prod
     schema:
       $ref: deploy.json

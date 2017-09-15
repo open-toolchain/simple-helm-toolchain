@@ -84,6 +84,9 @@
                   "title": "Cluster Name"
                 },{
                   "type": "label",
+                  "title": "Cluster Namespace"
+                },{
+                  "type": "label",
                   "title": {
                     "$ref": "#/messages/organization"
                   }
