@@ -79,10 +79,10 @@
           "readonly": false,
           "title": "Image Registry Namespace",
           "key": "registry-namespace"
-          },{
-            "type": "select",
-            "title": {
-              "$ref": "#/messages/organization"
+        },{
+          "type": "select",
+          "title": {
+            "$ref": "#/messages/organization"
             },
             "key": "prod-organization"
           },{
@@ -99,7 +99,7 @@
           },{
             "type": "table",
             "columnCount": 4,
-            "widths": ["15%", "25%", "25%", "30%"],
+            "widths": ["15%", "25%", "25%", "25%"],
             "items": [
                 {
                   "type": "label",
