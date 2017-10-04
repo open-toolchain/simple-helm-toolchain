@@ -80,14 +80,26 @@
           "title": "Image Registry Namespace",
           "key": "registry-namespace"
           },{
+            "type": "select",
+            "title": {
+              "$ref": "#/messages/organization"
+            },
+            "key": "prod-organization"
+          },{
+            "type": "select",
+            "title": {
+              "$ref": "#/messages/space"
+            },
+            "key": "prod-space"
+          },{
             "type": "password",
             "readonly": false,
             "title": "Bluemix API Key",
             "key": "api-key"
           },{
             "type": "table",
-            "columnCount": 6,
-            "widths": ["15%", "20%", "20%", "20%", "20%", "20%"],
+            "columnCount": 4,
+            "widths": ["15%", "20%", "20%", "20%"],
             "items": [
                 {
                   "type": "label",
@@ -106,16 +118,6 @@
                 },{
                   "type": "label",
                   "title": {
-                    "$ref": "#/messages/organization"
-                  }
-                },{
-                  "type": "label",
-                  "title": {
-                    "$ref": "#/messages/space"
-                  }
-                },{
-                  "type": "label",
-                  "title": {
                     "$ref": "#/messages/prodStage"
                   }
                 },{
@@ -128,13 +130,6 @@
                 },{
                   "type": "text",
                   "key": "prod-cluster-namespace",
-                  "readonly": false
-                },{
-                  "type": "select",
-                  "key": "prod-organization"
-                },{
-                  "type": "select",
-                  "key": "prod-space",
                   "readonly": false
                 }
             ]
