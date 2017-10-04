@@ -8,15 +8,14 @@ stages:
   triggers:
   - type: commit
   jobs:
-  - name: Container build
+  - name: Build image
     type: builder
-    extension_id: ibm.devops.services.pipeline.container.builder
+    build_type: cr
     target:
-      region_id: ${PROD_REGION_ID}
-      organization: ${PROD_ORG_NAME}
-      space: ${PROD_SPACE_NAME}
-    IMAGE_NAME: ${CF_APP_NAME}
-    USE_CACHED_LAYERS: 'true'
+      region_id: ${REGISTRY_REGION_ID}
+      namespace: ${REGISTRY_NAMESPACE}
+      api_key: ${API_KEY}
+    image_name: ${CF_APP_NAME}
     COMMAND: |
       #!/bin/bash
       source ./scripts/build.sh
@@ -24,7 +23,7 @@ stages:
   inputs:
   - type: job
     stage: BUILD
-    job: Container build
+    job: Build image
   triggers:
   - type: stage
   properties:
@@ -44,7 +43,7 @@ stages:
   inputs:
   - type: job
     stage: BUILD
-    job: Container build
+    job: Build image
   triggers:
   - type: stage
   properties:

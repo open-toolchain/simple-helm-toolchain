@@ -43,8 +43,10 @@ services:
         env:
           GIT_REPO: hello-world-repo
           CF_APP_NAME: '{{form.pipeline.parameters.app-name}}'
-          PROD_REGION_ID: '{{form.pipeline.parameters.prod-region}}'
+          REGISTRY_REGION_ID: '{{form.pipeline.parameters.registry-region}}'
+          REGISTRY_NAMESPACE: '{{form.pipeline.parameters.registry-namespace}}'
           API_KEY: '{{form.pipeline.parameters.api-key}}'
+          PROD_REGION_ID: '{{form.pipeline.parameters.prod-region}}'
           PROD_CLUSTER_NAME: '{{form.pipeline.parameters.prod-cluster-name}}'
           PROD_CLUSTER_NAMESPACE: '{{form.pipeline.parameters.prod-cluster-namespace}}'
           PROD_ORG_NAME: '{{form.pipeline.parameters.prod-organization}}'

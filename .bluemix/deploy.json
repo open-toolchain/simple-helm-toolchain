@@ -15,7 +15,7 @@
     "type": "object",
     "properties": {
         "prod-region": {
-            "description": "The bluemix region",
+            "description": "The bluemix region for prod deployment",
             "type": "string"
         },
         "prod-organization": {
@@ -30,6 +30,15 @@
             "description": "The Bluemix API key is used to access the IBM Container Service API and interact with the cluster. You can obtain your API key with 'bx iam api-key-create' or via the console at https://console.ng.bluemix.net/iam/#/apikeys by clicking **Create API key** (Each API key only can be viewed once).",
             "type": "string",
             "pattern": "\\S"
+        },
+       "registry-region": {
+          "description": "The bluemix region for image registry",
+          "type": "string"
+        },
+       "registry-namespace": {
+          "description": "The image registry namespace. You can create a new namespace with 'bx cr namespace-add'.",
+          "type": "string",
+          "pattern": "\\S"
         },
        "prod-cluster-name": {
             "description": "Your cluster name. Retrieve it with [bx cs clusters] or via the console at https://console.ng.bluemix.net/containers-kubernetes/home/clusters .",
@@ -49,7 +58,7 @@
             "pattern": "\\S"
         }
     },
-    "required": ["prod-region", "prod-organization", "prod-space", "api-key", "cluster-name", "app-name", "prod-cluster-namespace"],
+    "required": ["app-name", "api-key", "registry-region", "registry-namespace", "prod-region", "prod-cluster-name", "prod-cluster-namespace", "prod-organization", "prod-space"],
     "form": [
        {
           "type": "validator",
@@ -62,11 +71,20 @@
           },
           "key": "app-name"
         },{
-          "type": "password",
-          "readonly": false,
-          "title": "Bluemix API Key",
-          "key": "api-key"
+          "type": "select",
+          "title": "Image Registry Region",
+          "key": "registry-region"
         },{
+          "type": "text",
+          "readonly": false,
+          "title": "Image Registry Namespace",
+          "key": "registry-namespace"
+          },{
+            "type": "password",
+            "readonly": false,
+            "title": "Bluemix API Key",
+            "key": "api-key"
+          },{
             "type": "table",
             "columnCount": 6,
             "widths": ["15%", "20%", "20%", "20%", "20%", "20%"],
