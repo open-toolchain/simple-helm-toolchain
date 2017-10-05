@@ -20,7 +20,7 @@ stages:
       namespace: ${REGISTRY_NAMESPACE}
       api_key: ${API_KEY}
     image_name: ${CF_APP_NAME}
-    COMMAND: |
+    script: |
       #!/bin/bash
       source ./scripts/build.sh
 - name: VALIDATE
