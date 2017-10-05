@@ -17,8 +17,8 @@ stages:
     build_type: cr
     target:
       region_id: ${REGISTRY_REGION_ID}
-      namespace: ${REGISTRY_NAMESPACE}
       api_key: ${API_KEY}
+    namespace: ${REGISTRY_NAMESPACE}
     image_name: ${CF_APP_NAME}
     script: |
       #!/bin/bash
