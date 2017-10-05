@@ -85,53 +85,53 @@
           "$ref": "#/messages/organization"
           },
           "key": "prod-organization"
-        },{
-          "type": "select",
-          "title": {
-            "$ref": "#/messages/space"
-          },
-          "key": "prod-space"
-        },{
-          "type": "password",
-          "readonly": false,
-          "title": "Bluemix API Key",
-          "key": "api-key"
-        },{
-          "type": "table",
-          "columnCount": 4,
-          "widths": ["15%", "25%", "25%", "25%"],
-          "items": [
-              {
-                "type": "label",
-                "title": ""
-              },{
-                "type": "label",
-                "title": {
-                  "$ref": "#/messages/region"
-                }
-              },{
-                "type": "label",
-                "title": "Cluster Name"
-              },{
-                "type": "label",
-                "title": "Cluster Namespace"
-              },{
-                "type": "label",
-                "title": {
-                  "$ref": "#/messages/prodStage"
-                }
-              },{
-                "type": "select",
-                "key": "prod-region"
-              },{
-                "type": "text",
-                "key": "prod-cluster-name",
-                "readonly": false
-              },{
-                "type": "text",
-                "key": "prod-cluster-namespace",
-                "readonly": false
+      },{
+        "type": "select",
+        "title": {
+          "$ref": "#/messages/space"
+        },
+        "key": "prod-space"
+      },{
+        "type": "password",
+        "readonly": false,
+        "title": "Bluemix API Key",
+        "key": "api-key"
+      },{
+        "type": "table",
+        "columnCount": 4,
+        "widths": ["15%", "25%", "25%", "25%"],
+        "items": [
+            {
+              "type": "label",
+              "title": ""
+            },{
+              "type": "label",
+              "title": {
+                "$ref": "#/messages/region"
               }
+            },{
+              "type": "label",
+              "title": "Cluster Name"
+            },{
+              "type": "label",
+              "title": "Cluster Namespace"
+            },{
+              "type": "label",
+              "title": {
+                "$ref": "#/messages/prodStage"
+              }
+            },{
+              "type": "select",
+              "key": "prod-region"
+            },{
+              "type": "text",
+              "key": "prod-cluster-name",
+              "readonly": false
+            },{
+              "type": "text",
+              "key": "prod-cluster-namespace",
+              "readonly": false
+            }
           ]
       },{
     "type": "table",
