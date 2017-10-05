@@ -7,6 +7,10 @@ stages:
     service: ${GIT_REPO}    
   triggers:
   - type: commit
+  properties:
+  - name: CHART_NAME
+    value: ${CHART_NAME}
+    type: text  
   jobs:
   - name: Build image
     type: builder
@@ -52,7 +56,13 @@ stages:
     type: file
   - name: CLUSTER_NAMESPACE
     value: ${PROD_CLUSTER_NAMESPACE}
-    type: text  
+    type: text
+  - name: CHART_NAME
+    value: ${CHART_NAME}
+    type: text      
+  - name: IMAGE_PULL_SECRET_NAME
+    value: ${IMAGE_PULL_SECRET_NAME}
+    type: text      
   jobs:
   - name: Deploy Helm Chart
     type: deployer
