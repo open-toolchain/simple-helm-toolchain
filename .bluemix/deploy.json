@@ -31,17 +31,17 @@
             "type": "string",
             "pattern": "\\S"
         },
-       "registry-region": {
-          "description": "The bluemix region for image registry",
-          "type": "string"
-        },
+#       "registry-region": {
+#          "description": "The bluemix region for image registry",
+#          "type": "string"
+#        },
        "registry-namespace": {
-          "description": "The image registry namespace. You can create a new namespace with 'bx cr namespace-add'.",
+          "description": "The namespace in the container image registry. You can set it up with {bx cr namespace-add]. Learn more at https://console.bluemix.net/docs/services/Registry/index.html .",
           "type": "string",
           "pattern": "\\S"
         },
        "prod-cluster-name": {
-            "description": "Your cluster name. Retrieve it with [bx cs clusters] or via the console at https://console.ng.bluemix.net/containers-kubernetes/home/clusters .",
+            "description": "The target cluster name. Retrieve it with [bx cs clusters] or via the console at https://console.ng.bluemix.net/containers-kubernetes/home/clusters .",
             "type": "string",
             "pattern": "\\S"
         },
@@ -56,10 +56,11 @@
             },
             "type": "string",
             "pattern": "\\S"
-        }
+      }
     },
-    "required": ["app-name", "api-key", "registry-region", "registry-namespace", "prod-region", "prod-cluster-name", "prod-cluster-namespace", "prod-organization", "prod-space"],
-    "form": [
+#    "required": ["app-name", "api-key", "registry-region", "registry-namespace", "prod-region", "prod-cluster-name", "prod-cluster-namespace", "prod-organization", "prod-space"],
+    "required": ["app-name", "api-key", "registry-namespace", "prod-region", "prod-cluster-name", "prod-cluster-namespace", "prod-organization", "prod-space"],
+"form": [
        {
           "type": "validator",
           "url": "/devops/setup/bm-helper/helper.html"
@@ -72,12 +73,12 @@
           "key": "app-name"
         },{
           "type": "select",
-          "title": "Image Registry Region",
+          "title": "Container Image Registry Region",
           "key": "registry-region"
         },{
           "type": "text",
           "readonly": false,
-          "title": "Image Registry Namespace",
+          "title": "Container Image Registry Namespace",
           "key": "registry-namespace"
         },{
           "type": "select",
@@ -99,7 +100,7 @@
           },{
             "type": "table",
             "columnCount": 4,
-            "widths": ["15%", "25%", "25%", "25%"],
+            "widths": ["15%", "27%", "27%", "27%"],
             "items": [
                 {
                   "type": "label",
