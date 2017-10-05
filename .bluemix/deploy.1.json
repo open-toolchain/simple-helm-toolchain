@@ -31,6 +31,10 @@
             "type": "string",
             "pattern": "\\S"
         },
+       "registry-region": {
+          "description": "The bluemix region for image registry",
+          "type": "string"
+        },
        "registry-namespace": {
           "description": "The namespace in the container image registry. You can set it up with {bx cr namespace-add]. Learn more at https://console.bluemix.net/docs/services/Registry/index.html .",
           "type": "string",
@@ -54,7 +58,7 @@
             "pattern": "\\S"
       }
     },
-    "required": ["app-name", "api-key", "registry-namespace", "prod-region", "prod-cluster-name", "prod-cluster-namespace", "prod-organization", "prod-space"],
+    "required": ["app-name", "api-key", "registry-region", "registry-namespace", "prod-region", "prod-cluster-name", "prod-cluster-namespace", "prod-organization", "prod-space"],
 "form": [
        {
           "type": "validator",
