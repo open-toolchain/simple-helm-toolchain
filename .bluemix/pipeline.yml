@@ -15,6 +15,7 @@ stages:
   - name: Build image
     type: builder
     build_type: cr
+    artifact_dir: output
     target:
       region_id: ${REGISTRY_REGION_ID}
       api_key: ${API_KEY}
