@@ -23,6 +23,7 @@ stages:
     image_name: ${CF_APP_NAME}
     script: |
       #!/bin/bash
+      # use build script from app source control
       source ./scripts/build.sh
 - name: VALIDATE
   inputs:
@@ -73,4 +74,5 @@ stages:
       kubernetes_cluster: ${PROD_CLUSTER_NAME}
     script: |
       #!/bin/bash
+      # use deploy script from app source control      
       source ./scripts/deploy.sh
