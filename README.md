@@ -4,6 +4,12 @@
 ### Continuously deliver a secure Docker app to a Kubernetes Cluster with Helm Charts
 This Hello World application uses Docker with Node.js and includes a DevOps toolchain that is preconfigured for continuous delivery with Vulnerability Advisor, source control, issue tracking, and online editing, and deployment to the IBM Bluemix Containers service using Helm Charts.
 
+This template assumes an application (e.g. https://github.com/open-toolchain/hello-helm) structured as follow:
+- Dockerfile -- the docker file
+- /chart /<Application Name>/  -- Helm Chart
+- /scripts/build.sh    -- build script (e.g. https://github.com/open-toolchain/hello-helm/blob/master/scripts/build.sh)
+- /scripts/deploy.sh  -- deploy script (e.g. https://github.com/open-toolchain/hello-helm/blob/master/scripts/deploy.sh)
+
 CAUTION: 
 - The CF dependency is being removed shortly, it's still needed for the Vulnerability Advisor job
 - For now, keep the registry region location the same as the deployment one. Need more scripting to mint a secret for other region to pull via Tiller
