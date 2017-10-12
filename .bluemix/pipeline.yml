@@ -24,7 +24,13 @@ stages:
     script: |
       #!/bin/bash
       # use build script from app source control
-      source ./scripts/build.sh
+      if [ -f ./scripts/build.sh ]; then
+        source ./scripts/build.sh
+      else
+        echo "Did not file build script at ./scripts/build.sh"
+        echo "You can copy this file to build a container image: https://github.com/open-toolchain/hello-helm/blob/master/scripts/build.sh"
+        exit 1
+      fi
 - name: VALIDATE
   inputs:
   - type: job
@@ -74,5 +80,11 @@ stages:
       kubernetes_cluster: ${PROD_CLUSTER_NAME}
     script: |
       #!/bin/bash
-      # use deploy script from app source control      
-      source ./scripts/deploy.sh
+      # use deploy script from app source control
+      if [ -f ./scripts/deploy.sh ]; then
+        source ./scripts/deploy.sh
+      else
+        echo "Did not file deploy script at ./scripts/deploy.sh"
+        echo "You can copy this file to deploy a container image to Kubernetes: https://github.com/open-toolchain/hello-helm/blob/master/scripts/deploy.sh"
+        exit 1
+      fi
