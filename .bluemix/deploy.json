@@ -33,12 +33,12 @@
             "type": "string"
         },
        "staging-cluster-name": {
-            "description": "The target cluster name. Retrieve it with [bx cs clusters] or via the console at https://console.ng.bluemix.net/containers-kubernetes/home/clusters .",
+            "description": "The name of staging cluster. Retrieve it with [bx cs clusters] or via the console at https://console.ng.bluemix.net/containers-kubernetes/home/clusters .",
             "type": "string",
             "pattern": "\\S"
         },
         "staging-cluster-namespace": {
-          "description": "The cluster namespace to use for this environment (if new, will be automatically created and configured).",
+          "description": "The namespace in staging cluster (if new, will be automatically created and configured).",
           "type": "string",
           "pattern": "\\S"
         },
@@ -47,12 +47,12 @@
             "type": "string"
         },
        "prod-cluster-name": {
-            "description": "The target cluster name. Retrieve it with [bx cs clusters] or via the console at https://console.ng.bluemix.net/containers-kubernetes/home/clusters .",
+            "description": "The name of prod cluster. Retrieve it with [bx cs clusters] or via the console at https://console.ng.bluemix.net/containers-kubernetes/home/clusters .",
             "type": "string",
             "pattern": "\\S"
         },
         "prod-cluster-namespace": {
-          "description": "The cluster namespace to use for this environment (if new, will be automatically created and configured).",
+          "description": "The namespace in prod cluster (if new, will be automatically created and configured).",
           "type": "string",
           "pattern": "\\S"
         },
