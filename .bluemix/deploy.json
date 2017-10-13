@@ -14,18 +14,6 @@
     },
     "type": "object",
     "properties": {
-        "prod-region": {
-            "description": "The bluemix region for prod deployment",
-            "type": "string"
-        },
-        "prod-organization": {
-            "description": "The bluemix org",
-            "type": "string"
-        },
-       "prod-space": {
-            "description": "The bluemix space",
-            "type": "string"
-        },
        "api-key": {
             "description": "The Bluemix API key is used to access the IBM Container Service API and interact with the cluster. You can obtain your API key with 'bx iam api-key-create' or via the console at https://console.ng.bluemix.net/iam/#/apikeys by clicking **Create API key** (Each API key only can be viewed once).",
             "type": "string",
@@ -40,26 +28,52 @@
           "type": "string",
           "pattern": "\\S"
         },
+        "staging-region": {
+            "description": "The bluemix region for staging deployment",
+            "type": "string"
+        },
+       "staging-cluster-name": {
+            "description": "The name of staging cluster. Retrieve it with [bx cs clusters] or via the console at https://console.ng.bluemix.net/containers-kubernetes/home/clusters .",
+            "type": "string",
+            "pattern": "\\S"
+        },
+        "staging-cluster-namespace": {
+          "description": "Staging namespace",
+          "type": "string",
+          "pattern": "\\S"
+        },
+        "prod-region": {
+            "description": "The bluemix region for prod deployment",
+            "type": "string"
+        },
        "prod-cluster-name": {
-            "description": "The target cluster name. Retrieve it with [bx cs clusters] or via the console at https://console.ng.bluemix.net/containers-kubernetes/home/clusters .",
+            "description": "The name of prod cluster. Retrieve it with [bx cs clusters] or via the console at https://console.ng.bluemix.net/containers-kubernetes/home/clusters .",
             "type": "string",
             "pattern": "\\S"
         },
         "prod-cluster-namespace": {
-          "description": "The cluster namespace to use for this environment (if new, will be automatically created and configured).",
+          "description": "Prod namespace",
           "type": "string",
           "pattern": "\\S"
-      },
-     "app-name": {
+        },
+        "prod-organization": {
+            "description": "The bluemix org",
+            "type": "string"
+        },
+       "prod-space": {
+            "description": "The bluemix space",
+            "type": "string"
+        },
+       "app-name": {
             "description": {
               "$ref": "#/messages/deploy.appDescription"
             },
             "type": "string",
             "pattern": "\\S"
-      }
+        }
     },
-    "required": ["app-name", "api-key", "registry-region", "registry-namespace", "prod-region", "prod-cluster-name", "prod-cluster-namespace", "prod-organization", "prod-space"],
-"form": [
+    "required": ["app-name", "api-key", "registry-region", "registry-namespace", "prod-region", "prod-cluster-name", "prod-cluster-namespace", "prod-region", "prod-cluster-name", "prod-cluster-namespace", "prod-organization", "prod-space"],
+    "form": [
        {
           "type": "validator",
           "url": "/devops/setup/bm-helper/helper.html"
@@ -71,14 +85,33 @@
           },
           "key": "app-name"
         },{
-          "type": "select",
-          "title": "Container Image Registry Region",
-          "key": "registry-region"
-        },{
-          "type": "text",
-          "readonly": false,
-          "title": "Container Image Registry Namespace",
-          "key": "registry-namespace"
+          "type": "table",
+          "columnCount": 3,
+            "widths": ["50%", "3%", "47%"],
+            "items": [
+                {
+                  "type": "label",
+                  "title": "Container registry region"
+                },{
+                  "type": "label",
+                  "title": ""
+                },{                    
+                  "type": "label",
+                  "title": "Container registry namespace"
+                },{
+                  "type": "select",
+                  "title": "Container image registry region",
+                  "key": "registry-region"
+                },{
+                  "type": "label",
+                  "title": ""
+                },{
+                  "type": "text",
+                  "readonly": false,
+                  "title": "Container image registry namespace",
+                  "key": "registry-namespace"
+                }
+            ]
         },{
           "type": "select",
           "title": {
@@ -94,7 +127,7 @@
           },{
             "type": "password",
             "readonly": false,
-            "title": "Bluemix API Key",
+            "title": "Bluemix API key",
             "key": "api-key"
           },{
             "type": "table",
@@ -111,10 +144,26 @@
                   }
                 },{
                   "type": "label",
-                  "title": "Cluster Name"
+                  "title": "Cluster name"
                 },{
                   "type": "label",
-                  "title": "Cluster Namespace"
+                  "title": "Cluster namespace"
+                },{
+                  "type": "label",
+                  "title": {
+                    "$ref": "#/messages/stagingStage"
+                  }
+                },{
+                  "type": "select",
+                  "key": "staging-region"
+                },{
+                  "type": "text",
+                  "key": "staging-cluster-name",
+                  "readonly": false
+                },{
+                  "type": "text",
+                  "key": "staging-cluster-namespace",
+                  "readonly": false
                 },{
                   "type": "label",
                   "title": {
@@ -134,7 +183,7 @@
                 }
             ]
         },{
-		  "type": "table",
+          "type": "table",
           "columnCount": 2,
             "widths": ["15%", "80%"],
             "items": [
@@ -144,6 +193,19 @@
                 },{
                   "type": "label",
                   "title": "Retrieve the Kubernetes cluster name with the CLI command 'bx cs clusters' or via the [console](https://console.bluemix.net/containers-kubernetes/home/clusters)."
+                }
+            ]
+        },{
+          "type": "table",
+          "columnCount": 2,
+            "widths": ["15%", "80%"],
+            "items": [
+                {
+                  "type": "label",
+                  "title": ""
+                },{
+                  "type": "label",
+                  "title": "If the cluster namespace doesn't exist already, it will be automatically created and configured."
                 }
             ]
         }

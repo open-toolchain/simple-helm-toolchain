@@ -58,7 +58,48 @@ stages:
       organization: ${PROD_ORG_NAME}
       space: ${PROD_SPACE_NAME}
     WAIT_TIME: '5'
-- name: DEPLOY
+- name: STAGING
+  inputs:
+  - type: job
+    stage: BUILD
+    job: Build image
+  triggers:
+  - type: stage
+  properties:
+  - name: buildprops
+    value: build.properties
+    type: file
+  - name: CLUSTER_NAMESPACE
+    value: ${STAGING_CLUSTER_NAMESPACE}
+    type: text
+  - name: CHART_NAME
+    value: ${CHART_NAME}
+    type: text      
+  jobs:
+  - name: Deploy Helm Chart
+    type: deployer
+    target:
+      region_id: ${STAGING_REGION_ID}
+      api_key: ${API_KEY}
+      kubernetes_cluster: ${STAGING_CLUSTER_NAME}
+    script: |
+      #!/bin/bash
+      # use deploy script from app source control
+      SCRIPT_NAME="deploy.sh"
+      SCRIPT_FOLDER="scripts"
+      BASE_URL="https://raw.githubusercontent.com/open-toolchain/hello-helm/master"
+      if [ ! -f "${SCRIPT_FOLDER}/${SCRIPT_NAME}" ]; then
+        echo -e "No script found at ./${SCRIPT_FOLDER}/${SCRIPT_NAME}"
+        echo "Defaulting to generic script from: ${BASE_URL}/${SCRIPT_FOLDER}/${SCRIPT_NAME}"
+        mkdir -p ${SCRIPT_FOLDER}
+        wget "${BASE_URL}/${SCRIPT_FOLDER}/${SCRIPT_NAME}" --output-document "${SCRIPT_FOLDER}/${SCRIPT_NAME}"
+        if [ ! -f "${SCRIPT_FOLDER}/${SCRIPT_NAME}" ]; then
+          echo -e "Failed to retrieve generic script from: ${BASE_URL}/${SCRIPT_FOLDER}/${SCRIPT_NAME}"
+        fi
+        # cat "${SCRIPT_FOLDER}/${SCRIPT_NAME}"
+      fi
+      source "${SCRIPT_FOLDER}/${SCRIPT_NAME}"
+- name: PROD
   inputs:
   - type: job
     stage: BUILD
@@ -74,10 +115,7 @@ stages:
     type: text
   - name: CHART_NAME
     value: ${CHART_NAME}
-    type: text      
-  - name: IMAGE_PULL_SECRET_NAME
-    value: ${IMAGE_PULL_SECRET_NAME}
-    type: text      
+    type: text        
   jobs:
   - name: Deploy Helm Chart
     type: deployer
