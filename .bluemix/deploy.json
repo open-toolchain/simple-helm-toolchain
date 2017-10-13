@@ -72,12 +72,15 @@
           "key": "app-name"
         },{
           "type": "table",
-          "columnCount": 2,
-            "widths": ["50%", "45%"],
+          "columnCount": 3,
+            "widths": ["50%", "5%", "45%"],
             "items": [
                 {
                   "type": "label",
                   "title": "Container Registry"
+                },{
+                  "type": "label",
+                  "title": ""
                 },{                    
                   "type": "label",
                   "title": "Registry Namespace"
@@ -85,6 +88,9 @@
                   "type": "select",
                   "title": "Image Registry Region",
                   "key": "registry-region"
+                },{
+                  "type": "label",
+                  "title": ""
                 },{
                   "type": "text",
                   "readonly": false,
