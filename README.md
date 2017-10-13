@@ -4,15 +4,14 @@
 ### Continuously deliver a secure Docker app to a Kubernetes Cluster with Helm Charts
 This Hello World application uses Docker with Node.js and includes a DevOps toolchain that is preconfigured for continuous delivery with Vulnerability Advisor, source control, issue tracking, and online editing, and deployment to the IBM Bluemix Containers service using Helm Charts.
 
-This template assumes an application (e.g. https://github.com/open-toolchain/hello-helm) structured as below.  :
-- Dockerfile (must) -- the docker file used to build the container image
-- /chart /your-app-name  (must) -- the Helm Chart used to deploy this application, CI pipeline will automatically update it to reflect latest image build
-- /scripts/build.sh (optional) -- the custom build script (if absent, will default to [generic build script](https://github.com/open-toolchain/hello-helm/blob/master/scripts/build.sh)
-- /scripts/deploy.sh (optional) -- the custom Kubernetes/Helm deploy script (if absent, will default to [generic deploy script](https://github.com/open-toolchain/hello-helm/blob/master/scripts/deploy.sh)
+This template assumes an application (e.g. [hello-helm](https://github.com/open-toolchain/hello-helm) structured as below.  :
+- **Dockerfile (must)** -- the docker file used to build the container image
+- **/chart /your-app-name  (must)** -- the Helm Chart used to deploy this application, CI pipeline will automatically update it to reflect latest image build
+- **/scripts/build.sh (optional)** -- the custom build script (if absent, will default to [generic build script](https://github.com/open-toolchain/hello-helm/blob/master/scripts/build.sh)
+- **/scripts/deploy.sh (optional)** -- the custom Kubernetes/Helm deploy script (if absent, will default to [generic deploy script](https://github.com/open-toolchain/hello-helm/blob/master/scripts/deploy.sh)
 
-Here is a [sample app](https://github.com/open-toolchain/hello-helm) following this structure.
 
-CAUTION: 
+**CAUTION:** 
 - The CF dependency is being removed shortly, it's still needed for the Vulnerability Advisor job
 - For now, keep the registry region location the same as the deployment one. Need more scripting to mint a secret for other region to pull via Tiller
 
