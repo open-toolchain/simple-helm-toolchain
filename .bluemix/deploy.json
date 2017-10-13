@@ -73,7 +73,7 @@
         },{
           "type": "table",
           "columnCount": 3,
-            "widths": ["50%", "10%", "40%"],
+            "widths": ["50%", "5%", "45%"],
             "items": [
                 {
                   "type": "label",
