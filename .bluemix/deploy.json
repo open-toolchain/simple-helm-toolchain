@@ -71,14 +71,21 @@
           },
           "key": "app-name"
         },{
-          "type": "select",
-          "title": "Container Image Registry Region",
-          "key": "registry-region"
-        },{
-          "type": "text",
-          "readonly": false,
-          "title": "Container Image Registry Namespace",
-          "key": "registry-namespace"
+          "type": "table",
+          "columnCount": 2,
+            "widths": ["50%", "40%"],
+            "items": [
+                {
+                  "type": "select",
+                  "title": "Image Registry Region",
+                  "key": "registry-region"
+                },{
+                  "type": "text",
+                  "readonly": false,
+                  "title": "Image Registry Namespace",
+                  "key": "registry-namespace"
+                }
+            ]
         },{
           "type": "select",
           "title": {
@@ -134,7 +141,7 @@
                 }
             ]
         },{
-		  "type": "table",
+          "type": "table",
           "columnCount": 2,
             "widths": ["15%", "80%"],
             "items": [
