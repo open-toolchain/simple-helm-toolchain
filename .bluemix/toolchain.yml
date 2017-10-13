@@ -47,7 +47,6 @@ services:
           REGISTRY_REGION_ID: '{{form.pipeline.parameters.registry-region}}'
           REGISTRY_NAMESPACE: '{{form.pipeline.parameters.registry-namespace}}'
           API_KEY: '{{form.pipeline.parameters.api-key}}'
-          IMAGE_PULL_SECRET_NAME: bluemix-devops-secret
           STAGING_REGION_ID: '{{form.pipeline.parameters.staging-region}}'
           STAGING_CLUSTER_NAME: '{{form.pipeline.parameters.staging-cluster-name}}'
           STAGING_CLUSTER_NAMESPACE: '{{form.pipeline.parameters.staging-cluster-namespace}}'
