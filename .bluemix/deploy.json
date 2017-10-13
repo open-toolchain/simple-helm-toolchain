@@ -38,7 +38,7 @@
             "pattern": "\\S"
         },
         "staging-cluster-namespace": {
-          "description": "The namespace in staging cluster (if new, will be automatically created and configured).",
+          "description": "Staging namespace",
           "type": "string",
           "pattern": "\\S"
         },
@@ -52,7 +52,7 @@
             "pattern": "\\S"
         },
         "prod-cluster-namespace": {
-          "description": "The namespace in prod cluster (if new, will be automatically created and configured).",
+          "description": "Prod namespace",
           "type": "string",
           "pattern": "\\S"
         },
@@ -193,6 +193,12 @@
                 },{
                   "type": "label",
                   "title": "Retrieve the Kubernetes cluster name with the CLI command 'bx cs clusters' or via the [console](https://console.bluemix.net/containers-kubernetes/home/clusters)."
+                },{
+                  "type": "label",
+                  "title": ""
+                },{
+                  "type": "label",
+                  "title": "If the cluster namespace doesn't exist already, it will be automatically created and configured."
                 }
             ]
         }
