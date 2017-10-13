@@ -77,13 +77,13 @@
             "items": [
                 {
                   "type": "label",
-                  "title": "Container Registry"
+                  "title": "Container Registry Region"
                 },{
                   "type": "label",
                   "title": ""
                 },{                    
                   "type": "label",
-                  "title": "Registry Namespace"
+                  "title": "Container Registry Namespace"
                 },{
                   "type": "select",
                   "title": "Image Registry Region",
