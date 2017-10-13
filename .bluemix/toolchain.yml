@@ -44,7 +44,7 @@ services:
           GIT_REPO: hello-world-repo
           CHART_NAME: hello
           CF_APP_NAME: '{{form.pipeline.parameters.app-name}}'
-          REGISTRY_REGION_ID: '{{form.pipeline.parameters.registry-rgn}}'
+          REGISTRY_REGION_ID: '{{form.pipeline.parameters.registry-region}}'
           REGISTRY_NAMESPACE: '{{form.pipeline.parameters.registry-namespace}}'
           API_KEY: '{{form.pipeline.parameters.api-key}}'
           IMAGE_PULL_SECRET_NAME: bluemix-devops-secret
@@ -61,6 +61,5 @@ form:
     parameters:
       app-name: '{{services.hello-world-repo.parameters.repo_name}}'
       prod-cluster-namespace: prod
-      registry-rgn: ibm:yp:us-south
     schema:
       $ref: deploy.json
