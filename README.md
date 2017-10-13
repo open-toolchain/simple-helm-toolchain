@@ -9,6 +9,7 @@ This template assumes an application (e.g. https://github.com/open-toolchain/hel
 - /chart /your-app-name  (must) -- the Helm Chart used to deploy this application, CI pipeline will automatically update it to reflect latest image build
 - /scripts/build.sh (optional) -- the custom build script (if absent, will default to [generic build script](https://github.com/open-toolchain/hello-helm/blob/master/scripts/build.sh)
 - /scripts/deploy.sh (optional) -- the custom Kubernetes/Helm deploy script (if absent, will default to [generic deploy script](https://github.com/open-toolchain/hello-helm/blob/master/scripts/deploy.sh)
+
 Here is a [sample app](https://github.com/open-toolchain/hello-helm) following this structure.
 
 CAUTION: 
