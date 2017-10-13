@@ -193,7 +193,14 @@
                 },{
                   "type": "label",
                   "title": "Retrieve the Kubernetes cluster name with the CLI command 'bx cs clusters' or via the [console](https://console.bluemix.net/containers-kubernetes/home/clusters)."
-                },{
+                }
+            ]
+        },{
+          "type": "table",
+          "columnCount": 2,
+            "widths": ["15%", "80%"],
+            "items": [
+                {
                   "type": "label",
                   "title": ""
                 },{
