@@ -2,7 +2,7 @@
 
 
 ### Continuously deliver a secure Docker app to a Kubernetes Cluster with Helm Charts
-This Hello World application uses Docker with Node.js and includes a DevOps toolchain that is preconfigured for continuous delivery with Vulnerability Advisor, source control, issue tracking, and online editing, and deployment to the IBM Bluemix Containers service using Helm Charts.
+This Hello World application uses Docker with Node.js and includes a DevOps toolchain that is preconfigured for continuous delivery across a staging and a prod Kubernetes cluster, with Vulnerability Advisor, source control, issue tracking, and online editing, and deployment to the IBM Bluemix Kubernetes Cluster using Helm Charts.
 
 This template assumes an application (e.g. [hello-helm](https://github.com/open-toolchain/hello-helm)) structured like this  :
 - **/Dockerfile (must)** -- the docker file used to build the container image in root folder
@@ -25,7 +25,7 @@ This template assumes an application (e.g. [hello-helm](https://github.com/open-
 * TBD Blog [Continuously deliver your app to Kubernetes with Bluemix](https://www.ibm.com/blogs/bluemix/2017/07/continuously-deliver-your-app-to-kubernetes-with-bluemix/)
 * TBD Step by step [tutorial](https://www.ibm.com/devops/method/tutorials/tc_secure_kube)
 * **First-time IBM Container Service users**: Make sure that your container image registry is correctly set up with a [namespace](https://console.bluemix.net/docs/services/Registry/index.html)
-    * IMPORTANT NOTE: For the pipeline to build containers successfully, please use these steps to define your namespace:
+    * IMPORTANT NOTE: For the pipeline to validate containers successfully, please use these steps to define your namespace:
         * bx login
         * bx target --cf
         * bx cr namespace-add <my_namespace>
