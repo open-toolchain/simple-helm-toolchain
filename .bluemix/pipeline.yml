@@ -24,13 +24,20 @@ stages:
     script: |
       #!/bin/bash
       # use build script from app source control
-      if [ -f ./scripts/build.sh ]; then
-        source ./scripts/build.sh
-      else
-        echo "Did not file build script at ./scripts/build.sh"
-        echo "You can copy this file to build a container image: https://github.com/open-toolchain/hello-helm/blob/master/scripts/build.sh"
-        exit 1
+      SCRIPT_NAME="build.sh"
+      SCRIPT_FOLDER="scripts"
+      BASE_URL="https://raw.githubusercontent.com/open-toolchain/hello-helm/master"
+      if [ ! -f "${SCRIPT_FOLDER}/${SCRIPT_NAME}" ]; then
+        echo -e "No script found at ./${SCRIPT_FOLDER}/${SCRIPT_NAME}"
+        echo "Defaulting to generic script from: ${BASE_URL}/${SCRIPT_FOLDER}/${SCRIPT_NAME}"
+        mkdir -p ${SCRIPT_FOLDER}
+        wget "${BASE_URL}/${SCRIPT_FOLDER}/${SCRIPT_NAME}" --output-document "${SCRIPT_FOLDER}/${SCRIPT_NAME}"
+        if [ ! -f "${SCRIPT_FOLDER}/${SCRIPT_NAME}" ]; then
+          echo -e "Failed to retrieve generic script from: ${BASE_URL}/${SCRIPT_FOLDER}/${SCRIPT_NAME}"
+        fi
+        # cat "${SCRIPT_FOLDER}/${SCRIPT_NAME}"
       fi
+      source "${SCRIPT_FOLDER}/${SCRIPT_NAME}"
 - name: VALIDATE
   inputs:
   - type: job
@@ -81,10 +88,17 @@ stages:
     script: |
       #!/bin/bash
       # use deploy script from app source control
-      if [ -f ./scripts/deploy.sh ]; then
-        source ./scripts/deploy.sh
-      else
-        echo "Did not file deploy script at ./scripts/deploy.sh"
-        echo "You can copy this file to deploy a container image to Kubernetes: https://github.com/open-toolchain/hello-helm/blob/master/scripts/deploy.sh"
-        exit 1
+      SCRIPT_NAME="deploy.sh"
+      SCRIPT_FOLDER="scripts"
+      BASE_URL="https://raw.githubusercontent.com/open-toolchain/hello-helm/master"
+      if [ ! -f "${SCRIPT_FOLDER}/${SCRIPT_NAME}" ]; then
+        echo -e "No script found at ./${SCRIPT_FOLDER}/${SCRIPT_NAME}"
+        echo "Defaulting to generic script from: ${BASE_URL}/${SCRIPT_FOLDER}/${SCRIPT_NAME}"
+        mkdir -p ${SCRIPT_FOLDER}
+        wget "${BASE_URL}/${SCRIPT_FOLDER}/${SCRIPT_NAME}" --output-document "${SCRIPT_FOLDER}/${SCRIPT_NAME}"
+        if [ ! -f "${SCRIPT_FOLDER}/${SCRIPT_NAME}" ]; then
+          echo -e "Failed to retrieve generic script from: ${BASE_URL}/${SCRIPT_FOLDER}/${SCRIPT_NAME}"
+        fi
+        # cat "${SCRIPT_FOLDER}/${SCRIPT_NAME}"
       fi
+      source "${SCRIPT_FOLDER}/${SCRIPT_NAME}"
