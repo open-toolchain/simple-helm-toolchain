@@ -63,18 +63,17 @@
        "prod-space": {
             "description": "The bluemix space",
             "type": "string"
-        }
-      },
-     "app-name": {
+        },
+       "app-name": {
             "description": {
               "$ref": "#/messages/deploy.appDescription"
             },
             "type": "string",
             "pattern": "\\S"
-      }
+        }
     },
     "required": ["app-name", "api-key", "registry-region", "registry-namespace", "prod-region", "prod-cluster-name", "prod-cluster-namespace", "prod-region", "prod-cluster-name", "prod-cluster-namespace", "prod-organization", "prod-space"],
-"form": [
+    "form": [
        {
           "type": "validator",
           "url": "/devops/setup/bm-helper/helper.html"
