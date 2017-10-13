@@ -13,7 +13,6 @@ This template assumes an application (e.g. [hello-helm](https://github.com/open-
 
 **CAUTION:** 
 - The CF dependency is being removed shortly, it's still needed for the Vulnerability Advisor job
-- For now, keep the registry region location the same as the deployment one. Need more scripting to mint a secret for other region to pull via Tiller
 
 ![Icon](./.bluemix/toolchain.png)
 
