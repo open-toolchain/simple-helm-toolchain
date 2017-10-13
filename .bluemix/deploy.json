@@ -151,7 +151,7 @@
                 },{
                   "type": "label",
                   "title": {
-                    "$ref": "#/messages/prodStage"
+                    "$ref": "#/messages/stagingStage"
                   }
                 },{
                   "type": "select",
@@ -164,6 +164,11 @@
                   "type": "text",
                   "key": "staging-cluster-namespace",
                   "readonly": false
+                },{
+                  "type": "label",
+                  "title": {
+                    "$ref": "#/messages/prodStage"
+                  }
                 },{
                   "type": "select",
                   "key": "prod-region"
