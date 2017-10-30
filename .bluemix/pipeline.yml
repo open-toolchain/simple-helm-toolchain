@@ -23,21 +23,15 @@ stages:
     image_name: ${CF_APP_NAME}
     script: |
       #!/bin/bash
-      # use build script from app source control
-      SCRIPT_NAME="build.sh"
-      SCRIPT_FOLDER="scripts"
-      BASE_URL="https://raw.githubusercontent.com/open-toolchain/hello-helm/master"
-      if [ ! -f "${SCRIPT_FOLDER}/${SCRIPT_NAME}" ]; then
-        echo -e "No script found at ./${SCRIPT_FOLDER}/${SCRIPT_NAME}"
-        echo "Defaulting to generic script from: ${BASE_URL}/${SCRIPT_FOLDER}/${SCRIPT_NAME}"
-        mkdir -p ${SCRIPT_FOLDER}
-        wget "${BASE_URL}/${SCRIPT_FOLDER}/${SCRIPT_NAME}" --output-document "${SCRIPT_FOLDER}/${SCRIPT_NAME}"
-        if [ ! -f "${SCRIPT_FOLDER}/${SCRIPT_NAME}" ]; then
-          echo -e "Failed to retrieve generic script from: ${BASE_URL}/${SCRIPT_FOLDER}/${SCRIPT_NAME}"
-        fi
-        # cat "${SCRIPT_FOLDER}/${SCRIPT_NAME}"
+      # use script from app source control, or default to 
+      SCRIPT_FILE="scripts/build_image.sh"
+      SCRIPT_URL="https://raw.githubusercontent.com/open-toolchain/commons/master/${SCRIPT_FILE}"
+      if [ ! -f  ${SCRIPT_FILE} ]; then
+        echo -e "No script found at ./${SCRIPT_FILE}, defaulting to ${SCRIPT_URL}"
+        sh -c "$(curl -sSL ${SCRIPT_URL})"
+      else
+        source "${SCRIPT_FILE}"
       fi
-      source "${SCRIPT_FOLDER}/${SCRIPT_NAME}"
 - name: VALIDATE
   inputs:
   - type: job
@@ -45,19 +39,26 @@ stages:
     job: Build image
   triggers:
   - type: stage
-  properties:
-  - name: FULL_REPOSITORY_NAME
-    value: ''
-    type: text  
   jobs:
   - name: Vulnerability Advisor
     type: tester
-    extension_id: ibm.devops.services.pipeline.crawler.tester
+    test_type: vulnerabilityadvisor
+    use_image_from_build_input: true
+    fail_stage: false
     target:
       region_id: ${PROD_REGION_ID}
-      organization: ${PROD_ORG_NAME}
-      space: ${PROD_SPACE_NAME}
-    WAIT_TIME: '5'
+      api_key: ${API_KEY}
+    script: |
+      #!/bin/bash
+      # use script from app source control, or default to 
+      SCRIPT_FILE="scripts/check_vulnerabilities.sh"
+      SCRIPT_URL="https://raw.githubusercontent.com/open-toolchain/commons/master/${SCRIPT_FILE}"
+      if [ ! -f  ${SCRIPT_FILE} ]; then
+        echo -e "No script found at ./${SCRIPT_FILE}, defaulting to ${SCRIPT_URL}"
+        sh -c "$(curl -sSL ${SCRIPT_URL})"
+      else
+        source "${SCRIPT_FILE}"
+      fi
 - name: STAGING
   inputs:
   - type: job
@@ -84,21 +85,15 @@ stages:
       kubernetes_cluster: ${STAGING_CLUSTER_NAME}
     script: |
       #!/bin/bash
-      # use deploy script from app source control
-      SCRIPT_NAME="deploy.sh"
-      SCRIPT_FOLDER="scripts"
-      BASE_URL="https://raw.githubusercontent.com/open-toolchain/hello-helm/master"
-      if [ ! -f "${SCRIPT_FOLDER}/${SCRIPT_NAME}" ]; then
-        echo -e "No script found at ./${SCRIPT_FOLDER}/${SCRIPT_NAME}"
-        echo "Defaulting to generic script from: ${BASE_URL}/${SCRIPT_FOLDER}/${SCRIPT_NAME}"
-        mkdir -p ${SCRIPT_FOLDER}
-        wget "${BASE_URL}/${SCRIPT_FOLDER}/${SCRIPT_NAME}" --output-document "${SCRIPT_FOLDER}/${SCRIPT_NAME}"
-        if [ ! -f "${SCRIPT_FOLDER}/${SCRIPT_NAME}" ]; then
-          echo -e "Failed to retrieve generic script from: ${BASE_URL}/${SCRIPT_FOLDER}/${SCRIPT_NAME}"
-        fi
-        # cat "${SCRIPT_FOLDER}/${SCRIPT_NAME}"
+      # use script from app source control, or default to 
+      SCRIPT_FILE="scripts/deploy_helm.sh"
+      SCRIPT_URL="https://raw.githubusercontent.com/open-toolchain/commons/master/${SCRIPT_FILE}"
+      if [ ! -f  ${SCRIPT_FILE} ]; then
+        echo -e "No script found at ./${SCRIPT_FILE}, defaulting to ${SCRIPT_URL}"
+        sh -c "$(curl -sSL ${SCRIPT_URL})"
+      else
+        source "${SCRIPT_FILE}"
       fi
-      source "${SCRIPT_FOLDER}/${SCRIPT_NAME}"
 - name: PROD
   inputs:
   - type: job
@@ -125,18 +120,12 @@ stages:
       kubernetes_cluster: ${PROD_CLUSTER_NAME}
     script: |
       #!/bin/bash
-      # use deploy script from app source control
-      SCRIPT_NAME="deploy.sh"
-      SCRIPT_FOLDER="scripts"
-      BASE_URL="https://raw.githubusercontent.com/open-toolchain/hello-helm/master"
-      if [ ! -f "${SCRIPT_FOLDER}/${SCRIPT_NAME}" ]; then
-        echo -e "No script found at ./${SCRIPT_FOLDER}/${SCRIPT_NAME}"
-        echo "Defaulting to generic script from: ${BASE_URL}/${SCRIPT_FOLDER}/${SCRIPT_NAME}"
-        mkdir -p ${SCRIPT_FOLDER}
-        wget "${BASE_URL}/${SCRIPT_FOLDER}/${SCRIPT_NAME}" --output-document "${SCRIPT_FOLDER}/${SCRIPT_NAME}"
-        if [ ! -f "${SCRIPT_FOLDER}/${SCRIPT_NAME}" ]; then
-          echo -e "Failed to retrieve generic script from: ${BASE_URL}/${SCRIPT_FOLDER}/${SCRIPT_NAME}"
-        fi
-        # cat "${SCRIPT_FOLDER}/${SCRIPT_NAME}"
+      # use script from app source control, or default to 
+      SCRIPT_FILE="scripts/deploy_helm.sh"
+      SCRIPT_URL="https://raw.githubusercontent.com/open-toolchain/commons/master/${SCRIPT_FILE}"
+      if [ ! -f  ${SCRIPT_FILE} ]; then
+        echo -e "No script found at ./${SCRIPT_FILE}, defaulting to ${SCRIPT_URL}"
+        sh -c "$(curl -sSL ${SCRIPT_URL})"
+      else
+        source "${SCRIPT_FILE}"
       fi
-      source "${SCRIPT_FOLDER}/${SCRIPT_NAME}"
