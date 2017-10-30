@@ -7,12 +7,9 @@ This Hello World application uses Docker with Node.js and includes a DevOps tool
 This template assumes an application (e.g. [hello-helm](https://github.com/open-toolchain/hello-helm)) structured like this  :
 - **/Dockerfile (must)** -- the docker file used to build the container image in root folder
 - **/chart /your-app-name  (must)** -- the Helm Chart used to deploy this application, CI pipeline will automatically update it to reflect latest image build
-- **/scripts/build.sh (optional)** -- the custom build script (if absent, will default to [generic script](https://github.com/open-toolchain/hello-helm/blob/master/scripts/build.sh))
-- **/scripts/deploy.sh (optional)** -- the custom Kubernetes/Helm deploy script (if absent, will default to [generic script](https://github.com/open-toolchain/hello-helm/blob/master/scripts/deploy.sh))
-
-
-**CAUTION:** 
-- The CF dependency is being removed shortly, it's still needed for the Vulnerability Advisor job
+- **/scripts/build_image.sh (optional)** -- the custom container build script (if absent, will default to [generic script](https://github.com/open-toolchain/commons/blob/master/scripts/build_image.sh))
+- **/scripts/check_vulnerabilities.sh (optional)** -- the custom vulnerability advisor script (if absent, will default to [generic script](https://github.com/open-toolchain/commons/blob/master/scripts/check_vulnerabilities.sh))
+- **/scripts/deploy_helm.sh (optional)** -- the custom Kubernetes/Helm deploy script (if absent, will default to [generic script](https://github.com/open-toolchain/commons/blob/master/scripts/deploy_helm.sh))
 
 ![Icon](./.bluemix/toolchain.png)
 
@@ -24,11 +21,6 @@ This template assumes an application (e.g. [hello-helm](https://github.com/open-
 
 * TBD Blog [Continuously deliver your app to Kubernetes with Bluemix](https://www.ibm.com/blogs/bluemix/2017/07/continuously-deliver-your-app-to-kubernetes-with-bluemix/)
 * TBD Step by step [tutorial](https://www.ibm.com/devops/method/tutorials/tc_secure_kube)
-* **First-time IBM Container Service users**: Make sure that your container image registry is correctly set up with a [namespace](https://console.bluemix.net/docs/services/Registry/index.html)
-    * IMPORTANT NOTE: For the pipeline to validate containers successfully, please use these steps to define your namespace:
-        * bx login
-        * bx target --cf
-        * bx cr namespace-add <my_namespace>
 * [Getting started with Bluemix clusters](https://console.bluemix.net/docs/containers/container_index.html?pos=2)
 * [Getting started with toolchains](https://bluemix.net/devops/getting-started)
 * [Documentation](https://console.ng.bluemix.net/docs/services/ContinuousDelivery/index.html?pos=2)
