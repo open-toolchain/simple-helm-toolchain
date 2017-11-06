@@ -71,7 +71,7 @@ echo "=========================================================="
 echo "Deploying Helm Chart"
 
 echo -e "Dry run into: ${PIPELINE_KUBERNETES_CLUSTER_NAME}/${CLUSTER_NAMESPACE}."
-helm upgrade ${RELEASE_NAME} ./chart/${CHART_NAME} --namespace $CLUSTER_NAMESPACE --install --debug --dry-run
+helm upgrade ${RELEASE_NAME} ./chart/${CHART_NAME} --namespace ${CLUSTER_NAMESPACE} --install --debug --dry-run
 
 echo -e "Deploying into: ${PIPELINE_KUBERNETES_CLUSTER_NAME}/${CLUSTER_NAMESPACE}."
 helm upgrade ${RELEASE_NAME} ./chart/${CHART_NAME} --namespace ${CLUSTER_NAMESPACE} --install
