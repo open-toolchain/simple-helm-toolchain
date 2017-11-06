@@ -64,21 +64,30 @@ done
 helm version
 
 echo "=========================================================="
+echo "Prefix release name with namespace if not 'default' as Helm needs unique release names across namespaces"
+echo "(see also https://github.com/kubernetes/helm/issues/3037)""
+if [[ "${CLUSTER_NAMESPACE" != "default" ]]; then
+  PREFIXED_RELEASE_NAME="${CLUSTER_NAMESPACE}-${RELEASE_NAME}"
+else
+  PREFIXED_RELEASE_NAME=${RELEASE_NAME}
+fi
+echo -e "Prefixed release name: ${PREFIXED_RELEASE_NAME}"
+
 echo "Checking Helm Chart"
-helm lint ${RELEASE_NAME} ./chart/${CHART_NAME}
+helm lint ${PREFIXED_RELEASE_NAME} ./chart/${CHART_NAME}
 
 echo "=========================================================="
 echo "Deploying Helm Chart"
 
 echo -e "Dry run into: ${PIPELINE_KUBERNETES_CLUSTER_NAME}/${CLUSTER_NAMESPACE}."
-helm upgrade ${RELEASE_NAME} ./chart/${CHART_NAME} --namespace ${CLUSTER_NAMESPACE} --install --debug --dry-run
+helm upgrade ${PREFIXED_RELEASE_NAME} ./chart/${CHART_NAME} --namespace ${CLUSTER_NAMESPACE} --install --debug --dry-run
 
 echo -e "Deploying into: ${PIPELINE_KUBERNETES_CLUSTER_NAME}/${CLUSTER_NAMESPACE}."
-helm upgrade ${RELEASE_NAME} ./chart/${CHART_NAME} --namespace ${CLUSTER_NAMESPACE} --install
+helm upgrade ${PREFIXED_RELEASE_NAME} ./chart/${CHART_NAME} --namespace ${CLUSTER_NAMESPACE} --install
 
 echo ""
 echo "Deployed Services:"
-kubectl describe services ${RELEASE_NAME}-${CHART_NAME} --namespace ${CLUSTER_NAMESPACE}
+kubectl describe services ${PREFIXED_RELEASE_NAME}-${CHART_NAME} --namespace ${CLUSTER_NAMESPACE}
 
 echo ""
 echo "Deployed Pods:"
@@ -86,5 +95,5 @@ kubectl describe pods --selector app=${CHART_NAME} --namespace ${CLUSTER_NAMESPA
 
 echo ""
 echo "=========================================================="
-PORT=$(kubectl get services --namespace ${CLUSTER_NAMESPACE} | grep ${RELEASE_NAME}-${CHART_NAME} | sed 's/.*:\([0-9]*\).*/\1/g')
+PORT=$(kubectl get services --namespace ${CLUSTER_NAMESPACE} | grep ${PREFIXED_RELEASE_NAME}-${CHART_NAME} | sed 's/.*:\([0-9]*\).*/\1/g')
 echo -e "View the application at: http://${IP_ADDR}:${PORT}"
