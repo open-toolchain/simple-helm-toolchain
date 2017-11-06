@@ -28,7 +28,7 @@ stages:
       SCRIPT_URL="https://raw.githubusercontent.com/open-toolchain/commons/master/${SCRIPT_FILE}"
       if [ ! -f  ${SCRIPT_FILE} ]; then
         echo -e "No script found at ./${SCRIPT_FILE}, defaulting to ${SCRIPT_URL}"
-        sh -c "$(curl -sSL ${SCRIPT_URL})"
+        bash -c "$(curl -sSL ${SCRIPT_URL})"
       else
         source "${SCRIPT_FILE}"
       fi
@@ -55,7 +55,7 @@ stages:
       SCRIPT_URL="https://raw.githubusercontent.com/open-toolchain/secure-helm-toolchain/master/${SCRIPT_FILE}"
       if [ ! -f  ${SCRIPT_FILE} ]; then
         echo -e "No script found at ./${SCRIPT_FILE}, defaulting to ${SCRIPT_URL}"
-        sh -c "$(curl -sSL ${SCRIPT_URL})"
+        bash -c "$(curl -sSL ${SCRIPT_URL})"
       else
         source "${SCRIPT_FILE}"
       fi
@@ -90,7 +90,7 @@ stages:
       SCRIPT_URL="https://raw.githubusercontent.com/open-toolchain/secure-helm-toolchain/master/${SCRIPT_FILE}"
       if [ ! -f  ${SCRIPT_FILE} ]; then
         echo -e "No script found at ./${SCRIPT_FILE}, defaulting to ${SCRIPT_URL}"
-        sh -c "$(curl -sSL ${SCRIPT_URL})"
+        bash -c "$(curl -sSL ${SCRIPT_URL})"
       else
         source "${SCRIPT_FILE}"
       fi
@@ -125,7 +125,7 @@ stages:
       SCRIPT_URL="https://raw.githubusercontent.com/open-toolchain/secure-helm-toolchain/master/${SCRIPT_FILE}"
       if [ ! -f  ${SCRIPT_FILE} ]; then
         echo -e "No script found at ./${SCRIPT_FILE}, defaulting to ${SCRIPT_URL}"
-        sh -c "$(curl -sSL ${SCRIPT_URL})"
+        bash -c "$(curl -sSL ${SCRIPT_URL})"
       else
         source "${SCRIPT_FILE}"
       fi
