@@ -66,7 +66,7 @@ helm version
 echo "=========================================================="
 echo "Prefix release name with namespace if not 'default' as Helm needs unique release names across namespaces"
 echo "(see also https://github.com/kubernetes/helm/issues/3037)"
-if [[ "${CLUSTER_NAMESPACE" != "default" ]]; then
+if [[ "${CLUSTER_NAMESPACE}" != "default" ]]; then
   PREFIXED_RELEASE_NAME="${CLUSTER_NAMESPACE}-${RELEASE_NAME}"
 else
   PREFIXED_RELEASE_NAME=${RELEASE_NAME}
