@@ -7,9 +7,9 @@ This Hello World application uses Docker with Node.js and includes a DevOps tool
 This template assumes an application (e.g. [hello-helm](https://github.com/open-toolchain/hello-helm)) structured like this  :
 - **/Dockerfile (must)** -- the docker file used to build the container image in root folder
 - **/chart /your-app-name  (must)** -- the Helm Chart used to deploy this application, CI pipeline will automatically update it to reflect latest image build
-- **/scripts/build_image.sh (optional)** -- the custom container build script (if absent, will default to [generic script](https://github.com/open-toolchain/commons/blob/master/scripts/build_image.sh))
-- **/scripts/check_vulnerabilities.sh (optional)** -- the custom vulnerability advisor script (if absent, will default to [generic script](https://github.com/open-toolchain/commons/blob/master/scripts/check_vulnerabilities.sh))
-- **/scripts/deploy_helm.sh (optional)** -- the custom Kubernetes/Helm deploy script (if absent, will default to [generic script](https://github.com/open-toolchain/commons/blob/master/scripts/deploy_helm.sh))
+- **/scripts/build_image.sh (optional)** -- the custom container build script (if absent, will default to [generic script](https://github.com/open-toolchain/secure-helm-toolchain/blob/master/scripts/build_image.sh))
+- **/scripts/check_vulnerabilities.sh (optional)** -- the custom vulnerability advisor script (if absent, will default to [generic script](https://github.com/open-toolchain/secure-helm-toolchain/blob/master/scripts/check_vulnerabilities.sh))
+- **/scripts/deploy_helm.sh (optional)** -- the custom Kubernetes/Helm deploy script (if absent, will default to [generic script](https://github.com/open-toolchain/secure-helm-toolchain/blob/master/scripts/deploy_helm.sh))
 
 ![Icon](./.bluemix/toolchain.png)
 
