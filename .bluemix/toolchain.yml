@@ -35,7 +35,7 @@ services:
     parameters:
       services:
         - hello-world-repo
-      name: 'hello-world-{{timestamp}}'
+      name: 'hello-helm-{{timestamp}}'
       ui-pipeline: true
       configuration:
         content:
