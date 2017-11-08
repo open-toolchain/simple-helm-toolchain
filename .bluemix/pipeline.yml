@@ -39,10 +39,6 @@ stages:
     job: Build image
   triggers:
   - type: stage
-  properties:
-  - name: buildprops
-    value: build.properties
-    type: file  
   jobs:
   - name: Vulnerability Advisor
     type: tester

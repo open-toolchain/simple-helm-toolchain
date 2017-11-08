@@ -50,10 +50,11 @@ bx cr build -t ${REGISTRY_URL}/${REGISTRY_NAMESPACE}/${IMAGE_NAME}:${BUILD_NUMBE
 set +x
 bx cr image-inspect ${REGISTRY_URL}/${REGISTRY_NAMESPACE}/${IMAGE_NAME}:${BUILD_NUMBER}
 
-# The image URL will automatically be passed along with the build result as env variable PIPELINE_IMAGE_URL to
-# any subsequent job consuming this build result. 
-# Uncomment and modify the environment variable $PIPELINE_IMAGE_URL to pass along a different image URL than the one inferred by the pipeline:
-#export PIPELINE_IMAGE_URL="$REGISTRY_URL/$REGISTRY_NAMESPACE/$IMAGE_NAME:$BUILD_NUMBER"
+# When 'bx' commands are in the pipeline job config directly, the image URL will automatically be passed 
+# along with the build result as env variable PIPELINE_IMAGE_URL to any subsequent job consuming this build result. 
+# When the job is sourc'ing an external shell script, or to pass a different image URL than the one inferred by the pipeline,
+# please uncomment and modify the environment variable the following line.
+export PIPELINE_IMAGE_URL="$REGISTRY_URL/$REGISTRY_NAMESPACE/$IMAGE_NAME:$BUILD_NUMBER"
 
 # Provision a registry token for this toolchain to later pull image. Token will be passed into build.properties
 echo "=========================================================="
@@ -77,9 +78,6 @@ echo "Copying artifacts needed for deployment and testing"
 echo "Checking archive dir presence"
 mkdir -p $ARCHIVE_DIR
 
-echo "Keep track of build.properties"
- # IMAGE_URL from build.properties is used for vulnerability advisor job
-echo "IMAGE_URL=${REGISTRY_URL}/${REGISTRY_NAMESPACE}/${IMAGE_NAME}:${BUILD_NUMBER}"  >> $ARCHIVE_DIR/build.properties
 # RELEASE_NAME from build.properties is used in Helm Chart deployment to set the release name
 echo "RELEASE_NAME=${IMAGE_NAME}" >> $ARCHIVE_DIR/build.properties
 # REGISTRY information from build.properties is used in Helm Chart deployment to generate cluster secret
