@@ -11,6 +11,15 @@ This template assumes an application (e.g. [hello-helm](https://github.com/open-
 - **/scripts/check_vulnerabilities.sh (optional)** -- the custom vulnerability advisor script (if absent, will default to [generic script](https://github.com/open-toolchain/secure-helm-toolchain/blob/master/scripts/check_vulnerabilities.sh))
 - **/scripts/deploy_helm.sh (optional)** -- the custom Kubernetes/Helm deploy script (if absent, will default to [generic script](https://github.com/open-toolchain/secure-helm-toolchain/blob/master/scripts/deploy_helm.sh))
 
+It implements the following best practices:
+- perform unit tests prior to building a container image (could be revisited to only occur after, or using a multistage build)
+- sanity check the Dockerfile prior to attempting creating the image
+- build container image once, and stage it through various Kubernetes environments (staging and prod, but could be further expanded by cloning pipeline stages)
+- use a private image registry to store the built image, automatically configure access permissions for target cluster deployment using tokens than can be revoked
+- check container image for security vulnerabilities
+- use a Helm chart to conduct the deployment of each release
+- use an explicit namespace in cluster to insulate each deployment (and make it easy to clear, by "kubectl delete namespace <name>")
+
 ![Icon](./.bluemix/toolchain.png)
 
 ### To get started, click this button:
