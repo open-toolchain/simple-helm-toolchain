@@ -53,7 +53,7 @@ bx cr image-inspect ${REGISTRY_URL}/${REGISTRY_NAMESPACE}/${IMAGE_NAME}:${BUILD_
 # The image URL will automatically be passed along with the build result as env variable PIPELINE_IMAGE_URL to
 # any subsequent job consuming this build result. 
 # Uncomment and modify the environment variable $PIPELINE_IMAGE_URL to pass along a different image URL than the one inferred by the pipeline:
-export PIPELINE_IMAGE_URL="$REGISTRY_URL/$REGISTRY_NAMESPACE/$IMAGE_NAME:$BUILD_NUMBER"
+#export PIPELINE_IMAGE_URL="$REGISTRY_URL/$REGISTRY_NAMESPACE/$IMAGE_NAME:$BUILD_NUMBER"
 
 # Provision a registry token for this toolchain to later pull image. Token will be passed into build.properties
 echo "=========================================================="
@@ -74,14 +74,20 @@ echo -e "REGISTRY_TOKEN=${REGISTRY_TOKEN}"
 echo "=========================================================="
 echo "Copying artifacts needed for deployment and testing"
 
-echo -e "Checking archive dir presence"
+echo "Checking archive dir presence"
 mkdir -p $ARCHIVE_DIR
+
+echo "Keep track of build.properties"
+ # PIPELINE_IMAGE_URL from build.properties is used for vulnerability advisor job
+echo "PIPELINE_IMAGE_URL=${REGISTRY_URL}/${REGISTRY_NAMESPACE}/${IMAGE_NAME}:${BUILD_NUMBER}"  >> $ARCHIVE_DIR/build.properties
 # RELEASE_NAME from build.properties is used in Helm Chart deployment to set the release name
 echo "RELEASE_NAME=${IMAGE_NAME}" >> $ARCHIVE_DIR/build.properties
 # REGISTRY information from build.properties is used in Helm Chart deployment to generate cluster secret
 echo "REGISTRY_URL=${REGISTRY_URL}" >> $ARCHIVE_DIR/build.properties
 echo "REGISTRY_TOKEN=${REGISTRY_TOKEN}" >> $ARCHIVE_DIR/build.properties
+cat $ARCHIVE_DIR/build.properties
 
+echo "Copy pipeline scripts along with the build"
 # Copy scripts (incl. deploy scripts)
 if [ -d ./scripts/ ]; then
   if [ ! -d $ARCHIVE_DIR/scripts/ ]; then # no need to copy if working in ./ already
@@ -89,6 +95,7 @@ if [ -d ./scripts/ ]; then
   fi
 fi
 
+echo "Update the Helm chart image information, and copy it along with the build"
 if [ -f ./chart/${CHART_NAME}/values.yaml ]; then
     #Update Helm chart values.yml with image name and tag
     echo "UPDATING CHART VALUES:"
