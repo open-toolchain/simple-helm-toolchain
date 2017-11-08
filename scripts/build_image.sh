@@ -78,8 +78,8 @@ echo "Checking archive dir presence"
 mkdir -p $ARCHIVE_DIR
 
 echo "Keep track of build.properties"
- # PIPELINE_IMAGE_URL from build.properties is used for vulnerability advisor job
-echo "PIPELINE_IMAGE_URL=${REGISTRY_URL}/${REGISTRY_NAMESPACE}/${IMAGE_NAME}:${BUILD_NUMBER}"  >> $ARCHIVE_DIR/build.properties
+ # IMAGE_URL from build.properties is used for vulnerability advisor job
+echo "IMAGE_URL=${REGISTRY_URL}/${REGISTRY_NAMESPACE}/${IMAGE_NAME}:${BUILD_NUMBER}"  >> $ARCHIVE_DIR/build.properties
 # RELEASE_NAME from build.properties is used in Helm Chart deployment to set the release name
 echo "RELEASE_NAME=${IMAGE_NAME}" >> $ARCHIVE_DIR/build.properties
 # REGISTRY information from build.properties is used in Helm Chart deployment to generate cluster secret
