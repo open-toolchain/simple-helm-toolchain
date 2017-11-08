@@ -46,7 +46,7 @@ stages:
     use_image_from_build_input: true
     fail_stage: false
     target:
-      region_id: ${PROD_REGION_ID}
+      region_id: ${REGISTRY_REGION_ID}
       api_key: ${API_KEY}
     script: |
       #!/bin/bash
