@@ -20,7 +20,7 @@ cat build.properties
 
 #Check cluster availability
 echo "=========================================================="
-echo "Checking cluster readiness"
+echo "CHECKING CLUSTER readiness and namespace existence"
 IP_ADDR=$(bx cs workers ${PIPELINE_KUBERNETES_CLUSTER_NAME} | grep normal | awk '{ print $2 }')
 if [ -z ${IP_ADDR} ]; then
   echo -e "${PIPELINE_KUBERNETES_CLUSTER_NAME} not created or workers not ready"
@@ -37,7 +37,8 @@ fi
 
 # Grant access to private image registry from namespace $CLUSTER_NAMESPACE
 # reference https://console.bluemix.net/docs/containers/cs_cluster.html#bx_registry_other
-echo -e "Configuring access to private image registry from namespace ${CLUSTER_NAMESPACE}"
+echo "=========================================================="
+echo -e "CONFIGURING ACCESS to private image registry from namespace ${CLUSTER_NAMESPACE}"
 IMAGE_PULL_SECRET_NAME="bluemix-toolchain-${PIPELINE_TOOLCHAIN_ID}-${REGISTRY_URL}"
 echo -e "Checking for presence of ${IMAGE_PULL_SECRET_NAME} imagePullSecret for this toolchain"
 if ! kubectl get secret ${IMAGE_PULL_SECRET_NAME} --namespace ${CLUSTER_NAMESPACE}; then
@@ -56,7 +57,7 @@ kubectl get serviceAccount default -o yaml
 echo "TODO -- do not patch the account, rather inject secret into the chart"
 
 echo "=========================================================="
-echo "Configuring TILLER enabled (Helm server-side component)"
+echo "CONFIGURING TILLER enabled (Helm server-side component)"
 helm init --upgrade
 while true; do
   TILLER_DEPLOYED=$(kubectl --namespace=kube-system get pods | grep tiller | grep Running | grep 1/1 )

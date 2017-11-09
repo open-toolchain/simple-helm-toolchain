@@ -16,7 +16,7 @@ echo "ARCHIVE_DIR=${ARCHIVE_DIR}"
 # bx cr build --help
 
 echo "=========================================================="
-echo "Checking for Dockerfile at the repository root"
+echo "CHECKING DOCKERFILE at the repository root"
 if [ -f Dockerfile ]; then 
    echo "Dockerfile found"
 else
@@ -25,7 +25,7 @@ else
 fi
 
 echo "=========================================================="
-echo "Checking registry current plan and quota"
+echo "CHECKING REGISTRY current plan and quota"
 bx cr plan
 bx cr quota
 echo "If needed, discard older images using: bx cr image-rm"
@@ -44,7 +44,7 @@ echo -e "Existing images in registry"
 bx cr images
 
 echo "=========================================================="
-echo -e "Building container image: ${IMAGE_NAME}:${BUILD_NUMBER}"
+echo -e "BUILDING CONTAINER IMAGE: ${IMAGE_NAME}:${BUILD_NUMBER}"
 set -x
 bx cr build -t ${REGISTRY_URL}/${REGISTRY_NAMESPACE}/${IMAGE_NAME}:${BUILD_NUMBER} .
 set +x
@@ -60,7 +60,7 @@ echo "TODO - remove once no longer needed to unlock VA job ^^^^"
 # Provision a registry token for this toolchain to later pull image. Token will be passed into build.properties
 echo "=========================================================="
 TOKEN_DESCR="bluemix-toolchain-${PIPELINE_TOOLCHAIN_ID}"
-echo "Checking registry token for toolchain: ${TOKEN_DESCR}"
+echo "CHECKING REGISTRY token existence for toolchain: ${TOKEN_DESCR}"
 EXISTING_TOKEN=$(bx cr tokens | grep ${TOKEN_DESCR} ||: )
 if [ -z ${EXISTING_TOKEN} ]; then
     echo -e "Creating new registry token: ${TOKEN_DESCR}"
@@ -74,7 +74,7 @@ REGISTRY_TOKEN=$(bx cr token-get ${REGISTRY_TOKEN_ID} --quiet)
 echo -e "REGISTRY_TOKEN=${REGISTRY_TOKEN}"
 
 echo "=========================================================="
-echo "Copying artifacts needed for deployment and testing"
+echo "COPYING ARTIFACTS needed for deployment and testing (in particular build.properties)"
 
 echo "Checking archive dir presence"
 mkdir -p $ARCHIVE_DIR
