@@ -12,6 +12,21 @@ stages:
     value: ${CHART_NAME}
     type: text  
   jobs:
+  - name: Pre-build check
+    type: builder
+    build_type: shell
+    script: |-
+      #!/bin/bash
+      # use script from app source control, or default to template script
+      # use source command to run script to ensure env variables are set in current shell
+      SCRIPT_FILE="scripts/check_prebuild.sh"
+      SCRIPT_URL="https://raw.githubusercontent.com/open-toolchain/simple-helm-toolchain/master/${SCRIPT_FILE}"
+      if [ ! -f  ${SCRIPT_FILE} ]; then
+        echo -e "No script found at ./${SCRIPT_FILE}, defaulting to ${SCRIPT_URL}"
+        source <(curl -sSL ${SCRIPT_URL})
+      else
+        source "${SCRIPT_FILE}"
+      fi
   - name: Build image
     type: builder
     build_type: cr
@@ -101,7 +116,7 @@ stages:
       else
         source "${SCRIPT_FILE}"
       fi  
-  - name: Deploy Helm release
+  - name: Deploy Helm chart
     type: deployer
     target:
       region_id: ${STAGING_REGION_ID}
@@ -155,7 +170,7 @@ stages:
       else
         source "${SCRIPT_FILE}"
       fi   
-  - name: Deploy Helm release
+  - name: Deploy Helm chart
     type: deployer
     target:
       region_id: ${PROD_REGION_ID}

@@ -1,4 +1,5 @@
 #!/bin/bash
+# uncomment to debug the script
 #set -x
 
 # env
@@ -14,31 +15,6 @@ echo "ARCHIVE_DIR=${ARCHIVE_DIR}"
 
 # To review or change build options use:
 # bx cr build --help
-
-echo "=========================================================="
-echo "CHECKING DOCKERFILE at the repository root"
-if [ -f Dockerfile ]; then 
-   echo "Dockerfile found"
-else
-    echo "Dockerfile not found"
-    exit 1
-fi
-
-echo "=========================================================="
-echo "CHECKING REGISTRY current plan and quota"
-bx cr plan
-bx cr quota
-echo "If needed, discard older images using: bx cr image-rm"
-
-echo "Checking registry namespace: ${REGISTRY_NAMESPACE}"
-NS=$( bx cr namespaces | grep ${REGISTRY_NAMESPACE} ||: )
-if [ -z ${NS} ]; then
-    echo "Registry namespace ${REGISTRY_NAMESPACE} not found, creating it."
-    bx cr namespace-add ${REGISTRY_NAMESPACE}
-    echo "Registry namespace ${REGISTRY_NAMESPACE} created."
-else 
-    echo "Registry namespace ${REGISTRY_NAMESPACE} found."
-fi
 
 echo -e "Existing images in registry"
 bx cr images
@@ -88,6 +64,7 @@ echo "BUILD_NUMBER=${BUILD_NUMBER}" >> $ARCHIVE_DIR/build.properties
 echo "REGISTRY_URL=${REGISTRY_URL}" >> $ARCHIVE_DIR/build.properties
 echo "REGISTRY_NAMESPACE=${REGISTRY_NAMESPACE}" >> $ARCHIVE_DIR/build.properties
 echo "REGISTRY_TOKEN=${REGISTRY_TOKEN}" >> $ARCHIVE_DIR/build.properties
+echo "File 'build.properties' created for passing env variables to subsequent pipeline jobs:"
 cat $ARCHIVE_DIR/build.properties
 
 echo "Copy pipeline scripts along with the build"
@@ -99,11 +76,6 @@ if [ -d ./scripts/ ]; then
 fi
 
 echo "Copy Helm chart along with the build"
-if [ -d ./chart//${CHART_NAME} ]; then
-  if [ ! -d $ARCHIVE_DIR/chart/ ]; then # no need to copy if working in ./ already
-    cp -r ./chart/ $ARCHIVE_DIR/
-  fi
-else 
-    echo -e "${red}Helm chart for Kubernetes deployment (/chart/${CHART_NAME}) not found.${no_color}"
-    exit 1
+if [ ! -d $ARCHIVE_DIR/chart/ ]; then # no need to copy if working in ./ already
+  cp -r ./chart/ $ARCHIVE_DIR/
 fi

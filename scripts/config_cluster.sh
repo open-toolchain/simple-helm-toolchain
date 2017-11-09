@@ -1,17 +1,20 @@
 #!/bin/bash
+# uncomment to debug the script
+#set -x
 
-# Input parameters configured via Env Variables (e.g. build.properties)
-# CHART_NAME
-# IMAGE_NAME
-# BUILD_NUMBER
-# REGISTRY_URL
-# REGISTRY_NAMESPACE
-# REGISTRY_TOKEN
+echo "Input env variables (can be received via properties.file:"
+echo "CHART_NAME=${CHART_NAME}"
+echo "IMAGE_NAME=${IMAGE_NAME}"
+echo "BUILD_NUMBER=${BUILD_NUMBER}"
+echo "REGISTRY_URL=${REGISTRY_URL}"
+echo "REGISTRY_NAMESPACE=${REGISTRY_NAMESPACE}"
+echo "REGISTRY_TOKEN=${REGISTRY_TOKEN}"
+#View build properties
+# cat build.properties
 
 # Input parameters configured by Pipeline job automatically
 # PIPELINE_KUBERNETES_CLUSTER_NAME
 # CLUSTER_NAMESPACE
-# REGISTRY_URL
 
 #set -x
 
