@@ -40,11 +40,11 @@ helm upgrade ${RELEASE_NAME} ./chart/${CHART_NAME} --set image.repository=${IMAG
 echo "=========================================================="
 echo "CHECKING OUTCOME"
 echo ""
-echo "Release history:"
+echo -e "History for release:${RELEASE_NAME}"
 helm history ${RELEASE_NAME}
 
 echo ""
-echo "Releases in this namespace:"
+echo -e "Releases in namespace: ${CLUSTER_NAMESPACE}"
 helm list --namespace ${CLUSTER_NAMESPACE}
 
 echo ""

@@ -74,5 +74,5 @@ done
 helm version
 
 echo "=========================================================="
-echo "CHECKING RELEASES in this namespace:"
+echo -e "CHECKING HELM releases in this namespace: ${CLUSTER_NAMESPACE}"
 helm list --namespace ${CLUSTER_NAMESPACE}
