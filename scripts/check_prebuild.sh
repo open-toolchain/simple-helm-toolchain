@@ -17,7 +17,7 @@ echo "ARCHIVE_DIR=${ARCHIVE_DIR}"
 # bx cr build --help
 
 echo "=========================================================="
-echo "CHECKING DOCKERFILE
+echo "CHECKING DOCKERFILE"
 echo "Checking Dockerfile at the repository root"
 if [ -f Dockerfile ]; then 
    echo "Dockerfile found"
@@ -28,10 +28,10 @@ fi
 
 echo "Linting Dockerfile"
 npm install -g dockerlint
-dockerlint Dockerfile
+dockerlint -f Dockerfile
 
 echo "=========================================================="
-echo "CHECKING HELM CHART
+echo "CHECKING HELM CHART"
 echo "Checking Helm chart in /chart/${CHART_NAME} folder"
 if [ -d ./chart//${CHART_NAME} ]; then
     echo -e "$Helm chart for Kubernetes deployment (/chart/${CHART_NAME}) found."
