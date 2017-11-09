@@ -91,18 +91,6 @@
                 }
             ]
         },{
-          "type": "select",
-          "title": {
-            "$ref": "#/messages/organization"
-            },
-            "key": "prod-organization"
-          },{
-            "type": "select",
-            "title": {
-              "$ref": "#/messages/space"
-            },
-            "key": "prod-space"
-          },{
             "type": "password",
             "readonly": false,
             "title": "Bluemix API key",
