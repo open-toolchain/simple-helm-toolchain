@@ -13,11 +13,11 @@ template:
     - hello-world-repo
   info:
     git url: >-
-      [https://github.com/open-toolchain/secure-helm-toolchain](https://github.com/open-toolchain/secure-helm-toolchain)
+      [https://github.com/open-toolchain/simple-helm-toolchain](https://github.com/open-toolchain/simple-helm-toolchain)
     git branch: >-
-      [master](https://github.com/open-toolchain/secure-helm-toolchain/tree/master)
+      [master](https://github.com/open-toolchain/simple-helm-toolchain/tree/master)
 toolchain:
-  name: 'secure-helm-toolchain-{{timestamp}}'
+  name: 'simple-helm-toolchain-{{timestamp}}'
   template:
     getting_started:
       $ref: "#/messages/template.gettingStarted" 

@@ -7,9 +7,10 @@ This Hello World application uses Docker with Node.js and includes a DevOps tool
 This template assumes an application (e.g. [hello-helm](https://github.com/open-toolchain/hello-helm)) structured like this  :
 - **/Dockerfile (must)** -- the docker file used to build the container image in root folder
 - **/chart /your-app-name  (must)** -- the Helm Chart used to deploy this application, CI pipeline will automatically update it to reflect latest image build
-- **/scripts/build_image.sh (optional)** -- the custom container build script (if absent, will default to [generic script](https://github.com/open-toolchain/secure-helm-toolchain/blob/master/scripts/build_image.sh))
-- **/scripts/check_vulnerabilities.sh (optional)** -- the custom vulnerability advisor script (if absent, will default to [generic script](https://github.com/open-toolchain/secure-helm-toolchain/blob/master/scripts/check_vulnerabilities.sh))
-- **/scripts/deploy_helm.sh (optional)** -- the custom Kubernetes/Helm deploy script (if absent, will default to [generic script](https://github.com/open-toolchain/secure-helm-toolchain/blob/master/scripts/deploy_helm.sh))
+- **/scripts/build_image.sh (optional)** -- the custom container build script (if absent, will default to [generic script](https://github.com/open-toolchain/simple-helm-toolchain/blob/master/scripts/build_image.sh))
+- **/scripts/check_vulnerabilities.sh (optional)** -- the custom vulnerability advisor script (if absent, will default to [generic script](https://github.com/open-toolchain/simple-helm-toolchain/blob/master/scripts/check_vulnerabilities.sh))
+- **/scripts/config_cluster.sh (optional)** -- the custom Kubernetes ckuster config script (if absent, will default to [generic script](https://github.com/open-toolchain/simple-helm-toolchain/blob/master/scripts/config_cluster.sh))
+- **/scripts/deploy_helm.sh (optional)** -- the custom Kubernetes/Helm deploy script (if absent, will default to [generic script](https://github.com/open-toolchain/simple-helm-toolchain/blob/master/scripts/deploy_helm.sh))
 
 It implements the following best practices:
 - perform unit tests prior to building a container image (could be revisited to only occur after, or using a multistage build)
@@ -23,7 +24,7 @@ It implements the following best practices:
 ![Icon](./.bluemix/toolchain.png)
 
 ### To get started, click this button:
-[![Deploy To Bluemix](https://console.bluemix.net/devops/graphics/create_toolchain_button.png)](https://console.bluemix.net/devops/setup/deploy/?repository=https%3A//github.com/open-toolchain/secure-helm-toolchain)
+[![Deploy To Bluemix](https://console.bluemix.net/devops/graphics/create_toolchain_button.png)](https://console.bluemix.net/devops/setup/deploy/?repository=https%3A//github.com/open-toolchain/simple-helm-toolchain)
 
 ---
 ### Learn more 
