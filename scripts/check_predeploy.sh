@@ -72,3 +72,7 @@ while true; do
   sleep 1
 done
 helm version
+
+echo "=========================================================="
+echo "CHECKING RELEASES in this namespace:"
+helm list --namespace ${CLUSTER_NAMESPACE}

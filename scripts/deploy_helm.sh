@@ -18,8 +18,7 @@ echo "REGISTRY_TOKEN=${REGISTRY_TOKEN}"
 
 
 echo "=========================================================="
-echo "Prefix release name with namespace if not 'default' as Helm needs unique release names across namespaces"
-echo "(see also https://github.com/kubernetes/helm/issues/3037)"
+echo "DEFINE RELEASE by prefixing image (app) name with namespace if not 'default' as Helm needs unique release names across namespaces"
 if [[ "${CLUSTER_NAMESPACE}" != "default" ]]; then
   RELEASE_NAME="${CLUSTER_NAMESPACE}-${IMAGE_NAME}"
 else
@@ -28,15 +27,25 @@ fi
 echo -e "Release name: ${RELEASE_NAME}"
 
 echo "=========================================================="
-echo "Deploying Helm Chart"
-
+echo "DEPLOYING HELM chart"
 IMAGE_REPOSITORY=${REGISTRY_URL}/${REGISTRY_NAMESPACE}/${IMAGE_NAME}
 
+# Using 'upgrade --install" for rolling updates. Note that subsequent updates will occur in the same namespace the release is currently deployed in, ignoring the explicit--namespace argument".
 echo -e "Dry run into: ${PIPELINE_KUBERNETES_CLUSTER_NAME}/${CLUSTER_NAMESPACE}."
 helm upgrade ${RELEASE_NAME} ./chart/${CHART_NAME} --set image.repository=${IMAGE_REPOSITORY},image.tag=${BUILD_NUMBER} --namespace ${CLUSTER_NAMESPACE} --install --debug --dry-run
 
 echo -e "Deploying into: ${PIPELINE_KUBERNETES_CLUSTER_NAME}/${CLUSTER_NAMESPACE}."
 helm upgrade ${RELEASE_NAME} ./chart/${CHART_NAME} --set image.repository=${IMAGE_REPOSITORY},image.tag=${BUILD_NUMBER} --namespace ${CLUSTER_NAMESPACE} --install
+
+echo "=========================================================="
+echo "CHECKING OUTCOME"
+echo ""
+echo "Release history:"
+helm history ${RELEASE_NAME}
+
+echo ""
+echo "Releases in this namespace:"
+helm list --namespace ${CLUSTER_NAMESPACE}
 
 echo ""
 echo "Deployed Services:"
