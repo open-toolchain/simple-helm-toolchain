@@ -99,10 +99,7 @@ stages:
     type: file
   - name: CLUSTER_NAMESPACE
     value: ${PROD_CLUSTER_NAMESPACE}
-    type: text
-  - name: CHART_NAME
-    value: ${CHART_NAME}
-    type: text        
+    type: text     
   jobs:
   - name: Pre-deploy check
     type: deployer
