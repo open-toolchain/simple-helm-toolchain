@@ -14,7 +14,13 @@ stages:
   jobs:
   - name: Pre-build check
     type: builder
-    build_type: shell
+    build_type: cr
+    artifact_dir: output
+    target:
+      region_id: ${REGISTRY_REGION_ID}
+      api_key: ${API_KEY}
+    namespace: ${REGISTRY_NAMESPACE}
+    image_name: ${CF_APP_NAME}
     script: |-
       #!/bin/bash
       # use script from app source control, or default to template script
