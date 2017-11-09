@@ -33,7 +33,7 @@ stages:
       else
         source "${SCRIPT_FILE}"
       fi
-  - name: Build image
+  - name: Build Docker image
     type: builder
     build_type: cr
     artifact_dir: output
@@ -58,7 +58,7 @@ stages:
   inputs:
   - type: job
     stage: BUILD
-    job: Build image
+    job: Build Docker image
   triggers:
   - type: stage
   properties:
@@ -90,7 +90,7 @@ stages:
   inputs:
   - type: job
     stage: BUILD
-    job: Build image
+    job: Build Docker image
   triggers:
   - type: stage
   properties:
@@ -144,7 +144,7 @@ stages:
   inputs:
   - type: job
     stage: BUILD
-    job: Build image
+    job: Build Docker image
   triggers:
   - type: stage
   properties:
