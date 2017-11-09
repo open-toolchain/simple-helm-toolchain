@@ -26,7 +26,7 @@ stages:
       # use script from app source control, or default to template script
       # use source command to run script to ensure env variables are set in current shell
       SCRIPT_FILE="scripts/build_image.sh"
-      SCRIPT_URL="https://raw.githubusercontent.com/open-toolchain/secure-helm-toolchain/master/${SCRIPT_FILE}"
+      SCRIPT_URL="https://raw.githubusercontent.com/open-toolchain/simple-helm-toolchain/master/${SCRIPT_FILE}"
       if [ ! -f  ${SCRIPT_FILE} ]; then
         echo -e "No script found at ./${SCRIPT_FILE}, defaulting to ${SCRIPT_URL}"
         source <(curl -sSL ${SCRIPT_URL})
@@ -40,6 +40,10 @@ stages:
     job: Build image
   triggers:
   - type: stage
+  properties:
+  - name: buildprops
+    value: build.properties
+    type: file
   jobs:
   - name: Vulnerability Advisor
     type: tester
@@ -54,7 +58,7 @@ stages:
       # use script from app source control, or default to template script
       # use source command to run script to ensure env variables are set in current shell
       SCRIPT_FILE="scripts/check_vulnerabilities.sh"
-      SCRIPT_URL="https://raw.githubusercontent.com/open-toolchain/secure-helm-toolchain/master/${SCRIPT_FILE}"
+      SCRIPT_URL="https://raw.githubusercontent.com/open-toolchain/simple-helm-toolchain/master/${SCRIPT_FILE}"
       if [ ! -f  ${SCRIPT_FILE} ]; then
         echo -e "No script found at ./${SCRIPT_FILE}, defaulting to ${SCRIPT_URL}"
         source <(curl -sSL ${SCRIPT_URL})
@@ -79,7 +83,25 @@ stages:
     value: ${CHART_NAME}
     type: text      
   jobs:
-  - name: Deploy Helm Chart
+  - name: Configure cluster
+    type: deployer
+    target:
+      region_id: ${STAGING_REGION_ID}
+      api_key: ${API_KEY}
+      kubernetes_cluster: ${STAGING_CLUSTER_NAME}
+    script: |
+      #!/bin/bash
+      # use script from app source control, or default to template script
+      # use source command to run script to ensure env variables are set in current shell
+      SCRIPT_FILE="scripts/config_cluster.sh"
+      SCRIPT_URL="https://raw.githubusercontent.com/open-toolchain/simple-helm-toolchain/master/${SCRIPT_FILE}"
+      if [ ! -f  ${SCRIPT_FILE} ]; then
+        echo -e "No script found at ./${SCRIPT_FILE}, defaulting to ${SCRIPT_URL}"
+        source <(curl -sSL ${SCRIPT_URL})
+      else
+        source "${SCRIPT_FILE}"
+      fi  
+  - name: Deploy Helm release
     type: deployer
     target:
       region_id: ${STAGING_REGION_ID}
@@ -90,7 +112,7 @@ stages:
       # use script from app source control, or default to template script
       # use source command to run script to ensure env variables are set in current shell
       SCRIPT_FILE="scripts/deploy_helm.sh"
-      SCRIPT_URL="https://raw.githubusercontent.com/open-toolchain/secure-helm-toolchain/master/${SCRIPT_FILE}"
+      SCRIPT_URL="https://raw.githubusercontent.com/open-toolchain/simple-helm-toolchain/master/${SCRIPT_FILE}"
       if [ ! -f  ${SCRIPT_FILE} ]; then
         echo -e "No script found at ./${SCRIPT_FILE}, defaulting to ${SCRIPT_URL}"
         source <(curl -sSL ${SCRIPT_URL})

@@ -55,6 +55,7 @@ bx cr image-inspect ${REGISTRY_URL}/${REGISTRY_NAMESPACE}/${IMAGE_NAME}:${BUILD_
 # When the job is sourc'ing an external shell script, or to pass a different image URL than the one inferred by the pipeline,
 # please uncomment and modify the environment variable the following line.
 export PIPELINE_IMAGE_URL="$REGISTRY_URL/$REGISTRY_NAMESPACE/$IMAGE_NAME:$BUILD_NUMBER"
+echo "TODO - remove once no longer needed to unlock VA job ^^^^"
 
 # Provision a registry token for this toolchain to later pull image. Token will be passed into build.properties
 echo "=========================================================="
@@ -78,10 +79,14 @@ echo "Copying artifacts needed for deployment and testing"
 echo "Checking archive dir presence"
 mkdir -p $ARCHIVE_DIR
 
-# RELEASE_NAME from build.properties is used in Helm Chart deployment to set the release name
-echo "RELEASE_NAME=${IMAGE_NAME}" >> $ARCHIVE_DIR/build.properties
+# CHART information from build.properties is used in Helm Chart deployment to set the release name
+echo "CHART_NAME=${CHART_NAME}" >> $ARCHIVE_DIR/build.properties
+# IMAGE information from build.properties is used in Helm Chart deployment to set the release name
+echo "IMAGE_NAME=${IMAGE_NAME}" >> $ARCHIVE_DIR/build.properties
+echo "BUILD_NUMBER=${BUILD_NUMBER}" >> $ARCHIVE_DIR/build.properties
 # REGISTRY information from build.properties is used in Helm Chart deployment to generate cluster secret
 echo "REGISTRY_URL=${REGISTRY_URL}" >> $ARCHIVE_DIR/build.properties
+echo "REGISTRY_NAMESPACE=${REGISTRY_NAMESPACE}" >> $ARCHIVE_DIR/build.properties
 echo "REGISTRY_TOKEN=${REGISTRY_TOKEN}" >> $ARCHIVE_DIR/build.properties
 cat $ARCHIVE_DIR/build.properties
 
@@ -93,17 +98,12 @@ if [ -d ./scripts/ ]; then
   fi
 fi
 
-echo "Update the Helm chart image information, and copy it along with the build"
-if [ -f ./chart/${CHART_NAME}/values.yaml ]; then
-    #Update Helm chart values.yml with image name and tag
-    echo "UPDATING CHART VALUES:"
-    sed -i "s~^\([[:blank:]]*\)repository:.*$~\1repository: ${REGISTRY_URL}/${REGISTRY_NAMESPACE}/${IMAGE_NAME}~" ./chart/${CHART_NAME}/values.yaml
-    sed -i "s~^\([[:blank:]]*\)tag:.*$~\1tag: ${BUILD_NUMBER}~" ./chart/${CHART_NAME}/values.yaml
-    cat ./chart/${CHART_NAME}/values.yaml
-    if [ ! -d $ARCHIVE_DIR/chart/ ]; then # no need to copy if working in ./ already
-      cp -r ./chart/ $ARCHIVE_DIR/
-    fi
+echo "Copy Helm chart along with the build"
+if [ -d ./chart//${CHART_NAME} ]; then
+  if [ ! -d $ARCHIVE_DIR/chart/ ]; then # no need to copy if working in ./ already
+    cp -r ./chart/ $ARCHIVE_DIR/
+  fi
 else 
-    echo -e "${red}Helm chart values for Kubernetes deployment (/chart/${CHART_NAME}/values.yaml) not found.${no_color}"
+    echo -e "${red}Helm chart for Kubernetes deployment (/chart/${CHART_NAME}) not found.${no_color}"
     exit 1
-fi     
+fi
