@@ -47,14 +47,9 @@ services:
           REGISTRY_REGION_ID: '{{form.pipeline.parameters.registry-region}}'
           REGISTRY_NAMESPACE: '{{form.pipeline.parameters.registry-namespace}}'
           API_KEY: '{{form.pipeline.parameters.api-key}}'
-          STAGING_REGION_ID: '{{form.pipeline.parameters.staging-region}}'
-          STAGING_CLUSTER_NAME: '{{form.pipeline.parameters.staging-cluster-name}}'
-          STAGING_CLUSTER_NAMESPACE: '{{form.pipeline.parameters.staging-cluster-namespace}}'
           PROD_REGION_ID: '{{form.pipeline.parameters.prod-region}}'
           PROD_CLUSTER_NAME: '{{form.pipeline.parameters.prod-cluster-name}}'
           PROD_CLUSTER_NAMESPACE: '{{form.pipeline.parameters.prod-cluster-namespace}}'
-          PROD_ORG_NAME: '{{form.pipeline.parameters.prod-organization}}'
-          PROD_SPACE_NAME: '{{form.pipeline.parameters.prod-space}}'
         execute: true
   webide:
     service_id: orion
@@ -62,7 +57,6 @@ form:
   pipeline:
     parameters:
       app-name: '{{services.hello-world-repo.parameters.repo_name}}'
-      staging-cluster-namespace: staging
       prod-cluster-namespace: prod
     schema:
       $ref: deploy.json

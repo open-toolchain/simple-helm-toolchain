@@ -28,20 +28,6 @@
           "type": "string",
           "pattern": "\\S"
         },
-        "staging-region": {
-            "description": "The bluemix region for staging deployment",
-            "type": "string"
-        },
-       "staging-cluster-name": {
-            "description": "The name of staging cluster. Retrieve it with [bx cs clusters] or via the console at https://console.ng.bluemix.net/containers-kubernetes/home/clusters .",
-            "type": "string",
-            "pattern": "\\S"
-        },
-        "staging-cluster-namespace": {
-          "description": "Staging namespace",
-          "type": "string",
-          "pattern": "\\S"
-        },
         "prod-region": {
             "description": "The bluemix region for prod deployment",
             "type": "string"
@@ -56,14 +42,6 @@
           "type": "string",
           "pattern": "\\S"
         },
-        "prod-organization": {
-            "description": "The bluemix org",
-            "type": "string"
-        },
-       "prod-space": {
-            "description": "The bluemix space",
-            "type": "string"
-        },
        "app-name": {
             "description": {
               "$ref": "#/messages/deploy.appDescription"
@@ -72,7 +50,7 @@
             "pattern": "\\S"
         }
     },
-    "required": ["app-name", "api-key", "registry-region", "registry-namespace", "prod-region", "prod-cluster-name", "prod-cluster-namespace", "prod-region", "prod-cluster-name", "prod-cluster-namespace", "prod-organization", "prod-space"],
+    "required": ["app-name", "api-key", "registry-region", "registry-namespace", "prod-region", "prod-cluster-name", "prod-cluster-namespace"],
     "form": [
        {
           "type": "validator",
@@ -148,22 +126,6 @@
                 },{
                   "type": "label",
                   "title": "Cluster namespace"
-                },{
-                  "type": "label",
-                  "title": {
-                    "$ref": "#/messages/stagingStage"
-                  }
-                },{
-                  "type": "select",
-                  "key": "staging-region"
-                },{
-                  "type": "text",
-                  "key": "staging-cluster-name",
-                  "readonly": false
-                },{
-                  "type": "text",
-                  "key": "staging-cluster-namespace",
-                  "readonly": false
                 },{
                   "type": "label",
                   "title": {

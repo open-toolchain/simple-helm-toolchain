@@ -86,60 +86,6 @@ stages:
       else
         source "${SCRIPT_FILE}"
       fi
-- name: STAGING
-  inputs:
-  - type: job
-    stage: BUILD
-    job: Build Docker image
-  triggers:
-  - type: stage
-  properties:
-  - name: buildprops
-    value: build.properties
-    type: file
-  - name: CLUSTER_NAMESPACE
-    value: ${STAGING_CLUSTER_NAMESPACE}
-    type: text
-  - name: CHART_NAME
-    value: ${CHART_NAME}
-    type: text      
-  jobs:
-  - name: Configure cluster
-    type: deployer
-    target:
-      region_id: ${STAGING_REGION_ID}
-      api_key: ${API_KEY}
-      kubernetes_cluster: ${STAGING_CLUSTER_NAME}
-    script: |
-      #!/bin/bash
-      # use script from app source control, or default to template script
-      # use source command to run script to ensure env variables are set in current shell
-      SCRIPT_FILE="scripts/config_cluster.sh"
-      SCRIPT_URL="https://raw.githubusercontent.com/open-toolchain/simple-helm-toolchain/master/${SCRIPT_FILE}"
-      if [ ! -f  ${SCRIPT_FILE} ]; then
-        echo -e "No script found at ./${SCRIPT_FILE}, defaulting to ${SCRIPT_URL}"
-        source <(curl -sSL ${SCRIPT_URL})
-      else
-        source "${SCRIPT_FILE}"
-      fi  
-  - name: Deploy Helm chart
-    type: deployer
-    target:
-      region_id: ${STAGING_REGION_ID}
-      api_key: ${API_KEY}
-      kubernetes_cluster: ${STAGING_CLUSTER_NAME}
-    script: |
-      #!/bin/bash
-      # use script from app source control, or default to template script
-      # use source command to run script to ensure env variables are set in current shell
-      SCRIPT_FILE="scripts/deploy_helm.sh"
-      SCRIPT_URL="https://raw.githubusercontent.com/open-toolchain/simple-helm-toolchain/master/${SCRIPT_FILE}"
-      if [ ! -f  ${SCRIPT_FILE} ]; then
-        echo -e "No script found at ./${SCRIPT_FILE}, defaulting to ${SCRIPT_URL}"
-        source <(curl -sSL ${SCRIPT_URL})
-      else
-        source "${SCRIPT_FILE}"
-      fi
 - name: PROD
   inputs:
   - type: job
@@ -158,7 +104,7 @@ stages:
     value: ${CHART_NAME}
     type: text        
   jobs:
-  - name: Configure cluster
+  - name: Pre-deploy check
     type: deployer
     target:
       region_id: ${PROD_REGION_ID}
@@ -168,7 +114,7 @@ stages:
       #!/bin/bash
       # use script from app source control, or default to template script
       # use source command to run script to ensure env variables are set in current shell
-      SCRIPT_FILE="scripts/config_cluster.sh"
+      SCRIPT_FILE="scripts/check_predeploy.sh"
       SCRIPT_URL="https://raw.githubusercontent.com/open-toolchain/simple-helm-toolchain/master/${SCRIPT_FILE}"
       if [ ! -f  ${SCRIPT_FILE} ]; then
         echo -e "No script found at ./${SCRIPT_FILE}, defaulting to ${SCRIPT_URL}"
