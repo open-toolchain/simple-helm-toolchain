@@ -91,8 +91,6 @@ stages:
     namespace: ${REGISTRY_NAMESPACE}
     image_name: ${CF_APP_NAME}
     script: |
-      $ref: ../scripts/build_image.sh
-      #****************
       #!/bin/bash
       # use script from app source control, or default to template script
       # use source command to run script to ensure env variables are set in current shell
