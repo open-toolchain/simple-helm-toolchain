@@ -33,6 +33,8 @@ bx cr image-inspect ${REGISTRY_URL}/${REGISTRY_NAMESPACE}/${IMAGE_NAME}:${BUILD_
 export PIPELINE_IMAGE_URL="$REGISTRY_URL/$REGISTRY_NAMESPACE/$IMAGE_NAME:$BUILD_NUMBER"
 echo "TODO - remove once no longer needed to unlock VA job ^^^^"
 
+bx cr images
+
 # Provision a registry token for this toolchain to later pull image. Token will be passed into build.properties
 echo "=========================================================="
 TOKEN_DESCR="bluemix-toolchain-${PIPELINE_TOOLCHAIN_ID}"
