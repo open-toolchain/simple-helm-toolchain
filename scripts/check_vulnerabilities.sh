@@ -12,6 +12,8 @@ echo "REGISTRY_TOKEN=${REGISTRY_TOKEN}"
 #View build properties
 # cat build.properties
 
+bx cr images
+
 IMAGE_URL=$REGISTRY_URL/$REGISTRY_NAMESPACE/$IMAGE_NAME:$BUILD_NUMBER
 echo -e "Checking vulnerabilities in image: ${IMAGE_URL}"
 for iteration in {1..30}
