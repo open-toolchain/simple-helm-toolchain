@@ -9,7 +9,7 @@ template:
   header: '![](toolchain.svg?localize)'
   icon: secure-lock-kubernetes.svg
   required:
-    - pipeline
+    - build
     - repo
   info:
     git url: >-
@@ -30,7 +30,7 @@ services:
       type: clone
       has_issues: true
       enable_traceability: true
-  pipeline:
+  build:
     service_id: pipeline
     parameters:
       services:
