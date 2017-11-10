@@ -56,6 +56,7 @@ echo "Checking archive dir presence"
 mkdir -p $ARCHIVE_DIR
 
 # CHART information from build.properties is used in Helm Chart deployment to set the release name
+CHART_NAME=$(find chart/. -maxdepth 2 -type d -name '[^.]?*' -printf %f -quit)
 echo "CHART_NAME=${CHART_NAME}" >> $ARCHIVE_DIR/build.properties
 # IMAGE information from build.properties is used in Helm Chart deployment to set the release name
 echo "IMAGE_NAME=${IMAGE_NAME}" >> $ARCHIVE_DIR/build.properties

@@ -9,20 +9,20 @@ template:
   header: '![](toolchain.svg?localize)'
   icon: secure-lock-kubernetes.svg
   required:
-    - hello-world-build
-    - hello-world-repo
+    - pipeline
+    - repo
   info:
     git url: >-
       [https://github.com/open-toolchain/simple-helm-toolchain](https://github.com/open-toolchain/simple-helm-toolchain)
     git branch: >-
       [master](https://github.com/open-toolchain/simple-helm-toolchain/tree/master)
 toolchain:
-  name: 'simple-helm-toolchain-{{timestamp}}'
+  name: 'helm-toolchain-{{timestamp}}'
   template:
     getting_started:
       $ref: "#/messages/template.gettingStarted" 
 services:
-  hello-world-repo:
+  repo:
     service_id: hostedgit
     parameters:
       repo_name: 'hello-helm-{{timestamp}}'
@@ -30,19 +30,18 @@ services:
       type: clone
       has_issues: true
       enable_traceability: true
-  hello-world-build:
+  pipeline:
     service_id: pipeline
     parameters:
       services:
-        - hello-world-repo
+        - repo
       name: 'hello-helm-{{timestamp}}'
       ui-pipeline: true
       configuration:
         content:
           $text: pipeline.yml
         env:
-          GIT_REPO: hello-world-repo
-          CHART_NAME: hello
+          GIT_REPO: repo
           CF_APP_NAME: '{{form.pipeline.parameters.app-name}}'
           REGISTRY_REGION_ID: '{{form.pipeline.parameters.registry-region}}'
           REGISTRY_NAMESPACE: '{{form.pipeline.parameters.registry-namespace}}'
@@ -56,7 +55,7 @@ services:
 form:
   pipeline:
     parameters:
-      app-name: '{{services.hello-world-repo.parameters.repo_name}}'
+      app-name: '{{services.repo.parameters.repo_name}}'
       prod-cluster-namespace: prod
     schema:
       $ref: deploy.json

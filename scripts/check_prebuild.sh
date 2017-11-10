@@ -32,12 +32,15 @@ dockerlint -f Dockerfile
 
 echo "=========================================================="
 echo "CHECKING HELM CHART"
-echo "Checking Helm chart in /chart/${CHART_NAME} folder"
-if [ -d ./chart//${CHART_NAME} ]; then
-    echo -e "$Helm chart for Kubernetes deployment (/chart/${CHART_NAME}) found."
-else 
-    echo -e "Helm chart for Kubernetes deployment (/chart/${CHART_NAME}) not found."
+echo "Looking for chart under /chart/<CHART_NAME>"
+if [ -d ./chart ]; then
+  CHART_NAME=$(find chart/. -maxdepth 2 -type d -name '[^.]?*' -printf %f -quit)
+fi
+if [ -z ${CHART_NAME} ]; then
+    echo -e "No Helm chart found for Kubernetes deployment under /chart/<CHART_NAME>."
     exit 1
+else
+    echo -e "Helm chart found for Kubernetes deployment : /chart/${CHART_NAME}"
 fi
 
 echo "Linting Helm Chart"
