@@ -8,6 +8,17 @@ stages:
   triggers:
   - type: commit
   jobs:
+  - name: Pre0-build check
+    type: builder
+    build_type: cr
+    artifact_dir: ''
+    target:
+      region_id: ${REGISTRY_REGION_ID}
+      api_key: ${API_KEY}
+    namespace: ${REGISTRY_NAMESPACE}
+    image_name: ${CF_APP_NAME}
+    script:
+      $text: check_prebuild.sh
   - name: Pre-build check
     type: builder
     build_type: cr
