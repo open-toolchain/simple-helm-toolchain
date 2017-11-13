@@ -1,19 +1,17 @@
-# ![Icon](./.bluemix/secure-lock-kubernetes.png) Secure Kubernetes with Helm Charts toolchain
+# ![Icon](./.bluemix/helm.png) Simple Kubernetes Helm Chart toolchain
 
 
-### Continuously deliver a secure Docker app to a Kubernetes Cluster with Helm Charts
-This Hello World application uses Docker with Node.js and includes a DevOps toolchain that is preconfigured for continuous delivery across a staging and a prod Kubernetes cluster, with Vulnerability Advisor, source control, issue tracking, and online editing, and deployment to the IBM Bluemix Kubernetes Cluster using Helm Charts.
+### Continuously deliver a secure Docker app to a Kubernetes Cluster using a Helm Chart
+This Hello World application uses Docker and Kubernetes Helm in a DevOps toolchain preconfigured for 
+continuous delivery to a Kubernetes cluster. It automates numerous tasks such automatic triggering from Git
+commits, issue tracking, online editing, automatic linting of files, configuration of target cluster permissions to private image registry, etc... through a preconfigured Delivery Pipeline.
 
 This template assumes an application (e.g. [hello-helm](https://github.com/open-toolchain/hello-helm)) structured like this  :
 - **/Dockerfile (must)** -- the docker file used to build the container image in root folder
 - **/chart /your-app-name  (must)** -- the Helm Chart used to deploy this application, CI pipeline will automatically update it to reflect latest image build
-- **/scripts/build_image.sh (optional)** -- the custom container build script (if absent, will default to [generic script](https://github.com/open-toolchain/simple-helm-toolchain/blob/master/scripts/build_image.sh))
-- **/scripts/check_vulnerabilities.sh (optional)** -- the custom vulnerability advisor script (if absent, will default to [generic script](https://github.com/open-toolchain/simple-helm-toolchain/blob/master/scripts/check_vulnerabilities.sh))
-- **/scripts/config_cluster.sh (optional)** -- the custom Kubernetes ckuster config script (if absent, will default to [generic script](https://github.com/open-toolchain/simple-helm-toolchain/blob/master/scripts/config_cluster.sh))
-- **/scripts/deploy_helm.sh (optional)** -- the custom Kubernetes/Helm deploy script (if absent, will default to [generic script](https://github.com/open-toolchain/simple-helm-toolchain/blob/master/scripts/deploy_helm.sh))
 
 It implements the following best practices:
-- perform unit tests prior to building a container image (could be revisited to only occur after, or using a multistage build)
+- NOT YET - perform unit tests prior to building a container image (could be revisited to only occur after, or using a multistage build)
 - sanity check the Dockerfile prior to attempting creating the image
 - build container image once, and stage it through various Kubernetes environments (staging and prod, but could be further expanded by cloning pipeline stages)
 - use a private image registry to store the built image, automatically configure access permissions for target cluster deployment using tokens than can be revoked
