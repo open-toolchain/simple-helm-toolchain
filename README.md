@@ -28,7 +28,7 @@ It implements the following best practices:
 ### Learn more 
 
 * TBD Blog [Continuously deliver your app to Kubernetes with Bluemix](https://www.ibm.com/blogs/bluemix/2017/07/continuously-deliver-your-app-to-kubernetes-with-bluemix/)
-* TBD Step by step [tutorial](https://www.ibm.com/devops/method/tutorials/tc_secure_kube)
+* [tutorial](https://www.ibm.com/cloud/garage/tutorials/tc-simple-kube-helm)
 * [Getting started with Bluemix clusters](https://console.bluemix.net/docs/containers/container_index.html?pos=2)
 * [Getting started with toolchains](https://bluemix.net/devops/getting-started)
 * [Documentation](https://console.ng.bluemix.net/docs/services/ContinuousDelivery/index.html?pos=2)
