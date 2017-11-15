@@ -18,7 +18,6 @@ stages:
     namespace: ${REGISTRY_NAMESPACE}
     image_name: ${CF_APP_NAME}
     script: |-
-      $text: check_prebuild.sh
       #********************************************
       #!/bin/bash
       # uncomment to debug the script
