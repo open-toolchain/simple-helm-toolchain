@@ -1,4 +1,4 @@
-# ![Icon](./.bluemix/helm.png) Simple Kubernetes Helm Chart toolchain
+# ![Icon](./.bluemix/helm.png) Simple Kubernetes with Helm toolchain
 
 
 ### Continuously deliver a secure Docker app to a Kubernetes Cluster using a Helm Chart
