@@ -321,7 +321,7 @@ stages:
         echo -e "Namespace ${CLUSTER_NAMESPACE} already has an imagePullSecret for this toolchain."
       fi
       echo "Checking ability to pass pull secret via Helm chart"
-      CHART_PULL_SECRET=$( grep 'pullSecret' ./chart/${CHART_NAME}/values.yaml )
+      CHART_PULL_SECRET=$( grep 'pullSecret' ./chart/${CHART_NAME}/values.yaml || : )
       if [ -z $CHART_PULL_SECRET ]; then
         echo "WARNING: Chart is not expecting an explicit private registry imagePullSecret. Will patch the cluster default serviceAccount to pass it implicitly for now."
         echo "Going forward, you should edit the chart to add in:"
