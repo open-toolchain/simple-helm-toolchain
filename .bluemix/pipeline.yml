@@ -133,7 +133,7 @@ stages:
 
       bx cr images
 
-      # Provision a registry token for this toolchain to later pull image. Token will be passed into build.properties
+      # Provision a registry token for this toolchain to later pull image. Token will be passed into build.propertiProvision a registry token for this toolchain to later pull image. Token will be passed into build.properties
       echo "=========================================================="
       TOKEN_DESCR="bluemix-toolchain-${PIPELINE_TOOLCHAIN_ID}"
       echo "CHECKING REGISTRY token existence for toolchain: ${TOKEN_DESCR}"
@@ -317,16 +317,41 @@ stages:
         echo -e "${IMAGE_PULL_SECRET_NAME} not found in ${CLUSTER_NAMESPACE}, creating it"
         # for Container Registry, docker username is 'token' and email does not matter
         kubectl --namespace ${CLUSTER_NAMESPACE} create secret docker-registry ${IMAGE_PULL_SECRET_NAME} --docker-server=${REGISTRY_URL} --docker-password=${REGISTRY_TOKEN} --docker-username=token --docker-email=a@b.com
-        echo "enable default serviceaccount to use the pull secret"
-        kubectl patch -n ${CLUSTER_NAMESPACE} serviceaccount/default -p '{"imagePullSecrets":[{"name":"'"${IMAGE_PULL_SECRET_NAME}"'"}]}'
-        echo -e "Namespace ${CLUSTER_NAMESPACE} is now authorized to pull from the private image registry"
+        # 
+        CHART_PULL_SECRET=$( grep 'pullSecret' ./charts/${CHART_NAME}/values.yaml )
+        if [ -z $CHART_PULL_SECRET ]; then
+          echo "WARNING: Chart is not expecting an explicit private image registry pull secret. Will patch the cluster default serviceAccount to pass it implicitly."
+          echo "Going forward, you should edit the chart to add in:"
+          echo -e "[./charts/${CHART_NAME}/templates/deployment.yaml] (under kind:Deployment)"
+          echo "    ..."
+          echo "    spec:"
+          echo "      imagePullSecrets:                                       #<<<<<<<<<<<<<<<<<<<<<<<<"
+          echo "        - name: {{ .Values.image.pullSecret }}       #<<<<<<<<<<<<<<<<<<<<<<<<"
+          echo "      containers:"
+          echo "        - name: {{ .Chart.Name }}"
+          echo "          image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"
+          echo "    ..."          
+          echo -e "[./charts/${CHART_NAME}/values.yaml]"
+          echo "or check out this chart example: https://github.com/open-toolchain/hello-helm/tree/master/chart/hello"
+          echo "or refer to: https://kubernetes.io/docs/tasks/configure-pod-container/pull-image-private-registry/#create-a-pod-that-uses-your-secret"
+          echo "    ..."
+          echo "    image:"
+          echo "repository: webapp"
+          echo "  tag: 1"
+          echo "  pullSecret: regsecret            #<<<<<<<<<<<<<<<<<<<<<<<<""
+          echo "  pullPolicy: IfNotPresent"
+          echo "    ..."
+          echo "Enabling default serviceaccount to use the pull secret"
+          kubectl patch -n ${CLUSTER_NAMESPACE} serviceaccount/default -p '{"imagePullSecrets":[{"name":"'"${IMAGE_PULL_SECRET_NAME}"'"}]}'
+          echo "default serviceAccount:"
+          kubectl get serviceAccount default -o yaml
+          echo -e "Namespace ${CLUSTER_NAMESPACE} is now authorized to pull from the private image registry"
+        else
+          echo -e "Namespace ${CLUSTER_NAMESPACE} is now authorized to pull from the private image registry, using patched default serviceAccount"
+        fi
       else
         echo -e "Namespace ${CLUSTER_NAMESPACE} is already authorized to pull from the private image registry"
       fi
-      echo "default serviceAccount:"
-      kubectl get serviceAccount default -o yaml
-
-      echo "TODO -- do not patch the account, rather inject secret into the chart"
 
       echo "=========================================================="
       echo "CONFIGURING TILLER enabled (Helm server-side component)"
@@ -345,6 +370,7 @@ stages:
       echo "=========================================================="
       echo -e "CHECKING HELM releases in this namespace: ${CLUSTER_NAMESPACE}"
       helm list --namespace ${CLUSTER_NAMESPACE}
+      
   - name: Deploy Helm chart
     type: deployer
     target:
@@ -390,13 +416,14 @@ stages:
       echo "=========================================================="
       echo "DEPLOYING HELM chart"
       IMAGE_REPOSITORY=${REGISTRY_URL}/${REGISTRY_NAMESPACE}/${IMAGE_NAME}
+      IMAGE_PULL_SECRET_NAME="bluemix-toolchain-${PIPELINE_TOOLCHAIN_ID}-${REGISTRY_URL}"
 
       # Using 'upgrade --install" for rolling updates. Note that subsequent updates will occur in the same namespace the release is currently deployed in, ignoring the explicit--namespace argument".
       echo -e "Dry run into: ${PIPELINE_KUBERNETES_CLUSTER_NAME}/${CLUSTER_NAMESPACE}."
-      helm upgrade ${RELEASE_NAME} ./chart/${CHART_NAME} --set image.repository=${IMAGE_REPOSITORY},image.tag=${BUILD_NUMBER} --namespace ${CLUSTER_NAMESPACE} --install --debug --dry-run
+      helm upgrade --install --debug --dry-run ${RELEASE_NAME} ./chart/${CHART_NAME} --set image.repository=${IMAGE_REPOSITORY},image.tag=${BUILD_NUMBER},image.pullSecret=${IMAGE_PULL_SECRET_NAME} --namespace ${CLUSTER_NAMESPACE}
 
       echo -e "Deploying into: ${PIPELINE_KUBERNETES_CLUSTER_NAME}/${CLUSTER_NAMESPACE}."
-      helm upgrade ${RELEASE_NAME} ./chart/${CHART_NAME} --set image.repository=${IMAGE_REPOSITORY},image.tag=${BUILD_NUMBER} --namespace ${CLUSTER_NAMESPACE} --install
+      helm upgrade  --install ${RELEASE_NAME} ./chart/${CHART_NAME} --set image.repository=${IMAGE_REPOSITORY},image.tag=${BUILD_NUMBER},image.pullSecret=${IMAGE_PULL_SECRET_NAME} --namespace ${CLUSTER_NAMESPACE}
 
       echo "=========================================================="
       echo "CHECKING OUTCOME"
