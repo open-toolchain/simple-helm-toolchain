@@ -318,11 +318,11 @@ stages:
         # for Container Registry, docker username is 'token' and email does not matter
         kubectl --namespace ${CLUSTER_NAMESPACE} create secret docker-registry ${IMAGE_PULL_SECRET_NAME} --docker-server=${REGISTRY_URL} --docker-password=${REGISTRY_TOKEN} --docker-username=token --docker-email=a@b.com
         # 
-        CHART_PULL_SECRET=$( grep 'pullSecret' ./charts/${CHART_NAME}/values.yaml )
+        CHART_PULL_SECRET=$( grep 'pullSecret' ./chart/${CHART_NAME}/values.yaml )
         if [ -z $CHART_PULL_SECRET ]; then
           echo "WARNING: Chart is not expecting an explicit private image registry pull secret. Will patch the cluster default serviceAccount to pass it implicitly."
           echo "Going forward, you should edit the chart to add in:"
-          echo -e "[./charts/${CHART_NAME}/templates/deployment.yaml] (under kind:Deployment)"
+          echo -e "[./chart/${CHART_NAME}/templates/deployment.yaml] (under kind:Deployment)"
           echo "    ..."
           echo "    spec:"
           echo "      imagePullSecrets:                                       #<<<<<<<<<<<<<<<<<<<<<<<<"
@@ -331,7 +331,7 @@ stages:
           echo "        - name: {{ .Chart.Name }}"
           echo "          image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"
           echo "    ..."          
-          echo -e "[./charts/${CHART_NAME}/values.yaml]"
+          echo -e "[./chart/${CHART_NAME}/values.yaml]"
           echo "or check out this chart example: https://github.com/open-toolchain/hello-helm/tree/master/chart/hello"
           echo "or refer to: https://kubernetes.io/docs/tasks/configure-pod-container/pull-image-private-registry/#create-a-pod-that-uses-your-secret"
           echo "    ..."
