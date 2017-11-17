@@ -317,40 +317,40 @@ stages:
         echo -e "${IMAGE_PULL_SECRET_NAME} not found in ${CLUSTER_NAMESPACE}, creating it"
         # for Container Registry, docker username is 'token' and email does not matter
         kubectl --namespace ${CLUSTER_NAMESPACE} create secret docker-registry ${IMAGE_PULL_SECRET_NAME} --docker-server=${REGISTRY_URL} --docker-password=${REGISTRY_TOKEN} --docker-username=token --docker-email=a@b.com
-        # 
-        CHART_PULL_SECRET=$( grep 'pullSecret' ./chart/${CHART_NAME}/values.yaml )
-        if [ -z $CHART_PULL_SECRET ]; then
-          echo "WARNING: Chart is not expecting an explicit private image registry pull secret. Will patch the cluster default serviceAccount to pass it implicitly."
-          echo "Going forward, you should edit the chart to add in:"
-          echo -e "[./chart/${CHART_NAME}/templates/deployment.yaml] (under kind:Deployment)"
-          echo "    ..."
-          echo "    spec:"
-          echo "      imagePullSecrets:                                       #<<<<<<<<<<<<<<<<<<<<<<<<"
-          echo "        - name: {{ .Values.image.pullSecret }}       #<<<<<<<<<<<<<<<<<<<<<<<<"
-          echo "      containers:"
-          echo "        - name: {{ .Chart.Name }}"
-          echo "          image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"
-          echo "    ..."          
-          echo -e "[./chart/${CHART_NAME}/values.yaml]"
-          echo "or check out this chart example: https://github.com/open-toolchain/hello-helm/tree/master/chart/hello"
-          echo "or refer to: https://kubernetes.io/docs/tasks/configure-pod-container/pull-image-private-registry/#create-a-pod-that-uses-your-secret"
-          echo "    ..."
-          echo "    image:"
-          echo "repository: webapp"
-          echo "  tag: 1"
-          echo "  pullSecret: regsecret            #<<<<<<<<<<<<<<<<<<<<<<<<""
-          echo "  pullPolicy: IfNotPresent"
-          echo "    ..."
-          echo "Enabling default serviceaccount to use the pull secret"
-          kubectl patch -n ${CLUSTER_NAMESPACE} serviceaccount/default -p '{"imagePullSecrets":[{"name":"'"${IMAGE_PULL_SECRET_NAME}"'"}]}'
-          echo "default serviceAccount:"
-          kubectl get serviceAccount default -o yaml
-          echo -e "Namespace ${CLUSTER_NAMESPACE} is now authorized to pull from the private image registry"
-        else
-          echo -e "Namespace ${CLUSTER_NAMESPACE} is now authorized to pull from the private image registry, using patched default serviceAccount"
-        fi
       else
-        echo -e "Namespace ${CLUSTER_NAMESPACE} is already authorized to pull from the private image registry"
+        echo -e "Namespace ${CLUSTER_NAMESPACE} already has an imagePullSecret for this toolchain."
+      fi
+      echo "Checking ability to pass pull secret via Helm chart"
+      CHART_PULL_SECRET=$( grep 'pullSecret' ./chart/${CHART_NAME}/values.yaml )
+      if [ -z $CHART_PULL_SECRET ]; then
+        echo "WARNING: Chart is not expecting an explicit private registry imagePullSecret. Will patch the cluster default serviceAccount to pass it implicitly for now."
+        echo "Going forward, you should edit the chart to add in:"
+        echo -e "[./chart/${CHART_NAME}/templates/deployment.yaml] (under kind:Deployment)"
+        echo "    ..."
+        echo "    spec:"
+        echo "      imagePullSecrets:                                       #<<<<<<<<<<<<<<<<<<<<<<<<"
+        echo "        - name: {{ .Values.image.pullSecret }}       #<<<<<<<<<<<<<<<<<<<<<<<<"
+        echo "      containers:"
+        echo "        - name: {{ .Chart.Name }}"
+        echo "          image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"
+        echo "    ..."          
+        echo -e "[./chart/${CHART_NAME}/values.yaml]"
+        echo "or check out this chart example: https://github.com/open-toolchain/hello-helm/tree/master/chart/hello"
+        echo "or refer to: https://kubernetes.io/docs/tasks/configure-pod-container/pull-image-private-registry/#create-a-pod-that-uses-your-secret"
+        echo "    ..."
+        echo "    image:"
+        echo "repository: webapp"
+        echo "  tag: 1"
+        echo "  pullSecret: regsecret            #<<<<<<<<<<<<<<<<<<<<<<<<""
+        echo "  pullPolicy: IfNotPresent"
+        echo "    ..."
+        echo "Enabling default serviceaccount to use the pull secret"
+        kubectl patch -n ${CLUSTER_NAMESPACE} serviceaccount/default -p '{"imagePullSecrets":[{"name":"'"${IMAGE_PULL_SECRET_NAME}"'"}]}'
+        echo "default serviceAccount:"
+        kubectl get serviceAccount default -o yaml
+        echo -e "Namespace ${CLUSTER_NAMESPACE} authorizing with private image registry using patched default serviceAccount"
+      else
+        echo -e "Namespace ${CLUSTER_NAMESPACE} authorizing with private image registry using Helm chart imagePullSecret"
       fi
 
       echo "=========================================================="
