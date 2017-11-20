@@ -133,22 +133,6 @@ stages:
 
       bx cr images
 
-      # Provision a registry token for this toolchain to later pull image. Token will be passed into build.propertiProvision a registry token for this toolchain to later pull image. Token will be passed into build.properties
-      echo "=========================================================="
-      TOKEN_DESCR="bluemix-toolchain-${PIPELINE_TOOLCHAIN_ID}"
-      echo "CHECKING REGISTRY token existence for toolchain: ${TOKEN_DESCR}"
-      EXISTING_TOKEN=$(bx cr tokens | grep ${TOKEN_DESCR} ||: )
-      if [ -z ${EXISTING_TOKEN} ]; then
-          echo -e "Creating new registry token: ${TOKEN_DESCR}"
-          bx cr token-add --non-expiring --description ${TOKEN_DESCR}
-          REGISTRY_TOKEN_ID=$(bx cr tokens | grep ${TOKEN_DESCR} | awk '{ print $1 }')
-      else    
-          echo -e "Reusing existing registry token: ${TOKEN_DESCR}"
-          REGISTRY_TOKEN_ID=$(echo $EXISTING_TOKEN | awk '{ print $1 }')
-      fi
-      REGISTRY_TOKEN=$(bx cr token-get ${REGISTRY_TOKEN_ID} --quiet)
-      echo -e "REGISTRY_TOKEN=${REGISTRY_TOKEN}"
-
       echo "=========================================================="
       echo "COPYING ARTIFACTS needed for deployment and testing (in particular build.properties)"
 
@@ -168,7 +152,6 @@ stages:
       # REGISTRY information from build.properties is used in Helm Chart deployment to generate cluster secret
       echo "REGISTRY_URL=${REGISTRY_URL}" >> $ARCHIVE_DIR/build.properties
       echo "REGISTRY_NAMESPACE=${REGISTRY_NAMESPACE}" >> $ARCHIVE_DIR/build.properties
-      echo "REGISTRY_TOKEN=${REGISTRY_TOKEN}" >> $ARCHIVE_DIR/build.properties
       echo "File 'build.properties' created for passing env variables to subsequent pipeline jobs:"
       cat $ARCHIVE_DIR/build.properties
 
@@ -220,8 +203,7 @@ stages:
       echo "BUILD_NUMBER=${BUILD_NUMBER}"
       echo "REGISTRY_URL=${REGISTRY_URL}"
       echo "REGISTRY_NAMESPACE=${REGISTRY_NAMESPACE}"
-      echo "REGISTRY_TOKEN=${REGISTRY_TOKEN}"
-      #View build properties
+            #View build properties
       # cat build.properties
       # also run 'env' command to find all available env variables
       # or learn more about the available environment variables at:
@@ -280,8 +262,7 @@ stages:
       echo "BUILD_NUMBER=${BUILD_NUMBER}"
       echo "REGISTRY_URL=${REGISTRY_URL}"
       echo "REGISTRY_NAMESPACE=${REGISTRY_NAMESPACE}"
-      echo "REGISTRY_TOKEN=${REGISTRY_TOKEN}"
-      #View build properties
+            #View build properties
       # cat build.properties
       # also run 'env' command to find all available env variables
       # or learn more about the available environment variables at:
@@ -316,7 +297,7 @@ stages:
       if ! kubectl get secret ${IMAGE_PULL_SECRET_NAME} --namespace ${CLUSTER_NAMESPACE}; then
         echo -e "${IMAGE_PULL_SECRET_NAME} not found in ${CLUSTER_NAMESPACE}, creating it"
         # for Container Registry, docker username is 'token' and email does not matter
-        kubectl --namespace ${CLUSTER_NAMESPACE} create secret docker-registry ${IMAGE_PULL_SECRET_NAME} --docker-server=${REGISTRY_URL} --docker-password=${REGISTRY_TOKEN} --docker-username=token --docker-email=a@b.com
+        kubectl --namespace ${CLUSTER_NAMESPACE} create secret docker-registry ${IMAGE_PULL_SECRET_NAME} --docker-server=${REGISTRY_URL} --docker-password=${PIPELINE_BLUEMIX_API_KEY} --docker-username=iamapikey --docker-email=a@b.com
       else
         echo -e "Namespace ${CLUSTER_NAMESPACE} already has an imagePullSecret for this toolchain."
       fi
@@ -393,7 +374,6 @@ stages:
       echo "BUILD_NUMBER=${BUILD_NUMBER}"
       echo "REGISTRY_URL=${REGISTRY_URL}"
       echo "REGISTRY_NAMESPACE=${REGISTRY_NAMESPACE}"
-      echo "REGISTRY_TOKEN=${REGISTRY_TOKEN}"
       #View build properties
       # cat build.properties
       # also run 'env' command to find all available env variables
