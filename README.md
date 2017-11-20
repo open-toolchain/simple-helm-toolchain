@@ -6,6 +6,12 @@ This Hello World application uses Docker and Kubernetes Helm in a DevOps toolcha
 continuous delivery to a Kubernetes cluster. It automates numerous tasks such automatic triggering from Git
 commits, issue tracking, online editing, automatic linting of files, configuration of target cluster permissions to private image registry, etc... through a preconfigured Delivery Pipeline.
 
+![Icon](./.bluemix/toolchain.png)
+
+### To get started, click this button:
+[![Deploy To Bluemix](https://console.bluemix.net/devops/graphics/create_toolchain_button.png)](https://console.bluemix.net/devops/setup/deploy/?repository=https%3A//github.com/open-toolchain/simple-helm-toolchain)
+
+### Use it with your own application:
 This template assumes an application (e.g. [hello-helm](https://github.com/open-toolchain/hello-helm)) structured like this  :
 - **/Dockerfile (must)** -- the docker file used to build the container image in root folder
 - **/chart /your-app-name  (must)** -- the Helm Chart used to deploy this application, CI pipeline will automatically update it to reflect latest image build
@@ -19,10 +25,6 @@ It implements the following best practices:
 - use a Helm chart to conduct the deployment of each release
 - use an explicit namespace in cluster to insulate each deployment (and make it easy to clear, by "kubectl delete namespace <name>")
 
-![Icon](./.bluemix/toolchain.png)
-
-### To get started, click this button:
-[![Deploy To Bluemix](https://console.bluemix.net/devops/graphics/create_toolchain_button.png)](https://console.bluemix.net/devops/setup/deploy/?repository=https%3A//github.com/open-toolchain/simple-helm-toolchain)
 
 ---
 ### Learn more 
