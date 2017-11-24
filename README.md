@@ -1,4 +1,4 @@
-# ![Icon](./.bluemix/secure-lock-helm.png) Simple Kubernetes with Helm toolchain
+# ![Icon](./.bluemix/secure-lock-helm.png) Develop a Kubernetes app with Helm
 
 
 ### Continuously deliver a secure Docker app to a Kubernetes Cluster using a Helm Chart
