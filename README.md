@@ -17,10 +17,9 @@ This template assumes an application (e.g. [hello-helm](https://github.com/open-
 - **/chart /your-app-name  (must)** -- the Helm Chart used to deploy this application, CI pipeline will automatically update it to reflect latest image build
 
 It implements the following best practices:
-- NOT YET - perform unit tests prior to building a container image (could be revisited to only occur after, or using a multistage build)
 - sanity check the Dockerfile prior to attempting creating the image
-- build container image once, and stage it through various Kubernetes environments (staging and prod, but could be further expanded by cloning pipeline stages)
-- use a private image registry to store the built image, automatically configure access permissions for target cluster deployment using tokens than can be revoked
+- build container image on every Git commit
+- use a private image registry to store the built image, automatically configure access permissions for target cluster deployment using API tokens than can be revoked
 - check container image for security vulnerabilities
 - use a Helm chart to conduct the deployment of each release
 - use an explicit namespace in cluster to insulate each deployment (and make it easy to clear, by "kubectl delete namespace <name>")
@@ -29,17 +28,11 @@ It implements the following best practices:
 ---
 ### Learn more 
 
-* TBD Blog [Continuously deliver your app to Kubernetes with Bluemix](https://www.ibm.com/blogs/bluemix/2017/07/continuously-deliver-your-app-to-kubernetes-with-bluemix/)
-* [tutorial](https://www.ibm.com/cloud/garage/tutorials/tc-simple-kube-helm)
+* Blog [Continuously deliver your app to Kubernetes with Bluemix]
+(https://admin.blogs.prd.ibm.event.ibm.com/blogs/bluemix/?p=114624&preview=1&_ppp=ac27c51c93)
+* [Step-by-step tutorial](https://www.ibm.com/cloud/garage/tutorials/tc-simple-kube-helm)
 * [Getting started with Bluemix clusters](https://console.bluemix.net/docs/containers/container_index.html?pos=2)
 * [Getting started with toolchains](https://bluemix.net/devops/getting-started)
 * [Documentation](https://console.ng.bluemix.net/docs/services/ContinuousDelivery/index.html?pos=2)
-
-More links
-* https://github.com/kubernetes/helm/blob/master/docs/charts_tips_and_tricks.md
-* https://kubernetes.io/docs/tasks/configure-pod-container/pull-image-private-registry/
-* http://helm.readthedocs.io/en/latest/awesome/
-* https://kubernetes.io/docs/concepts/containers/images/#using-a-private-registry
-* https://www.ibm.com/blogs/bluemix/2017/03/whats-secret-pull-image-non-default-kubernetes-namespace-ibm-bluemix-container-service/
-* https://console.bluemix.net/docs/containers/cs_tutorials.html#cs_tutorials
-* https://console.bluemix.net/docs/containers/cs_cluster.html#cs_apps_images
+* Helm chart development [tips and tricks](https://kubernetes.io/docs/tasks/configure-pod-container/pull-image-private-registry/)
+* Helm Classic [Guide](https://kubernetes.io/docs/concepts/containers/images/#using-a-private-registry)
