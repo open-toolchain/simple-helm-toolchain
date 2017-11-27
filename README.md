@@ -22,7 +22,7 @@ It implements the following best practices:
 - use a private image registry to store the built image, automatically configure access permissions for target cluster deployment using API tokens than can be revoked
 - check container image for security vulnerabilities
 - use a Helm chart to conduct the deployment of each release
-- use an explicit namespace in cluster to insulate each deployment (and make it easy to clear, by "kubectl delete namespace <name>")
+- use an explicit namespace in cluster to insulate each deployment (and make it easy to clear, by "kubectl delete namespace")
 
 
 ---
