@@ -24,6 +24,8 @@ It implements the following best practices:
 - use a Helm chart to conduct the deployment of each release, abstracting away continuous integration via Helm command parameters,
 - use an explicit namespace in cluster to insulate each deployment (and make it easy to clear, by "kubectl delete namespace").
 
+![Icon](./pipe.png)
+
 
 ---
 ### Learn more 
