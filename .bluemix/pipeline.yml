@@ -57,7 +57,7 @@ stages:
       if [ -d ./chart ]; then
         CHART_NAME=$(find chart/. -maxdepth 2 -type d -name '[^.]?*' -printf %f -quit)
       fi
-      if [ -z ${CHART_NAME} ]; then
+      if [ -z "${CHART_NAME}" ]; then
           echo -e "No Helm chart found for Kubernetes deployment under /chart/<CHART_NAME>."
           exit 1
       else
@@ -77,7 +77,7 @@ stages:
 
       echo "Checking registry namespace: ${REGISTRY_NAMESPACE}"
       NS=$( bx cr namespaces | grep ${REGISTRY_NAMESPACE} ||: )
-      if [ -z ${NS} ]; then
+      if [ -z "${NS}" ]; then
           echo "Registry namespace ${REGISTRY_NAMESPACE} not found, creating it."
           bx cr namespace-add ${REGISTRY_NAMESPACE}
           echo "Registry namespace ${REGISTRY_NAMESPACE} created."
@@ -282,7 +282,7 @@ stages:
       echo "=========================================================="
       echo "CHECKING CLUSTER readiness and namespace existence"
       IP_ADDR=$(bx cs workers ${PIPELINE_KUBERNETES_CLUSTER_NAME} | grep normal | awk '{ print $2 }')
-      if [ -z ${IP_ADDR} ]; then
+      if [ -z "${IP_ADDR}" ]; then
         echo -e "${PIPELINE_KUBERNETES_CLUSTER_NAME} not created or workers not ready"
         exit 1
       fi
@@ -309,7 +309,7 @@ stages:
       fi
       echo "Checking ability to pass pull secret via Helm chart"
       CHART_PULL_SECRET=$( grep 'pullSecret' ./chart/${CHART_NAME}/values.yaml || : )
-      if [ -z $CHART_PULL_SECRET ]; then
+      if [ -z "$CHART_PULL_SECRET" ]; then
         echo "WARNING: Chart is not expecting an explicit private registry imagePullSecret. Will patch the cluster default serviceAccount to pass it implicitly for now."
         echo "Going forward, you should edit the chart to add in:"
         echo -e "[./chart/${CHART_NAME}/templates/deployment.yaml] (under kind:Deployment)"
@@ -413,6 +413,10 @@ stages:
 
       echo "=========================================================="
       echo "CHECKING OUTCOME"
+       echo ""
+      echo -e "Status for release:${RELEASE_NAME}"
+      helm status ${RELEASE_NAME}
+      
       echo ""
       echo -e "History for release:${RELEASE_NAME}"
       helm history ${RELEASE_NAME}
