@@ -15,12 +15,12 @@
     "type": "object",
     "properties": {
        "api-key": {
-            "description": "The Bluemix API key is used to access the IBM Container Service API and interact with the cluster. You can obtain your API key with 'bx iam api-key-create' or via the console at https://console.ng.bluemix.net/iam/#/apikeys by clicking **Create API key** (Each API key only can be viewed once).",
+            "description": "The IBM Cloud API key is used to access the IBM Container Service API and interact with the cluster. You can obtain your API key with 'bx iam api-key-create' or via the console at https://console.ng.bluemix.net/iam/#/apikeys by clicking **Create API key** (Each API key only can be viewed once).",
             "type": "string",
             "pattern": "\\S"
         },
        "registry-region": {
-          "description": "The bluemix region for image registry",
+          "description": "The IBM Cloud region for image registry",
           "type": "string"
         },
        "registry-namespace": {
@@ -29,7 +29,7 @@
           "pattern": "^[a-z0-9][a-z0-9_]{3,29}$"
         },
         "prod-region": {
-            "description": "The bluemix region for prod deployment",
+            "description": "The IBM Cloud region for prod deployment",
             "type": "string"
         },
        "prod-cluster-name": {
@@ -93,40 +93,48 @@
         },{
             "type": "password",
             "readonly": false,
-            "title": "Bluemix API key",
+            "title": "IBM Cloud API key",
             "key": "api-key"
           },{
             "type": "table",
-            "columnCount": 4,
-            "widths": ["15%", "27%", "27%", "27%"],
+            "columnCount": 5,
+            "widths": ["32%","2%","32%", "2%", "32%"],
             "items": [
                 {
-                  "type": "label",
-                  "title": ""
-                },{
                   "type": "label",
                   "title": {
                     "$ref": "#/messages/region"
                   }
                 },{
                   "type": "label",
+                  "title": ""
+                },
+                {
+                  "type": "label",
                   "title": "Cluster name"
                 },{
                   "type": "label",
-                  "title": "Cluster namespace"
-                },{
+                  "title": ""
+                },
+                {
                   "type": "label",
-                  "title": {
-                    "$ref": "#/messages/prodStage"
-                  }
+                  "title": "Cluster namespace"
                 },{
                   "type": "select",
                   "key": "prod-region"
                 },{
+                  "type": "label",
+                  "title": ""
+                },
+                {
                   "type": "text",
                   "key": "prod-cluster-name",
                   "readonly": false
                 },{
+                  "type": "label",
+                  "title": ""
+                },
+                {
                   "type": "text",
                   "key": "prod-cluster-namespace",
                   "readonly": false
@@ -134,26 +142,20 @@
             ]
         },{
           "type": "table",
-          "columnCount": 2,
-            "widths": ["15%", "80%"],
+          "columnCount": 1,
+            "widths": ["100%"],
             "items": [
                 {
-                  "type": "label",
-                  "title": ""
-                },{
                   "type": "label",
                   "title": "Retrieve the Kubernetes cluster name with the CLI command 'bx cs clusters' or via the [console](https://console.bluemix.net/containers-kubernetes/home/clusters)."
                 }
             ]
         },{
           "type": "table",
-          "columnCount": 2,
-            "widths": ["15%", "80%"],
+          "columnCount": 1,
+            "widths": ["100%"],
             "items": [
-                {
-                  "type": "label",
-                  "title": ""
-                },{
+               {
                   "type": "label",
                   "title": "If the cluster namespace doesn't exist already, it will be automatically created and configured."
                 }
