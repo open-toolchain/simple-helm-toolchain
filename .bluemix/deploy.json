@@ -37,9 +37,7 @@
        "prod-cluster-name": {
             "description": "The name of prod cluster. Retrieve it with [bx cs clusters] or via the console at https://console.ng.bluemix.net/containers-kubernetes/home/clusters .",
             "type": "string",
-            "pattern": "\\S",
-            "enum": [],
-            "disabled": false
+            "pattern": "\\S"
         },
         "prod-cluster-namespace": {
           "description": "Prod namespace",
@@ -132,8 +130,9 @@
                   "title": ""
                 },
                 {
-                  "type": "text",
-                  "key": "prod-cluster-name"
+                  "type": "select",
+                  "key": "prod-cluster-name",
+                  "readonly": false
                 },{
                   "type": "label",
                   "title": ""
