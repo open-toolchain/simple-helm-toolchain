@@ -1,0 +1,14 @@
+---
+#The format for creating a link with a URL and text is [link text](link url) with no spaces or characters between the two sets of brackets- []()
+template.name: "Développez une application Kubernetes avec Helm"
+template.description: "Avec cette chaîne d'outils, vous pouvez développer ensemble une application Docker et son graphique Helm dans un contrôle des sources. Ils seront générés et déployés automatiquement dans un cluster Kubernetes. La chaîne d'outils effectue des contrôles d'exactitude avant la génération et le déploiement et veille à la confidentialité en utilisant un registre de conteneur et des espaces de nom privés pour le registre de conteneur et le cluster Kubernetes. Cette chaîne d'outils optimise également [Vulnerability Advisor](https://www.ibm.com/blogs/bluemix/2016/06/docker-container-security-with-vulnerability-advisor/) pour s'assurer que seules des images sécurisées sont déployées.\n\nPar défaut, la chaîne d'outils utilise une application exemple Node.js \"Hello World\", mais vous pouvez vous lier à votre propre référentiel Git à la place, à condition qu'il comporte un fichier Dockerfile et un graphique Helm.\n\nVous pouvez gérer vos clusters IBM Cloud Container dans la [console](https://console.ng.bluemix.net/docs/containers/cs_cluster.html#cs_cluster).\n\nCette chaîne d'outils utilise des outils qui font partie du service Continuous Delivery. Si aucune instance de ce service n'existe dans votre organisation, elle est automatiquement ajoutée, sans aucun frais, lorsque vous cliquez sur **Créer**. Pour plus d'informations et pour obtenir les dispositions applicables, consultez le [catalogue IBM Cloud](/catalog/services/continuous-delivery/).\n\nPour commencer, cliquez sur **Créer**.\n\nPour obtenir des instructions étape par étape, reportez-vous au [tutoriel](https://www.ibm.com/cloud/garage/tutorials/tc-simple-kube-helm)."
+template.gettingStarted: " **Votre chaîne d'outils est prête !**\n**Démarrage rapide :** validez une modification dans le référentiel Git afin de déclencher une nouvelle génération d'image Docker, qui fera l'objet d'une analyse de vulnérabilité et sera déployée avec Helm dans votre cluster Kubernetes. Pour obtenir des instructions étape par étape, reportez-vous au [tutoriel](https://www.ibm.com/cloud/garage/tutorials/tc-simple-kube-helm?task=2) consacré à cette chaîne d'outils."
+deploy.title: "Etape de déploiement Hello World"
+deploy.description: "Chaîne d'outils hello-world simple"
+deploy.longDescription: "Delivery Pipeline automatise la génération, le test et le déploiement en continu de l'application Docker."
+deploy.appDescription: "Nom de votre appli"
+deploy.appName: "Nom de l'application"
+region: "Région du cluster"
+organization: "Organisation"
+space: "Espace"
+prodStage: "Environnement de production"
