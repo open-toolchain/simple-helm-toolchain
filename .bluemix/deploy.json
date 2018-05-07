@@ -105,7 +105,7 @@
                 },{
                   "type": "select",
                   "title": {
-                    "$ref": "#/messages/deploy.containerregRegion"
+                    "$ref": "#/messages/deploy.imgregRegion"
                   },
                   "key": "registry-region"
                 },{
