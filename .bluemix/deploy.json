@@ -15,32 +15,44 @@
     "type": "object",
     "properties": {
        "api-key": {
-            "description": "The IBM Cloud API key is used to access the IBM Container Service API and interact with the cluster. You can obtain your API key with 'bx iam api-key-create' or via the console at https://console.ng.bluemix.net/iam/#/apikeys by clicking **Create API key** (Each API key only can be viewed once).",
+            "description": {
+              "$ref": "#/messages/deploy.apikeyDescription"
+            },
             "type": "string",
             "pattern": "\\S"
         },
        "registry-region": {
-          "description": "The IBM Cloud region for image registry",
+          "description": {
+            "$ref" : "#/messages/deploy.registryRegionDescription"
+          },
           "type": "string",
           "disabled": false
         },
        "registry-namespace": {
-          "description": "The namespace in the container image registry. You can set it up with {bx cr namespace-add]. Learn more at https://console.bluemix.net/docs/services/Registry/index.html .",
+          "description": {
+            "$ref" : "#/messages/deploy.registrynsDescription"
+          },
           "type": "string",
           "pattern": "^[a-z0-9][a-z0-9_]{3,29}$"
         },
         "prod-region": {
-            "description": "The IBM Cloud region for prod deployment",
+            "description": {
+              "$ref" : "#/messages/deploy.regionDescription"
+            },
             "type": "string",
             "disabled": false
         },
        "prod-cluster-name": {
-            "description": "The name of prod cluster. Retrieve it with [bx cs clusters] or via the console at https://console.ng.bluemix.net/containers-kubernetes/home/clusters .",
+            "description": {
+              "$ref" : "#/messages/deploy.clusterNameDescription"
+            },
             "type": "string",
             "pattern": "\\S"
         },
         "prod-cluster-namespace": {
-          "description": "Prod namespace",
+          "description": {
+            "$ref" : "#/messages/deploy.namespaceDescription"
+          },
           "type": "string",
           "pattern": "\\S"
         },
@@ -67,7 +79,9 @@
         },{
             "type": "password",
             "readonly": false,
-            "title": "IBM Cloud API key",
+            "title": {
+              "$ref": "#/messages/deploy.apikey"
+            },
             "key": "api-key"
           },
         {
@@ -77,16 +91,22 @@
             "items": [
                 {
                   "type": "label",
-                  "title": "Container registry region"
+                  "title": {
+                    "$ref": "#/messages/deploy.containerregRegion"
+                  }
                 },{
                   "type": "label",
                   "title": ""
                 },{                    
                   "type": "label",
-                  "title": "Container registry namespace"
+                  "title": {
+                    "$ref": "#/messages/deploy.containerregns"
+                  }
                 },{
                   "type": "select",
-                  "title": "Container image registry region",
+                  "title": {
+                    "$ref": "#/messages/deploy.containerregRegion"
+                  },
                   "key": "registry-region"
                 },{
                   "type": "label",
@@ -94,7 +114,9 @@
                 },{
                   "type": "select",
                   "readonly": false,
-                  "title": "Container image registry namespace",
+                  "title": {
+                    "$ref": "#/messages/deploy.imgregNs"
+                  },
                   "key": "registry-namespace"
                 }
             ]
@@ -114,14 +136,18 @@
                 },
                 {
                   "type": "label",
-                  "title": "Cluster name"
+                  "title": {
+                    "$ref": "#/messages/deploy.cluster"
+                  }
                 },{
                   "type": "label",
                   "title": ""
                 },
                 {
                   "type": "label",
-                  "title": "Cluster namespace"
+                  "title": {
+                    "$ref": "#/messages/deploy.clusterNs"
+                  }
                 },{
                   "type": "select",
                   "key": "prod-region"
@@ -150,7 +176,9 @@
             "items": [
                 {
                   "type": "label",
-                  "title": "Retrieve the Kubernetes cluster name with the CLI command 'bx cs clusters' or via the [console](https://console.bluemix.net/containers-kubernetes/home/clusters)."
+                  "title": {
+                    "$ref": "#/messages/deploy.clusterDescription"
+                  }
                 }
             ]
         },{
@@ -160,7 +188,9 @@
             "items": [
                {
                   "type": "label",
-                  "title": "If the cluster namespace doesn't exist already, it will be automatically created and configured."
+                  "title": {
+                    "$ref": "#/messages/deploy.clusternsDescription"
+                  }
                 }
             ]
         }
