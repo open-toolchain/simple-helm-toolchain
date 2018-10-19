@@ -13,8 +13,8 @@ commits, issue tracking, online editing, automatic linting of files, configurati
 
 ### Use it with your own application:
 This template assumes an application (e.g. [hello-helm](https://github.com/open-toolchain/hello-helm)) structured like this  :
-- `/Dockerfile` [must] -- the docker file used to build the container image in root folder
-- `/chart /your-app-name`  [must] -- the Helm Chart used to deploy this application. The CI pipeline automatically binding it with build information (e.g. image tag) leveraging Helm ability to parameterize deployment actions.
+- `/Dockerfile` [configurable] -- the docker file used to build the container image in root folder (can be configured in pipeline BUILD stage properties)
+- `/chart /your-app-name`  [configurable] -- the Helm Chart used to deploy this application. The CI pipeline automatically binding it with build information (e.g. image tag) leveraging Helm ability to parameterize deployment actions. (can be configured in pipeline PROD deploy stage properties)
 
 It implements the following best practices:
 - sanity check the Dockerfile prior to attempting creating the image,
