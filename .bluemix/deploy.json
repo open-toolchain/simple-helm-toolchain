@@ -33,7 +33,7 @@
             "$ref" : "#/messages/deploy.registrynsDescription"
           },
           "type": "string",
-          "pattern": "^[a-z0-9][a-z0-9_]{3,29}$"
+          "pattern": "[a-z0-9]([-a-z0-9]*[a-z0-9])?"
         },
         "prod-region": {
             "description": {
