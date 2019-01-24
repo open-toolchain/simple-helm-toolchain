@@ -297,6 +297,9 @@ stages:
   - name: buildprops
     value: build.properties
     type: file
+  - name: HELM_VERSION
+    value: ''
+    type: text      
   - name: CLUSTER_NAMESPACE
     value: ${PROD_CLUSTER_NAMESPACE}
     type: text
@@ -308,6 +311,7 @@ stages:
     type: deployer
     target:
       region_id: ${PROD_REGION_ID}
+      resource_group: ${PROD_RESOURCE_GROUP}
       api_key: ${API_KEY}
       kubernetes_cluster: ${PROD_CLUSTER_NAME}
     script: |
@@ -321,7 +325,7 @@ stages:
       # ------------------
       # source: https://raw.githubusercontent.com/open-toolchain/commons/master/scripts/check_predeploy_helm.sh
 
-      # This script checks the IBM Cloud Kubernetes Service cluster is ready, has a namespace configured with access to the private
+      # This script checks the IBM Container Service cluster is ready, has a namespace configured with access to the private
       # image registry (using an IBM Cloud API Key). It also configures Helm Tiller service to later perform a deploy with Helm.
 
       # Input env variables (can be received via a pipeline environment properties.file.
@@ -329,6 +333,7 @@ stages:
       echo "IMAGE_TAG=${IMAGE_TAG}"
       echo "REGISTRY_URL=${REGISTRY_URL}"
       echo "REGISTRY_NAMESPACE=${REGISTRY_NAMESPACE}"
+      echo "HELM_VERSION=${HELM_VERSION}"
 
       # View build properties
       if [ -f build.properties ]; then 
@@ -394,7 +399,7 @@ stages:
       fi
       echo "Checking ability to pass pull secret via Helm chart (see also https://console.bluemix.net/docs/containers/cs_images.html#images)"
       CHART_PULL_SECRET=$( grep 'pullSecret' ${CHART_PATH}/values.yaml || : )
-      if [ -z "$CHART_PULL_SECRET" ]; then
+      if [ -z "${CHART_PULL_SECRET}" ]; then
         echo "INFO: Chart is not expecting an explicit private registry imagePullSecret. Patching the cluster default serviceAccount to pass it implicitly instead."
         echo "      Learn how to inject pull secrets into the deployment chart at: https://kubernetes.io/docs/concepts/containers/images/#referring-to-an-imagepullsecrets-on-a-pod"
         echo "      or check out this chart example: https://github.com/open-toolchain/hello-helm/tree/master/chart/hello"
@@ -417,13 +422,39 @@ stages:
       fi
 
       echo "=========================================================="
-      echo "CONFIGURING TILLER enabled (Helm server-side component)"
-      helm version
-      helm init --upgrade --force-upgrade
-      kubectl rollout status -w deployment/tiller-deploy --namespace=kube-system
-      # TODO: once helm version >=2.8.2 replace above 2 lines with
-      # helm init --upgrade --force-upgrade --wait
+      echo "CHECKING HELM CLIENT VERSION"
+      if [ -z "${HELM_VERSION}" ]; then
+        # use locally installed version of Helm
+        HELM_VERSION=$( helm version --client | grep SemVer: | sed "s/^.*SemVer:\"v\([0-9.]*\).*/\1/" )
+          echo -e "No required Helm version specified, defaulting to ${HELM_VERSION} found locally"
+      else
+        LOCAL_VERSION==$( helm version --client | grep SemVer: | sed "s/^.*SemVer:\"v\([0-9.]*\).*/\1/" )
+        if [ "${HELM_VERSION}" = "${LOCAL_VERSION}" ]; then
+          echo -e "Required Helm version ${HELM_VERSION} already found locally"
+        else
+          echo -e "Installing required Helm version ${HELM_VERSION}"
+          WORKING_DIR=$(pwd)
+          mkdir ~/tmpbin && cd ~/tmpbin
+          curl -L https://storage.googleapis.com/kubernetes-helm/helm-v${HELM_VERSION}-linux-amd64.tar.gz -o helm.tar.gz && tar -xzvf helm.tar.gz
+          cd linux-amd64
+          export PATH=$(pwd):$PATH
+          cd $WORKING_DIR
+        fi
+      fi
+      helm version --client
 
+      echo "=========================================================="
+      echo "CHECKING HELM SERVER VERSION (TILLER)"
+      TILLER_VERSION=$( helm version --server | grep SemVer: | sed "s/^.*SemVer:\"v\([0-9.]*\).*/\1/" )
+      if [ -z "${TILLER_VERSION}" ]; then
+          echo -e "Helm Tiller not found. Installing Tiller matching client version: ${HELM_VERSION}"
+          helm init --upgrade --force-upgrade
+          kubectl rollout status -w deployment/tiller-deploy --namespace=kube-system
+          # TODO: once helm version >=2.8.2 replace above 2 lines with
+          # helm init --upgrade --force-upgrade --wait
+        else
+          echo -e "Helm Tiller ${TILLER_VERSION} already installed in cluster. Keeping it."
+      fi
       helm version
 
       echo "=========================================================="
@@ -433,6 +464,7 @@ stages:
     type: deployer
     target:
       region_id: ${PROD_REGION_ID}
+      resource_group: ${PROD_RESOURCE_GROUP}
       api_key: ${API_KEY}
       kubernetes_cluster: ${PROD_CLUSTER_NAME}
     script: |
@@ -451,6 +483,8 @@ stages:
       echo "REGISTRY_URL=${REGISTRY_URL}"
       echo "REGISTRY_NAMESPACE=${REGISTRY_NAMESPACE}"
       echo "CLUSTER_NAMESPACE=${CLUSTER_NAMESPACE}"
+      echo "USE_ISTIO_GATEWAY=${USE_ISTIO_GATEWAY}"
+      echo "HELM_VERSION=${HELM_VERSION}"
 
       # View build properties
       if [ -f build.properties ]; then 
@@ -470,7 +504,6 @@ stages:
       echo "CLUSTER_NAMESPACE=${CLUSTER_NAMESPACE}"
 
       # Infer CHART_NAME from path to chart (last segment per construction for valid charts)
-      if [ -z "${CHART_ROOT}" ]; then CHART_ROOT="chart" ; fi
       CHART_NAME=$(find ${CHART_ROOT}/. -maxdepth 2 -type d -name '[^.]?*' -printf %f -quit)
       CHART_PATH=${CHART_ROOT}/${CHART_NAME}
 
@@ -482,6 +515,28 @@ stages:
         RELEASE_NAME=${IMAGE_NAME}
       fi
       echo -e "Release name: ${RELEASE_NAME}"
+
+      echo "=========================================================="
+      echo "CHECKING HELM CLIENT VERSION"
+      if [ -z "${HELM_VERSION}" ]; then
+        # use locally installed version of Helm
+        HELM_VERSION=$( helm version --client | grep SemVer: | sed "s/^.*SemVer:\"v\([0-9.]*\).*/\1/" )
+          echo -e "No required Helm version specified, defaulting to ${HELM_VERSION} found locally"
+      else
+        LOCAL_VERSION==$( helm version --client | grep SemVer: | sed "s/^.*SemVer:\"v\([0-9.]*\).*/\1/" )
+        if [ "${HELM_VERSION}" = "${LOCAL_VERSION}" ]; then
+          echo -e "Required Helm version ${HELM_VERSION} already found locally"
+        else
+          echo -e "Installing required Helm version ${HELM_VERSION}"
+          WORKING_DIR=$(pwd)
+          mkdir ~/tmpbin && cd ~/tmpbin
+          curl -L https://storage.googleapis.com/kubernetes-helm/helm-v${HELM_VERSION}-linux-amd64.tar.gz -o helm.tar.gz && tar -xzvf helm.tar.gz
+          cd linux-amd64
+          export PATH=$(pwd):$PATH
+          cd $WORKING_DIR
+        fi
+      fi
+      helm version --client
 
       echo "=========================================================="
       echo "DEPLOYING HELM chart"
@@ -570,5 +625,9 @@ stages:
 
       echo "=========================================================="
       IP_ADDR=$(bx cs workers ${PIPELINE_KUBERNETES_CLUSTER_NAME} | grep normal | head -n 1 | awk '{ print $2 }')
-      PORT=$(kubectl get services --namespace ${CLUSTER_NAMESPACE} | grep ${RELEASE_NAME} | sed 's/.*:\([0-9]*\).*/\1/g')
+      if [ "${USE_ISTIO_GATEWAY}" = true ]; then
+        PORT=$( kubectl get svc istio-ingressgateway -n istio-system -o json | jq -r '.spec.ports[] | select (.name=="http2") | .nodePort ' )
+      else
+        PORT=$( kubectl get services --namespace ${CLUSTER_NAMESPACE} | grep ${RELEASE_NAME} | sed 's/.*:\([0-9]*\).*/\1/g' )
+      fi
       echo -e "View the application at: http://${IP_ADDR}:${PORT}"
