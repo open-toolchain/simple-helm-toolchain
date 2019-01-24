@@ -22,7 +22,8 @@ It implements the following best practices:
 - use a private image registry to store the built image, automatically configure access permissions for target cluster deployment using API tokens than can be revoked,
 - check container image for security vulnerabilities,
 - use a Helm chart to conduct the deployment of each release, abstracting away continuous integration via Helm command parameters,
-- use an explicit namespace in cluster to insulate each deployment (and make it easy to clear, by "kubectl delete namespace").
+- use an explicit namespace in cluster to insulate each deployment (and make it easy to clear, by "kubectl delete namespace"),
+- reuse existing Tiller (Helm server) if detected, install it if missing (allowing to control Helm version via env property in pipeline)
 
 ![Icon](./pipe.png)
 
@@ -32,8 +33,8 @@ It implements the following best practices:
 
 * Blog [Continuously deliver your app to Kubernetes with Bluemix](https://admin.blogs.prd.ibm.event.ibm.com/blogs/bluemix/?p=114624&preview=1&_ppp=ac27c51c93)
 * [Step-by-step tutorial](https://www.ibm.com/cloud/garage/tutorials/tc-simple-kube-helm)
-* [Getting started with Bluemix clusters](https://console.bluemix.net/docs/containers/container_index.html?pos=2)
-* [Getting started](https://bluemix.net/devops/getting-started) with toolchains
-* [Documentation](https://console.ng.bluemix.net/docs/services/ContinuousDelivery/index.html?pos=2)
+* [Getting started with Bluemix clusters](https://cloud.ibm.com/docs/containers/container_index.html?pos=2)
+* [Getting started](https://cloud.ibm.com/devops/getting-started) with toolchains
+* [Documentation](https://cloud.ibm.com/docs/services/ContinuousDelivery/index.html?pos=2)
 * Helm chart development [tips and tricks](https://kubernetes.io/docs/tasks/configure-pod-container/pull-image-private-registry/)
 * Helm Classic [Guide](https://kubernetes.io/docs/concepts/containers/images/#using-a-private-registry)
