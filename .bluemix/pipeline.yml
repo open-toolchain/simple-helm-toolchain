@@ -1,4 +1,8 @@
 ---
+properties:
+- name: HELM_VERSION
+  value: '2.12.3'
+  type: text
 stages:
 - name: BUILD
   inputs:
@@ -297,10 +301,7 @@ stages:
   properties:
   - name: buildprops
     value: build.properties
-    type: file
-  - name: HELM_VERSION
-    value: ''
-    type: text      
+    type: file     
   - name: CLUSTER_NAMESPACE
     value: ${PROD_CLUSTER_NAMESPACE}
     type: text
