@@ -36,15 +36,15 @@ services:
           enable_traceability: true
       - $case: 'githubconsolidated'
         service_id: githubconsolidated
-          parameters:
+        parameters:
           repo_name: 'hello-helm-{{timestamp}}'
           repo_url: "$env.type === 'link' ? $env.app_repo : 'https://github.com/open-toolchain/hello-helm'"
           source_repo_url: "$env.type === 'fork' || $env.type === 'clone' ? $env.app_repo : ''"
           type: $env.type  || 'clone'
-                  visibility: public
+          visibility: public
       - $case: 'github_integrated'
         service_id: github_integrated
-          parameters:
+        parameters:
           repo_name: 'hello-helm-{{timestamp}}'
           repo_url: "$env.type === 'link' ? $env.app_repo : 'https://github.com/open-toolchain/hello-helm'"
           source_repo_url: "$env.type === 'fork' || $env.type === 'clone' ? $env.app_repo : ''"
