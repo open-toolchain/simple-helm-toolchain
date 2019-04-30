@@ -21,9 +21,9 @@ toolchain:
   template:
     getting_started:
      $ref: "#/messages/template.gettingStarted"
-  services:
-    repo:
-     $switch:
+services:
+  repo:
+    $switch:
       - $expr: $env.source_provider
       - $default: 'hostedgit'
         service_id: hostedgit
