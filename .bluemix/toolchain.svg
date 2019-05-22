@@ -131,8 +131,8 @@
 <text id="headerSVG.pipeline" transform="matrix(0.927 0 0 1 200.5088 131.2939)" class="st14 st15">PIPELINE</text>
 <text id="headerSVG.ibmCloud" transform="matrix(0.927 0 0 1 281.2407 131.2939)" class="st14 st15">IBM CLOUD</text>
 <g id="headerSVG.containers">
-	<text transform="matrix(0.927 0 0 1 282.2407 144.4951)" class="st14 st15">Kubernetes</text>
-	<text transform="matrix(0.927 0 0 1 287.0508 157.6943)" class="st14 st15">with Helm</text>
+	<text id="headerSVG.k8withHelm1" transform="matrix(0.927 0 0 1 282.2407 144.4951)" class="st14 st15">Kubernetes</text>
+	<text id="headerSVG.k8withHelm2" transform="matrix(0.927 0 0 1 287.0508 157.6943)" class="st14 st15">with Helm</text>
 </g>
 <text id="headerSVG.webIde" transform="matrix(0.927 0 0 1 109.7646 243.2744)" class="st14 st15">WEB IDE</text>
 <circle class="st1" cx="309.8" cy="88.6" r="26.5"/>
