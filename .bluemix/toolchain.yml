@@ -12,10 +12,15 @@ template:
     - build
     - repo
   info:
-    git url: >-
-      [https://github.com/open-toolchain/simple-helm-toolchain](https://github.com/open-toolchain/simple-helm-toolchain)
-    git branch: >-
-      [master](https://github.com/open-toolchain/simple-helm-toolchain/tree/master)
+    # compute the git url and branch values dynamically so that they remain correct when repo is forked etc. 
+    # note: `repository` url param must always be provided while the `branch` url param is optional
+    # the computed urls are of the same format as the original static urls shown above
+    git url: >
+        '[' + $env.repository + '](' + $env.repository + ')'
+    git branch: >
+        $env.branch ?
+          '[' + $env.branch + ']('+ $env.repository + '/tree/' + $env.branch + ')' :
+          '[master]('+ $env.repository + '/tree/master)'
 toolchain:
   name: 'helm-toolchain-{{timestamp}}'
   template:
