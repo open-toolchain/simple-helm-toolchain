@@ -15,7 +15,7 @@ deploy.regionDescription: "The IBM Cloud region for production deployment"
 deploy.rgDescription: "The IBM Cloud resource group for production deployment"
 deploy.clusterNameDescription: "The name of the production cluster. Retrieve it with [ibmcloud cs clusters] or via the console at https://cloud.ibm.com/containers-kubernetes/clusters."
 deploy.namespaceDescription: "Production namespace"
-deploy.apikey: "IBM Cloud API Key"
+deploy.apikey: "IBM Cloud API key"
 deploy.containerregRegion: "Container registry region"
 deploy.containerregns: "Container registry namespace"
 deploy.imgregRegion: "Container image registry region"
@@ -40,4 +40,8 @@ headerSVG.gitlab2: "GitLab"
 headerSVG.pipeline: "PIPELINE"
 headerSVG.webIde: "WEB IDE"
 headerSVG.ibmCloud: "IBM Cloud"
-headerSVG.k8withHelm: "Kubernetes with Helm"
+#Note on the following two translation. Together read "Kubernetes with Helm" but need to be split  as text wrap not supported in SVG. On screen it will look like:
+#Kubernetes
+#with Helm
+headerSVG.k8withHelm1: "Kubernetes"
+headerSVG.k8withHelm2: "with Helm"
