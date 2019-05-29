@@ -40,4 +40,8 @@ headerSVG.gitlab2: "GitLab"
 headerSVG.pipeline: "PIPELINE"
 headerSVG.webIde: "IDE WEB"
 headerSVG.ibmCloud: "IBM Cloud"
-headerSVG.k8withHelm: "Kubernetes avec Helm"
+#Note on the following two translation. Together read "Kubernetes with Helm" but need to be split  as text wrap not supported in SVG. On screen it will look like:
+#Kubernetes
+#with Helm
+headerSVG.k8withHelm1: "Kubernetes"
+headerSVG.k8withHelm2: "avec Helm"
