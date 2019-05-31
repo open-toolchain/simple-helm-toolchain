@@ -28,63 +28,19 @@ toolchain:
      $ref: "#/messages/template.gettingStarted"
 services:
   repo:
-    $switch:
-      - $expr: $env.source_provider
-      - $default: 'hostedgit'
-        service_id: hostedgit
-        parameters:
-          repo_name: 'hello-helm-{{timestamp}}'
-          repo_url: >
-            $env.type === 'link' ? 
-              $env.app_repo : 'https://github.com/open-toolchain/hello-helm'
-          source_repo_url: >
-            $env.type === 'fork' || $env.type === 'clone' ? 
-              $env.app_repo : ''
-          type: $env.type || 'clone'
-          has_issues: true
-          enable_traceability: true
-      - $case: 'githubconsolidated'
-        service_id: githubconsolidated
-        parameters:
-          repo_name: 'hello-helm-{{timestamp}}'
-          repo_url: >
-            $env.type === 'link' ? 
-              $env.app_repo : 'https://github.com/open-toolchain/hello-helm'
-          source_repo_url: >
-            $env.type === 'fork' || $env.type === 'clone' ?
-              $env.app_repo : ''
-          type: $env.type  || 'clone'
-          visibility: public
-      - $case: 'github_integrated'
-        service_id: github_integrated
-        parameters:
-          repo_name: 'hello-helm-{{timestamp}}'
-          repo_url: >
-            $env.type === 'link' ? 
-              $env.app_repo : 'https://github.com/open-toolchain/hello-helm'
-          source_repo_url: >
-            $env.type === 'fork' || $env.type === 'clone' ? 
-              $env.app_repo : ''
-          type: >
-            $env.type !== undefined ? 
-              $env.type : 'clone'
-          has_issues: true
-          enable_traceability: true
-      - $case: 'bitbucketgit'
-        service_id: bitbucketgit
-        parameters:
-          repo_name: 'hello-helm-{{timestamp}}'
-          repo_url: >
-            $env.type === 'link' ? 
-              $env.app_repo : 'https://github.com/open-toolchain/hello-helm'
-          source_repo_url: >
-            $env.type === 'fork' || $env.type === 'clone' ? 
-              $env.app_repo : ''
-          type: >
-            $env.type !== undefined ? 
-              $env.type : 'clone'
-          has_issues: true
-          enable_traceability: true
+    service_id: $env.source_provider ? $env.source_provider:'hostedgit'
+    parameters:
+      repo_name: $env.toolchain.name
+      repo_url: >
+        $env.type === 'link' ? 
+          $env.app_repo : 'https://github.com/open-toolchain/hello-helm'
+      source_repo_url: >
+        $env.type === 'fork' || $env.type === 'clone' ? 
+          $env.app_repo : 'https://github.com/open-toolchain/hello-helm'
+      type: $env.type || 'clone'
+      has_issues: true
+      enable_traceability: true
+      private_repo: false
   build:
     service_id: pipeline
     parameters:
