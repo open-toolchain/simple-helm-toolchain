@@ -2,8 +2,8 @@
 
 
 ### Continuously deliver a secure Docker app to a Kubernetes Cluster using a Helm Chart
-This Hello World application uses Docker and Kubernetes Helm in a DevOps toolchain preconfigured for 
-continuous delivery to a Kubernetes cluster. It automates numerous tasks such automatic triggering from Git
+This Hello World application uses Docker, Kubernetes and Helm in a DevOps toolchain preconfigured for 
+continuous delivery to the IBM Kubernetes Service. It automates numerous tasks such automatic triggering from Git
 commits, issue tracking, online editing, automatic linting of files, configuration of target cluster permissions to private image registry, etc... through a preconfigured Delivery Pipeline.
 
 ![Icon](./toolchain-flow.png)
