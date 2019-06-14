@@ -1,4 +1,5 @@
 ---
+defaultBaseImageVersion: latest
 properties:
 - name: HELM_VERSION
   value: '2.12.3'
