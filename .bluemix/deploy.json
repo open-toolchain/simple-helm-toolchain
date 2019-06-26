@@ -19,65 +19,41 @@
             "$ref": "#/messages/deploy.apikeyDescription"
           },
           "type": "string",
-          "pattern": "\\S",
-          "validator": {
-            "v-type": "api-key"
-        }
-  },
+          "pattern": "\\S"
+      },
      "registry-region": {
         "description": {
           "$ref" : "#/messages/deploy.registryRegionDescription"
         },
         "type": "string",
-        "disabled": false,
-        "validator": {
-            "v-type": "k8s-region",
-            "params": ["api-key"]
-        }
+        "disabled": false
       },
      "registry-namespace": {
         "description": {
           "$ref" : "#/messages/deploy.registrynsDescription"
         },
         "type": "string",
-        "pattern": "^[a-z0-9][-_a-z0-9]{2,28}[a-z0-9]$",
-        "validator": {
-            "v-type": "k8s-registry-namespace",
-            "params": ["registry-region"],
-            "validate": false
-        }
+        "pattern": "^[a-z0-9][-_a-z0-9]{2,28}[a-z0-9]$"
       },
       "prod-region": {
           "description": {
             "$ref" : "#/messages/deploy.regionDescription"
           },
           "type": "string",
-          "disabled": false,
-          "validator": {
-            "v-type": "k8s-region",
-            "params": ["api-key"]
-        }
+          "disabled": false
       },
       "prod-resource-group": {
           "description": {
             "$ref" : "#/messages/deploy.rgDescription"
           },
-          "type": "string",
-          "validator": {
-            "v-type": "resource-group",
-            "params": ["api-key"]
-        }
+          "type": "string"
       },
      "prod-cluster-name": {
           "description": {
             "$ref" : "#/messages/deploy.clusterNameDescription"
           },
           "type": "string",
-          "pattern": "\\S",
-          "validator": {
-            "v-type": "k8s-cluster-name",
-            "params": ["prod-region", "prod-resource-group"]
-        }
+          "pattern": "\\S"
       },
       "prod-cluster-namespace": {
         "description": {
@@ -98,7 +74,7 @@
   "form": [
      {
         "type": "validator",
-        "url": "/devops/setup/bm-helper/validator-v1.html"
+        "url": "/devops/setup/bm-helper/custom_helper.html"
      },{
         "type": "text",
         "readonly": false,
