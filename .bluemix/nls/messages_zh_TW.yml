@@ -1,8 +1,19 @@
-﻿---
+---
 #The format for creating a link with a URL and text is [link text](link url) with no spaces or characters between the two sets of brackets- []()
 template.name: "使用 Helm 來開發 Kubernetes 應用程式"
-template.description: "使用此工具鏈，您可以一起在來源控制中開發 Docker 應用程式及其 Helm Chart，並自動將此應用程式建置及部署到 Kubernetes 叢集。此工具鏈會先執行例行性檢查，然後才會進行建置或部署，並透過使用專用容器登錄、容器登錄的名稱空間及 Kubernetes 叢集來確保隱私權。這個工具鏈也會善用[漏洞顧問](https://www.ibm.com/blogs/bluemix/2016/06/docker-container-security-with-vulnerability-advisor/)，來確保只會部署安全的映像檔\n\n依預設，工具鏈使用範例 Node.js \"Hello World\" 應用程式，但只要您自己的 Git 儲存庫具有 Dockerfile 和 Helm Chart，您是可以改為鏈結至此 Git 儲存庫。\n\n 您可以在[主控台](https://cloud.ibm.com/containers-kubernetes/clusters) 中管理您的 IBM Cloud Container 叢集。\n\n 此工具鏈使用 Continuous Delivery 服務的部分工具。當您按一下**建立**時，如果資源群組或組織中尚未具有該服務的實例，則會自動新增實例，而不收取費用。如需相關資訊及術語，請參閱 [IBM Cloud 型錄](/catalog/services/continuous-delivery/)。\n\n若要開始，請按一下**建立**。\n\n如需逐步指示，請遵循[指導教學](https://www.ibm.com/cloud/garage/tutorials/tc-simple-kube-helm)。"
-template.gettingStarted: " **您的工具鏈已備妥！**\n**快速入門：** 確定 Git 儲存庫的變更，以觸發新的 Docker 映像檔建置，且將會掃描該建置的漏洞並搭配 Helm 部署到您的 Kubernetes 叢集。如需逐步指示，請參閱此工具鏈的[指導教學](https://www.ibm.com/cloud/garage/tutorials/use-develop-kubernetes-app-with-helm-toolchain?task=2)。"
+template.description: "使用此工具鏈，您可以一起在原始碼控制中開發 Docker 應用程式及其 Helm Chart，並自動將此應用程式建置及部署到 Kubernetes 叢集。此工具鏈會先執行例行性檢查，然後才會進行建置或部署，並透過使用專用容器登錄、容器登錄的名稱空間及 Kubernetes 叢集來確保隱私權。這個工具鏈也會善用[漏洞顧問](https://www.ibm.com/blogs/bluemix/2016/06/docker-container-security-with-vulnerability-advisor/)，來確保只會部署安全的映像檔。
+  
+  依預設，工具鏈使用範例 Node.js \"Hello World\" 應用程式，但只要您自己的 Git 儲存庫具有 Dockerfile 和 Helm Chart，您是可以改為鏈結至此 Git 儲存庫。
+  
+  您可以在[主控台](https://cloud.ibm.com/containers-kubernetes/clusters) 中管理您的 IBM Cloud Container 叢集。
+  
+  此工具鏈使用 Continuous Delivery 服務的部分工具。當您按一下**建立**時，如果資源群組或組織中尚未具有該服務的實例，則會自動新增實例，而不收取費用。如需相關資訊及條款，請參閱 [IBM Cloud 型錄](/catalog/services/continuous-delivery/)。
+  
+  若要開始，請按一下**建立**。
+  
+  如需逐步指示，請遵循[指導教學](https://www.ibm.com/cloud/garage/tutorials/tc-simple-kube-helm)。"
+template.gettingStarted: " **您的工具鏈已備妥！**
+  **快速入門：** 確定 Git 儲存庫的變更，以觸發新的 Docker 映像檔建置，且將會掃描該建置的漏洞並搭配 Helm 部署到您的 Kubernetes 叢集。如需逐步指示，請參閱此工具鏈的[指導教學](https://www.ibm.com/cloud/garage/tutorials/use-develop-kubernetes-app-with-helm-toolchain?task=2)。"
 deploy.title: "Hello World 部署階段"
 deploy.description: "hello-world 簡式工具鏈"
 deploy.longDescription: "Delivery Pipeline 會自動化連續建置、測試及部署 Docker 應用程式。"
