@@ -228,7 +228,7 @@
 			l0,0C29.5,87.2,32.9,89.2,36.7,89.4z"/>
 </g>
 <g id="github_icon1" display="none">
-    <text transform="matrix(0.927 0 0 1 24.0986 144.4951)" class="st14 st15">GitHub</text>
+    <text id="headerSVG.github1" transform="matrix(0.927 0 0 1 24.0986 144.4951)" class="st14 st15">GitHub</text>
 	<path id="path-1" class="st23" d="M57.2,99.4c0,2.3-5.1,4.1-11.5,4.1s-11.5-1.8-11.5-4.1s5.1-4,11.5-4S57.2,97.2,57.2,99.4z"/>
 	<path id="path-2" class="st24" d="M46.6,100.1c-0.3,0.2-0.6,0.5-0.7,0.9c-0.1,0.1-0.1,0.3-0.1,0.5v0.3v0.3v0.5v1
 		c1.6,0,0.2,0,2.1-0.1v-0.1v-0.2v-1.1v-0.3c0-0.2,0-0.2,0.1-0.5s0-0.4,0.2-0.6c0.1-0.1,0.1-0.1,0.1-0.2L46.6,100.1L46.6,100.1z"/>
@@ -387,7 +387,7 @@
 	</g>
 </g>
 <g id="github_icon2" display="none">
-    <text transform="matrix(0.927 0 0 1 116.9019 144.4951)" class="st14 st15">GitHub</text>
+    <text id="headerSVG.github2" transform="matrix(0.927 0 0 1 116.9019 144.4951)" class="st14 st15">GitHub</text>
 	<path id="path-1_1_" class="st23" d="M143.5,99.9c0,2.3-5.1,4.1-11.5,4.1c-6.4,0-11.5-1.8-11.5-4.1s5.1-4,11.5-4
 		C138.4,95.9,143.5,97.7,143.5,99.9z"/>
 	<path id="path-2_1_" class="st24" d="M132.9,100.6c-0.3,0.2-0.6,0.5-0.7,0.9c-0.1,0.1-0.1,0.3-0.1,0.5v0.3v0.3v0.5v1
@@ -470,27 +470,27 @@
 	<line id="line-13_1_" class="st0" x1="136.6" y1="103.7" x2="136.5" y2="103.7"/>
 </g>
 <g id="bitbucket_icon1" display="none">
-    <text transform="matrix(0.927 0 0 1 24.0986 144.4951)" class="st14 st15">Bitbucket</text>
+    <text id="headerSVG.bitbucket1" transform="matrix(0.927 0 0 1 24.0986 144.4951)" class="st14 st15">Bitbucket</text>
 	<path d="M58.9,80.1v-2.4h-1.1h-1.1v-1.2v-1.2h-1.1H34h-1.1v1.2v1.2h-1.1h-1.1v2.4h-2.2v19.5h32.6V80.1H58.9z M34,76.4h21.6v1.2H34
 		V76.4z M60,98.4H29.7V81.3h1.1h28.1H60V98.4z"/>
 	<polygon points="48.1,89.9 41.6,89.9 41.6,88.6 40.5,88.6 40.5,89.9 40.5,91.1 41.6,91.1 48.1,91.1 49.2,91.1 49.2,89.9 49.2,88.6 
 		48.1,88.6"/>
 </g>
 <g id="bitbucket_icon2" display="none">
-    <text transform="matrix(0.927 0 0 1 116.9019 144.4951)" class="st14 st15">Bitbucket</text>
+    <text id="headerSVG.bitbucket2" transform="matrix(0.927 0 0 1 116.9019 144.4951)" class="st14 st15">Bitbucket</text>
 	<path d="M145.6,79.8v-2.4h-1.1h-1.1v-1.2V75h-1.1h-21.6h-1.1v1.2v1.2h-1.1h-1.1v2.4h-2.2v19.5h32.4V79.8H145.6z M120.7,76h21.6v1.2
 		h-21.6C120.7,77.2,120.7,76,120.7,76z M146.6,98h-30.3V80.9h1.1h28.2h1.1V98H146.6z"/>
 	<polygon points="134.7,89.5 128.3,89.5 128.3,88.2 127.2,88.2 127.2,89.5 127.2,90.8 128.3,90.8 134.7,90.8 135.8,90.8 135.8,89.5 
 		135.8,88.2 134.7,88.2"/>
 </g>
 <g id="gitlab_icon1" display="none">
-    <text transform="matrix(0.927 0 0 1 24.0986 144.4951)" class="st14 st15">GitLab</text>
+    <text id="headerSVG.gitlab3" transform="matrix(0.927 0 0 1 24.0986 144.4951)" class="st14 st15">GitLab</text>
     <path d="M30.7,99.1l3.8,4.2l16-17.8l-3.8-4.2L30.7,99.1z M34.5,101.8L32,99.1l14.7-16.3l2.4,2.7L34.5,101.8z"/>
     <polygon points="58,83.4 56.1,83.4 56.1,81.3 49.5,73.9 42,73.9 52.3,85.5 54.2,85.5 54.2,87.6 55.1,88.6 58.9,84.4"/>
 </g>
 
 <g id="gitlab_icon2" display="none">
-    <text transform="matrix(0.927 0 0 1 116.9019 144.4951)" class="st14 st15">GitLab</text>
+    <text id="headerSVG.gitlab4" transform="matrix(0.927 0 0 1 116.9019 144.4951)" class="st14 st15">GitLab</text>
     <path d="M115.3,98l3.8,4.2l16-17.8l-3.8-4.2L115.3,98z M119.1,100.7l-2.4-2.7l14.7-16.3l2.4,2.7L119.1,100.7z"/>
     <polygon points="142.6,82.3 140.7,82.3 140.7,80.2 134.1,72.8 126.6,72.8 136.9,84.4 138.8,84.4 138.8,86.5 139.7,87.5 143.5,83.3"/>
 </g>
