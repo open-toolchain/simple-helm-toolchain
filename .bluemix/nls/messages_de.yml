@@ -1,25 +1,14 @@
 ---
 #The format for creating a link with a URL and text is [link text](link url) with no spaces or characters between the two sets of brackets- []()
 template.name: "Kubernetes-App mit Helm entwickeln"
-template.description: "Mit dieser Toolchain können Sie eine Docker-Anwendung zusammen mit dem zugehörigen Helm-Diagramm in der Quellcodeverwaltung entwickeln und sie automatisch in einem Kubernetes-Cluster bereitstellen. Die Toolchain führt vor der Builderstellung oder Bereitstellung Prüfungen auf den ordnungsgemäßen Zustand durch und stellt den Datenschutz sicher, indem eine private Container-Registry und Namespaces für die Container-Registry und den Kubernetes-Cluster verwendet werden. Diese Toolchain nutzt außerdem [Vulnerability Advisor](https://www.ibm.com/blogs/bluemix/2016/06/docker-container-security-with-vulnerability-advisor/), damit sichergestellt wird, dass nur sichere Images bereitgestellt werden.
-  
-  \n\nStandardmäßig verwendet die Toolchain die Node.js-Beispiel-App \"Hello World\", aber Sie können stattdessen auch Ihr eigenes Git-Repository verlinken, sofern es über eine Dockerfile und ein Helm-Diagramm verfügt.
-  
-   \n\nSie können Ihre IBM Cloud Container-Cluster in der [Konsole](https://cloud.ibm.com/containers-kubernetes/clusters) verwalten.
-  
-  \n\nDiese Toolchain verwendet Tools, die Teil des Continuous Delivery-Service sind. Wenn sich noch keine Instanz dieses Service in Ihrer Ressourcengruppe oder  Organisation befindet, wird sie automatisch kostenfrei hinzugefügt, wenn Sie auf **Erstellen** klicken. Weitere Informationen und Bedingungen finden Sie im [IBM Cloud-Katalog](/catalog/services/continuous-delivery/).
-  
-  \n\nKlicken Sie auf **Erstellen**, um zu beginnen.
-  
-  \n\nSchrittweise Anweisungen finden Sie im [Lernprogramm](https://www.ibm.com/cloud/garage/tutorials/tc-simple-kube-helm)."
-template.gettingStarted: " **Ihre Toolchain steht bereit!**
-  \n**Schnelleinstieg:** Schreiben Sie eine Änderung im Git-Repository fest, um einen neuen Build für das Docker-Image auszulösen, der auf Sicherheitslücken geprüft und mit Helm Ihrem Kubernetes-Cluster bereitgestellt wird. Schrittweise Anweisungen finden Sie im [Lernprogramm](https://www.ibm.com/cloud/garage/tutorials/use-develop-kubernetes-app-with-helm-toolchain?task=2) für diese Toolchain."
+template.description: "Mit dieser Toolchain können Sie eine Docker-Anwendung zusammen mit dem zugehörigen Helm-Diagramm in der Quellcodeverwaltung entwickeln und sie automatisch in einem Kubernetes-Cluster bereitstellen. Die Toolchain führt vor der Builderstellung oder Bereitstellung Prüfungen auf den ordnungsgemäßen Zustand durch und stellt den Datenschutz sicher, indem eine private Container-Registry und Namespaces für die Container-Registry und den Kubernetes-Cluster verwendet werden. Diese Toolchain nutzt außerdem [Vulnerability Advisor](https://www.ibm.com/blogs/bluemix/2016/06/docker-container-security-with-vulnerability-advisor/), damit sichergestellt wird, dass nur sichere Images bereitgestellt werden.\n\nStandardmäßig verwendet die Toolchain die Node.js-Beispiel-App \"Hello World\", aber Sie können stattdessen auch Ihr eigenes Git-Repository verlinken, sofern es über eine Dockerfile und ein Helm-Diagramm verfügt.\n\n Sie können Ihre IBM Cloud Container-Cluster in der [Konsole](https://cloud.ibm.com/containers-kubernetes/clusters) verwalten.\n\nDiese Toolchain verwendet Tools, die Teil des Continuous Delivery-Service sind. Wenn sich noch keine Instanz dieses Service in Ihrer Ressourcengruppe oder  Organisation befindet, wird sie automatisch kostenfrei hinzugefügt, wenn Sie auf **Erstellen** klicken. Weitere Informationen und Bedingungen finden Sie im [IBM Cloud-Katalog](/catalog/services/continuous-delivery/).\n\nKlicken Sie auf **Erstellen**, um zu beginnen.\n\nSchrittweise Anweisungen finden Sie im [Lernprogramm](https://www.ibm.com/cloud/garage/tutorials/tc-simple-kube-helm)."
+template.gettingStarted: " **Ihre Toolchain steht bereit!**\n**Schnelleinstieg:** Schreiben Sie eine Änderung im Git-Repository fest, um einen neuen Build für das Docker-Image auszulösen, der auf Sicherheitslücken geprüft und mit Helm Ihrem Kubernetes-Cluster bereitgestellt wird. Schrittweise Anweisungen finden Sie im [Lernprogramm](https://www.ibm.com/cloud/garage/tutorials/use-develop-kubernetes-app-with-helm-toolchain?task=2) für diese Toolchain."
 deploy.title: "Bereitstellungsphase von Hello World"
 deploy.description: "Einfache Toolchain für Hello World"
 deploy.longDescription: "Mit Delivery Pipeline werden die kontinuierliche Builderstellung, Tests und Bereitstellungen der Docker-Anwendung automatisiert."
 deploy.appDescription: "Der Name Ihrer App"
 deploy.appName: "Name der App"
-deploy.apikeyDescription: "Der IBM Cloud-API-Schlüssel wird verwendet, um auf die IBM Cloud Kubernetes-Service-API zuzugreifen und mit dem Cluster zu interagieren. Sie können einen API-Schlüssel mithilfe des Befehls 'ibmcloud iam api-key-create' oder über die Konsole unter https://cloud.ibm.com/iam#/apikeys abrufen, indem Sie auf **API-Schlüssel erstellen** klicken. (Jeder API-Schlüssel kann nur einmal angezeigt werden.)"
+deploy.apikeyDescription: "Der IBM Cloud-API-Schlüssel wird verwendet, um auf die IBM Cloud Kubernetes Service-API zuzugreifen und mit dem Cluster zu interagieren. Sie können einen API-Schlüssel mithilfe des Befehls 'ibmcloud iam api-key-create' oder über die Konsole unter https://cloud.ibm.com/iam#/apikeys abrufen, indem Sie auf **API-Schlüssel erstellen** klicken. (Jeder API-Schlüssel kann nur einmal angezeigt werden.)"
 deploy.registryRegionDescription: "Die IBM Cloud-Region für die Image-Registry"
 deploy.registrynsDescription: "Der Namespace in der Container-Image-Registry. Dieser kann mit [ibmcloud cr namespace-add] eingerichtet werden. Weitere Informationen finden Sie unter https://cloud.ibm.com/docs/services/Registry/index.html."
 deploy.regionDescription: "Die IBM Cloud-Region für die Produktionsbereitstellung"
@@ -56,3 +45,9 @@ headerSVG.ibmCloud: "IBM Cloud"
 #with Helm
 headerSVG.k8withHelm1: "Kubernetes"
 headerSVG.k8withHelm2: "mit Helm"
+headerSVG.github1: "GitHub"
+headerSVG.github2: "GitHub"
+headerSVG.gitlab3: "GitLab"
+headerSVG.gitlab4: "GitLab"
+headerSVG.bitbucket1: "Bitbucket"
+headerSVG.bitbucket2: "Bitbucket"
