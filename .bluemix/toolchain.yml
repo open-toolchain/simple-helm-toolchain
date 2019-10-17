@@ -81,11 +81,7 @@ form:
           '{{prodClusterNamespace}}' : 'prod'
       registry-region: '{{registryRegion}}'
       registry-namespace: '{{registryNamespace}}'
-      # Renaming apiKey field as temporary workaround for 
-      # headless template with pipeline prod-region & post apiKey gives error
-      # https://github.ibm.com/org-ids/roadmap/issues/10572
-      # api-key: '{{apiKey}}'
-      api-key: '{{api-key}}'
+      api-key: '{{apiKey}}'
       prod-region: '{{prodRegion}}'
       prod-resource-group: '{{prodResourceGroup}}'
       prod-cluster-name: '{{prodClusterName}}'
