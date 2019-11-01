@@ -23,8 +23,8 @@ template:
           '[master]('+ $env.repository + '/tree/master)'
 toolchain:
   name: >
-    $env.toolchainName? '{{toolchainName}}' :
-    'helm-toolchain-{{timestamp}}'
+    $env.toolchainName ? '{{toolchainName}}' :
+      'helm-toolchain-{{timestamp}}'
   template:
     getting_started:
      $ref: "#/messages/template.gettingStarted"
@@ -34,8 +34,8 @@ services:
       $env.source_provider ? $env.source_provider : 'hostedgit'
     parameters:
       repo_name: >
-        $env.toolchainName? '{{toolchainName}}' :
-        'hello-helm-{{timestamp}}'
+        $env.toolchainName ? '{{toolchainName}}' :
+          'hello-helm-{{timestamp}}'
       repo_url: >
         $env.type === 'link' ? $env.app_repo :
           $env.sourceZipUrl ? '{{sourceZipUrl}}' :
