@@ -22,7 +22,9 @@ template:
           '[' + $env.branch + ']('+ $env.repository + '/tree/' + $env.branch + ')' :
           '[master]('+ $env.repository + '/tree/master)'
 toolchain:
-  name: 'helm-toolchain-{{timestamp}}'
+  name: >
+    $env.toolchainName ? '{{toolchainName}}' :
+      'helm-toolchain-{{timestamp}}'
   template:
     getting_started:
      $ref: "#/messages/template.gettingStarted"
@@ -31,13 +33,17 @@ services:
     service_id: >
       $env.source_provider ? $env.source_provider : 'hostedgit'
     parameters:
-      repo_name: 'hello-helm-{{timestamp}}'
+      repo_name: >
+        $env.toolchainName ? '{{toolchainName}}' :
+          'hello-helm-{{timestamp}}'
       repo_url: >
-        $env.type === 'link' ? 
-          $env.app_repo : 'https://github.com/open-toolchain/hello-helm'
+        $env.type === 'link' ? $env.app_repo :
+          $env.sourceZipUrl ? '{{sourceZipUrl}}' :
+            'https://github.com/open-toolchain/hello-helm'
       source_repo_url: >
-        $env.type === 'fork' || $env.type === 'clone' ? 
-          $env.app_repo : 'https://github.com/open-toolchain/hello-helm'
+        $env.type === 'fork' || $env.type === 'clone' ? $env.app_repo :
+          $env.sourceZipUrl ? '{{sourceZipUrl}}' : 
+            'https://github.com/open-toolchain/hello-helm'
       type: $env.type || 'clone'
       has_issues: true
       enable_traceability: false
@@ -46,7 +52,7 @@ services:
     parameters:
       services:
         - repo
-      name: 'hello-helm-{{timestamp}}'
+      name: '{{services.repo.parameters.repo_name}}'
       ui-pipeline: true
       configuration:
         content:
@@ -67,7 +73,17 @@ services:
 form:
   pipeline:
     parameters:
-      app-name: '{{services.repo.parameters.repo_name}}'
-      prod-cluster-namespace: prod
+      app-name: >
+        $env.appName ?
+          '{{appName}}' : '{{services.repo.parameters.repo_name}}'
+      prod-cluster-namespace: >
+        $env.prodClusterNamespace ?
+          '{{prodClusterNamespace}}' : 'prod'
+      registry-region: '{{registryRegion}}'
+      registry-namespace: '{{registryNamespace}}'
+      api-key: '{{apiKey}}'
+      prod-region: '{{prodRegion}}'
+      prod-resource-group: '{{prodResourceGroup}}'
+      prod-cluster-name: '{{prodClusterName}}'
     schema:
       $ref: deploy.json
