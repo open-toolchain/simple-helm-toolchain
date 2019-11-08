@@ -2,7 +2,7 @@
 defaultBaseImageVersion: latest
 properties:
 - name: HELM_VERSION
-  value: '2.12.3'
+  value: ''
   type: text
 stages:
 - name: BUILD
@@ -432,9 +432,9 @@ stages:
       set -e
       if [ -z "${TILLER_VERSION}" ]; then
         if [ -z "${HELM_VERSION}" ]; then
-          CLIENT_VERSION=${HELM_VERSION}
-        else
           CLIENT_VERSION=${LOCAL_VERSION}
+        else
+          CLIENT_VERSION=${HELM_VERSION}
         fi
       else
         echo -e "Helm Tiller ${TILLER_VERSION} already installed in cluster. Keeping it, and aligning client."
@@ -539,9 +539,9 @@ stages:
       set -e
       if [ -z "${TILLER_VERSION}" ]; then
         if [ -z "${HELM_VERSION}" ]; then
-          CLIENT_VERSION=${HELM_VERSION}
-        else
           CLIENT_VERSION=${LOCAL_VERSION}
+        else
+          CLIENT_VERSION=${HELM_VERSION}
         fi
       else
         echo -e "Helm Tiller ${TILLER_VERSION} already installed in cluster. Keeping it, and aligning client."
