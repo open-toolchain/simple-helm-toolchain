@@ -2,7 +2,7 @@
 defaultBaseImageVersion: latest
 properties:
 - name: HELM_VERSION
-  value: '2.12.3'
+  value: ''
   type: text
 stages:
 - name: BUILD
@@ -39,25 +39,23 @@ stages:
       #    source <(curl -sSL "https://raw.githubusercontent.com/open-toolchain/commons/master/scripts/check_prebuild.sh")
       # ------------------
       # source: https://raw.githubusercontent.com/open-toolchain/commons/master/scripts/check_prebuild.sh
+      ibmcloud plugin update container-registry
       echo "REGISTRY_URL=${REGISTRY_URL}"
       echo "REGISTRY_NAMESPACE=${REGISTRY_NAMESPACE}"
       echo "IMAGE_NAME=${IMAGE_NAME}"
       echo "ARCHIVE_DIR=${ARCHIVE_DIR}"
-
       # View build properties
       if [ -f build.properties ]; then 
         echo "build.properties:"
         cat build.properties
       else 
         echo "build.properties : not found"
-      fi 
+      fi
       # also run 'env' command to find all available env variables
       # or learn more about the available environment variables at:
       # https://cloud.ibm.com/docs/services/ContinuousDelivery/pipeline_deploy_var.html#deliverypipeline_environment
-
       if [ -z "${DOCKER_ROOT}" ]; then DOCKER_ROOT=. ; fi
       if [ -z "${DOCKER_FILE}" ]; then DOCKER_FILE=${DOCKER_ROOT}/Dockerfile ; fi
-
       echo "=========================================================="
       echo "Checking for Dockerfile at the repository root"
       if [ -f "${DOCKER_FILE}" ]; then 
@@ -69,41 +67,42 @@ stages:
       echo "Linting Dockerfile"
       npm install -g dockerlint
       dockerlint -f Dockerfile
-
       echo "=========================================================="
       echo "Checking registry current plan and quota"
-      bx cr plan
-      bx cr quota
-      echo "If needed, discard older images using: bx cr image-rm"
+      ibmcloud cr plan
+      ibmcloud cr quota
+      echo "If needed, discard older images using: ibmcloud cr image-untag"
       echo "Checking registry namespace: ${REGISTRY_NAMESPACE}"
-      NS=$( bx cr namespaces | grep ${REGISTRY_NAMESPACE} ||: )
+      NS=$( ibmcloud cr namespaces | grep ${REGISTRY_NAMESPACE} ||: )
       if [ -z "${NS}" ]; then
           echo "Registry namespace ${REGISTRY_NAMESPACE} not found, creating it."
-          bx cr namespace-add ${REGISTRY_NAMESPACE}
+          ibmcloud cr namespace-add ${REGISTRY_NAMESPACE}
           echo "Registry namespace ${REGISTRY_NAMESPACE} created."
       else 
           echo "Registry namespace ${REGISTRY_NAMESPACE} found."
       fi
-      echo -e "Existing images in registry"
-      bx cr images --restrict ${REGISTRY_NAMESPACE}
+      echo -e "Existing images in registry..."
+      ibmcloud cr image-list --restrict ${REGISTRY_NAMESPACE}
+      echo "=========================================================="
+      KEEP=1
+      COUNT=0
+      echo -e "PURGING REGISTRY: Keeping last ${KEEP} build image(s) based on <Repository:Tag>..."
+      LIST=$( ibmcloud cr image-list --restrict ${REGISTRY_NAMESPACE}/${IMAGE_NAME} --no-trunc --format '{{ .Created }} {{ .Repository }}:{{ .Tag}}' | sort -r -u | awk '{print $2}' )
+      while IFS= read -r IMAGE_URL ; do
+        if [[ ! -z "$IMAGE_URL" ]]; then
+          if [[ $COUNT -lt $KEEP ]]; then
+            echo "Keeping build image: ${IMAGE_URL}..."
+          else
+            echo "Purging build image: ${IMAGE_URL}"
+            # Refer to: https://cloud.ibm.com/docs/container-registry-cli-plugin?topic=container-registry-cli-plugin-containerregcli#bx_cr_image_untag
+            ibmcloud cr image-untag "${IMAGE_URL}"
+          fi
+        fi
+        COUNT=$(( COUNT + 1 ))
+      done <<< "$LIST"
+      echo "Contents of build image registry:"
+      ibmcloud cr image-list --restrict ${REGISTRY_NAMESPACE}
 
-      # echo "=========================================================="
-      # KEEP=1
-      # echo -e "PURGING REGISTRY, only keeping last ${KEEP} image(s) based on image digests"
-      # COUNT=0
-      # LIST=$( bx cr images --restrict ${REGISTRY_NAMESPACE}/${IMAGE_NAME} --no-trunc --format '{{ .Created }} {{ .Repository }}@{{ .Digest }}' | sort -r -u | awk '{print $2}' | sed '$ d' )
-      # while read -r IMAGE_URL ; do
-      #   if [[ "$COUNT" -lt "$KEEP" ]]; then
-      #     echo "Keeping image digest: ${IMAGE_URL}"
-      #   else
-      #     bx cr image-rm "${IMAGE_URL}"
-      #   fi
-      #   COUNT=$((COUNT+1)) 
-      # done <<< "$LIST"
-      # if [[ "$COUNT" -gt 1 ]]; then
-      #   echo "Content of image registry"
-      #   bx cr images
-      # fi
   - name: Build Docker image
     type: builder
     build_type: cr
@@ -148,10 +147,10 @@ stages:
       # https://cloud.ibm.com/docs/services/ContinuousDelivery/pipeline_deploy_var.html#deliverypipeline_environment
 
       # To review or change build options use:
-      # bx cr build --help
+      # ibmcloud cr build --help
 
       echo -e "Existing images in registry"
-      bx cr images
+      ibmcloud cr images
 
       # Minting image tag using format: BUILD_NUMBER--BRANCH-COMMIT_ID-TIMESTAMP
       # e.g. 3-master-50da6912-20181123114435
@@ -170,15 +169,15 @@ stages:
       if [ -z "${DOCKER_ROOT}" ]; then DOCKER_ROOT=. ; fi
       if [ -z "${DOCKER_FILE}" ]; then DOCKER_FILE=${DOCKER_ROOT}/Dockerfile ; fi
       set -x
-      bx cr build -t ${REGISTRY_URL}/${REGISTRY_NAMESPACE}/${IMAGE_NAME}:${IMAGE_TAG} ${DOCKER_ROOT} -f ${DOCKER_FILE}
+      ibmcloud cr build -t ${REGISTRY_URL}/${REGISTRY_NAMESPACE}/${IMAGE_NAME}:${IMAGE_TAG} ${DOCKER_ROOT} -f ${DOCKER_FILE}
       set +x
 
-      bx cr image-inspect ${REGISTRY_URL}/${REGISTRY_NAMESPACE}/${IMAGE_NAME}:${IMAGE_TAG}
+      ibmcloud cr image-inspect ${REGISTRY_URL}/${REGISTRY_NAMESPACE}/${IMAGE_NAME}:${IMAGE_TAG}
 
       # Set PIPELINE_IMAGE_URL for subsequent jobs in stage (e.g. Vulnerability Advisor)
       export PIPELINE_IMAGE_URL="$REGISTRY_URL/$REGISTRY_NAMESPACE/$IMAGE_NAME:$IMAGE_TAG"
 
-      bx cr images --restrict ${REGISTRY_NAMESPACE}/${IMAGE_NAME}
+      ibmcloud cr images --restrict ${REGISTRY_NAMESPACE}/${IMAGE_NAME}
 
       ######################################################################################
       # Copy any artifacts that will be needed for deployment and testing to $WORKSPACE    #
@@ -271,12 +270,12 @@ stages:
       # or learn more about the available environment variables at:
       # https://cloud.ibm.com/docs/services/ContinuousDelivery/pipeline_deploy_var.html#deliverypipeline_environment
 
-      bx cr images --restrict ${REGISTRY_NAMESPACE}/${IMAGE_NAME}
+      ibmcloud cr images --restrict ${REGISTRY_NAMESPACE}/${IMAGE_NAME}
       echo -e "Checking vulnerabilities in image: ${PIPELINE_IMAGE_URL}"
       for ITER in {1..30}
       do
         set +e
-        STATUS=$( bx cr va -e -o json ${PIPELINE_IMAGE_URL} | jq -r '.[0].status' )
+        STATUS=$( ibmcloud cr va -e -o json ${PIPELINE_IMAGE_URL} | jq -r '.[0].status' )
         set -e
         # Possible status from Vulnerability Advisor: OK, UNSUPPORTED, INCOMPLETE, UNSCANNED, FAIL, WARN
         if [[ ${STATUS} != "INCOMPLETE" && ${STATUS} != "UNSCANNED" ]]; then
@@ -288,9 +287,9 @@ stages:
         sleep 10
       done
       set +e
-      bx cr va -e ${PIPELINE_IMAGE_URL}
+      ibmcloud cr va -e ${PIPELINE_IMAGE_URL}
       set -e
-      STATUS=$( bx cr va -e -o json ${PIPELINE_IMAGE_URL} | jq -r '.[0].status' )
+      STATUS=$( ibmcloud cr va -e -o json ${PIPELINE_IMAGE_URL} | jq -r '.[0].status' )
       [[ ${STATUS} == "OK" ]] || [[ ${STATUS} == "UNSUPPORTED" ]] || [[ ${STATUS} == "WARN" ]] || { echo "ERROR: The vulnerability scan was not successful, check the OUTPUT of the command and try again."; exit 1; }
 - name: PROD
   inputs:
@@ -433,9 +432,9 @@ stages:
       set -e
       if [ -z "${TILLER_VERSION}" ]; then
         if [ -z "${HELM_VERSION}" ]; then
-          CLIENT_VERSION=${HELM_VERSION}
-        else
           CLIENT_VERSION=${LOCAL_VERSION}
+        else
+          CLIENT_VERSION=${HELM_VERSION}
         fi
       else
         echo -e "Helm Tiller ${TILLER_VERSION} already installed in cluster. Keeping it, and aligning client."
@@ -540,9 +539,9 @@ stages:
       set -e
       if [ -z "${TILLER_VERSION}" ]; then
         if [ -z "${HELM_VERSION}" ]; then
-          CLIENT_VERSION=${HELM_VERSION}
-        else
           CLIENT_VERSION=${LOCAL_VERSION}
+        else
+          CLIENT_VERSION=${HELM_VERSION}
         fi
       else
         echo -e "Helm Tiller ${TILLER_VERSION} already installed in cluster. Keeping it, and aligning client."
@@ -638,7 +637,7 @@ stages:
       helm history ${RELEASE_NAME}
 
       echo "=========================================================="
-      APP_NAME=$(kubectl get pods --namespace ${CLUSTER_NAMESPACE} -o json | jq -r '[.items[] | select(.spec.containers[]?.image=="'"${IMAGE_REPOSITORY}:${IMAGE_TAG}"'")] | first | .metadata.labels.app')
+      APP_NAME=$(kubectl get pods --namespace ${CLUSTER_NAMESPACE} -o json | jq -r '[ .items[] | select(.spec.containers[]?.image=="'"${IMAGE_REPOSITORY}:${IMAGE_TAG}"'") | .metadata.labels.app] [1]')
       echo -e "APP: ${APP_NAME}"
       echo "DEPLOYED PODS:"
       kubectl describe pods --selector app=${APP_NAME} --namespace ${CLUSTER_NAMESPACE}

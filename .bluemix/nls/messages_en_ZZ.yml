@@ -2,7 +2,7 @@
 #The format for creating a link with a URL and text is [link text](link url) with no spaces or characters between the two sets of brackets- []()
 template.name: "[G'Ｄｅｖｅｌｏｐ ａ Ｋｕbernetes app with Helmฏูİı｜]"
 template.description: "[G'Ｗｉｔｈ ｔｈｉｓ ｔｏｏｌｃｈａｉｎ, ｙｏｕ ｃａｎ ｄｅｖｅｌｏｐ ａ Ｄｏｃｋｅｒ ａｐｐｌｉｃａｔｉｏｎ ａｎｄ ｉｔｓ Ｈｅｌｍ ｃｈａｒｔ ｔｏｇｅｔｈｅｒ ｉｎ ｓｏｕｒｃｅ ｃｏｎｔｒｏｌ ａｎｄ ｈａｖｅ ｉｔ ｂｕｉｌｔ ａｎｄ ｄｅｐｌｏｙｅｄ ａｕｔｏｍａｔｉｃａｌｌｙ ｔｏ ａ Ｋｕｂｅｒｎｅｔｅｓ ｃｌｕｓｔｅｒ. Ｔｈｅ ｔｏｏｌｃｈａｉｎ ｐｅｒｆｏｒｍｓ ｓａｎｉｔｙ ｃｈｅｃｋｓ ｐｒｉｏｒ ｔｏ ｂｕｉｌｄｉｎｇ ｏｒ ｄｅｐｌｏｙｉｎｇ ａｎｄ ｅｎｓｕｒｅｓ ｐｒｉｖａｃｙ ｂｙ ｕｓｉｎｇ ａ ｐｒｉｖａｔｅ ｃｏｎｔａｉｎｅｒ ｒｅｇｉｓｔｒｙ ａｎｄ ｎａｍｅｓｐａｃｅｓ ｆｏｒ ｔｈｅ ｃｏｎｔａｉｎｅｒ ｒｅｇｉｓｔｒｙ ａｎｄ ｔｈｅ Ｋｕｂｅｒｎｅｔｅｓ ｃｌｕｓｔｅｒ. Ｔｈｉｓ ｔｏｏｌｃｈａｉｎ ｉｓ ａｌｓｏ ｌｅｖｅｒａｇｉｎｇ [Ｖｕｌｎｅｒａｂｉｌｉｔｙ Ａｄｖｉｓｏｒ](ｈｔｔｐｓ://ｗｗｗ.ｉｂｍ.ｃｏｍ/ｂｌｏｇｓ/ｂｌｕｅｍｉｘ/2016/06/ｄｏｃｋｅｒ-ｃｏｎｔａiner-security-with-vulnerability-advisor/), to ensure only secure images get deployed.\n\nBy default, the toolchain uses a sample Node.js \"Hello World\" app, but you can link to your own Git repository instead as long as it has a Dockerfile and a Helm chart.\n\n You can manage your IBM Cloud Container clusters in the [console](https://cloud.ibm.com/containers-kubernetes/clusters).\n\n This toolchain uses tools that are part of the Continuous Delivery service. If an instance of that service isn't already in your resource group or organization, when you click **Create**, it is automatically added at no cost to you. For more information and terms, see the [IBM Cloud catalog](/catalog/services/continuous-delivery/).\n\nTo get started, click **Create**.\n\nFor step-by-step instructions, follow the [tutorial](https://www.ibm.com/cloud/garage/tutorials/tc-simple-kube-helm).ฏูİı｜]"
-template.gettingStarted: "[G' **Ｙｏｕｒ ｔｏｏｌｃｈａｉｎ ｉｓ ｒｅａｄｙ!**\n**Ｑｕｉｃｋ ｓｔａｒｔ:** Ｃｏｍｍｉｔ ａ ｃｈａｎｇｅ ｔｏ ｔｈｅ Ｇｉｔ ｒｅｐｏ ｔｏ ｔｒｉｇｇｅｒ ａ ｎｅｗ Ｄｏｃｋｅｒ ｉｍａｇｅ ｂｕｉｌｄ, ｗｈｉｃｈ ｗｉｌｌ ｂｅ scanned for vulnerabilites and deployed with Helm to your Kubernetes cluster. For step-by-step instructions, see the [tutorial](https://www.ibm.com/cloud/garage/tutorials/tc-simple-kube-helm?task=2) for this toolchain.ฏูİı｜]"
+template.gettingStarted: "[G' **Ｙｏｕｒ ｔｏｏｌｃｈａｉｎ ｉｓ ｒｅａｄｙ!**\n**Ｑｕｉｃｋ ｓｔａｒｔ:** Ｃｏｍｍｉｔ ａ ｃｈａｎｇｅ ｔｏ ｔｈｅ Ｇｉｔ ｒｅｐｏ ｔｏ ｔｒｉｇｇｅｒ ａ ｎｅｗ Ｄｏｃｋｅｒ ｉｍａｇｅ ｂｕｉｌｄ, ｗｈｉｃｈ ｗｉｌｌ ｂｅ ｓｃａｎｎｅｄ ｆor vulnerabilites and deployed with Helm to your Kubernetes cluster. For step-by-step instructions, see the [tutorial](https://www.ibm.com/cloud/garage/tutorials/use-develop-kubernetes-app-with-helm-toolchain?task=2) for this toolchain.ฏูİı｜]"
 deploy.title: "[G'Ｈｅｌｌｏ Ｗｏｒld Deploy Stageฏูİı｜]"
 deploy.description: "[G'ｈｅｌｌｏ-ｗｏｒｌd simple toolchainฏูİı｜]"
 deploy.longDescription: "[G'Ｔｈｅ Ｄｅｌｉｖｅｒｙ Ｐｉｐｅｌｉｎe automates continuous build, test and deploy of the Docker application.ฏูİı｜]"
@@ -45,3 +45,9 @@ headerSVG.ibmCloud: "[G'IBM Cloudฏูİı｜]"
 #with Helm
 headerSVG.k8withHelm1: "[G'Ｋubernetesฏูİı｜]"
 headerSVG.k8withHelm2: "[G'with Helmฏูİı｜]"
+headerSVG.github1: "[G'GitHubฏูİı｜]"
+headerSVG.github2: "[G'GitHubฏูİı｜]"
+headerSVG.gitlab3: "[G'GitLabฏูİı｜]"
+headerSVG.gitlab4: "[G'GitLabฏูİı｜]"
+headerSVG.bitbucket1: "[G'Bitbucketฏูİı｜]"
+headerSVG.bitbucket2: "[G'Bitbucketฏูİı｜]"
