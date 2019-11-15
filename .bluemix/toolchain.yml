@@ -28,8 +28,7 @@ toolchain:
      $ref: "#/messages/template.gettingStarted"
 services:
   repo:
-    service_id: >
-      $env.source_provider ? $env.source_provider : 'hostedgit'
+    service_id: github_integrated
     parameters:
       repo_name: 'hello-helm-{{timestamp}}'
       repo_url: >
@@ -41,6 +40,7 @@ services:
       type: $env.type || 'clone'
       has_issues: true
       enable_traceability: false
+      legal: true
   build:
     service_id: pipeline
     parameters:
