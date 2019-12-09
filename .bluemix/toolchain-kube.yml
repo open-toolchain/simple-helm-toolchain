@@ -7,7 +7,7 @@ template:
   description:
     $ref: "#/messages/template.description"
   header: '![](toolchain.svg?localize)'
-  icon: secure-lock-helm.svg
+  icon: secure-lock-kubernetes.svg
   required:
     - build
     - repo
@@ -20,28 +20,22 @@ template:
         "(" + $env.repository +
           "/tree/" + $env.branch + ")"
 toolchain:
-  name: >
-    $env.toolchainName ? '{{toolchainName}}' :
-      'helm-toolchain-{{timestamp}}'
+  name: 'kube-toolchain-{{timestamp}}'
   template:
     getting_started:
-     $ref: "#/messages/template.gettingStarted"
+      $ref: "#/messages/template.gettingStarted"
 services:
   repo:
     service_id: >
       $env.source_provider ? $env.source_provider : 'hostedgit'
     parameters:
-      repo_name: >
-        $env.toolchainName ? '{{toolchainName}}' :
-          'hello-helm-{{timestamp}}'
+      repo_name: 'hello-containers-{{timestamp}}'
       repo_url: >
-        $env.type === 'link' ? $env.app_repo :
-          $env.sourceZipUrl ? '{{sourceZipUrl}}' :
-            'https://github.com/open-toolchain/hello-helm'
+        $env.type === 'link' ? 
+          $env.app_repo : 'https://github.com/open-toolchain/hello-containers'
       source_repo_url: >
-        $env.type === 'fork' || $env.type === 'clone' ? $env.app_repo :
-          $env.sourceZipUrl ? '{{sourceZipUrl}}' : 
-            'https://github.com/open-toolchain/hello-helm'
+        $env.type === 'fork' || $env.type === 'clone' ? 
+          $env.app_repo : 'https://github.com/open-toolchain/hello-containers'
       type: $env.type || 'clone'
       has_issues: true
       enable_traceability: true
@@ -71,17 +65,7 @@ services:
 form:
   pipeline:
     parameters:
-      app-name: >
-        $env.appName ?
-          '{{appName}}' : '{{services.repo.parameters.repo_name}}'
-      prod-cluster-namespace: >
-        $env.prodClusterNamespace ?
-          '{{prodClusterNamespace}}' : 'prod'
-      registry-region: '{{registryRegion}}'
-      registry-namespace: '{{registryNamespace}}'
-      api-key: '{{apiKey}}'
-      prod-region: '{{prodRegion}}'
-      prod-resource-group: '{{prodResourceGroup}}'
-      prod-cluster-name: '{{prodClusterName}}'
+      app-name: '{{services.repo.parameters.repo_name}}'
+      prod-cluster-namespace: prod
     schema:
       $ref: deploy.json
