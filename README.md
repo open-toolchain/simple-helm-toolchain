@@ -21,12 +21,10 @@ It implements the following best practices:
 - build container image on every Git commit,
 - use a private image registry to store the built image, automatically configure access permissions for target cluster deployment using API tokens than can be revoked,
 - check container image for security vulnerabilities,
-- use a Helm chart to conduct the deployment of each release, abstracting away continuous integration via Helm command parameters,
+- use a Helm chart to conduct the deployment of each release, abstracting away continuous integration via Helm command parameters. Reuse existing Tiller (Helm server) if detected, install it if missing (allowing to control Helm version via env property in pipeline)
 - use an explicit namespace in cluster to insulate each deployment (and make it easy to clear, by "kubectl delete namespace"),
-- reuse existing Tiller (Helm server) if detected, install it if missing (allowing to control Helm version via env property in pipeline)
 
 ![Icon](./pipe.png)
-
 
 ---
 ### Learn more 
