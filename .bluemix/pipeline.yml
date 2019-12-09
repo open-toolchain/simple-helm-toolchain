@@ -78,7 +78,7 @@ stages:
     value: Dockerfile
     type: text
   - name: PIPELINE_IMAGE_URL
-    value: undefined
+    value: ''
     type: text
   inputs:
   - type: job
@@ -186,7 +186,7 @@ stages:
     value: chart
     type: text
   - name: APP_URL
-    value: undefined
+    value: ''
     type: text  
   jobs:
   - name: Deploy with Helm
