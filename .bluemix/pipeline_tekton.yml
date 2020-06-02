@@ -23,7 +23,7 @@ inputs:
   - type: git
     branch: task-test
     service: ${TEKTON_CATALOG_REPO}
-    path: temp/tests
+    path: temp/unit-tests
 triggers:
   - type: manual
     name: Manual Trigger
