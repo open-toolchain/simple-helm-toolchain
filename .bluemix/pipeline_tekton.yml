@@ -14,15 +14,15 @@ inputs:
     path: container-registry
   - type: git
     branch: task-test
-    service: ${TEKTON_TEMP_COMMON}
+    service: ${TEKTON_CATALOG_REPO}
     path: temp/docker
   - type: git
     branch: task-test
-    service: ${TEKTON_TEMP_COMMON}
+    service: ${TEKTON_CATALOG_REPO}
     path: temp/helm
   - type: git
     branch: task-test
-    service: ${TEKTON_TEMP_COMMON}
+    service: ${TEKTON_CATALOG_REPO}
     path: temp/tests
 triggers:
   - type: manual
