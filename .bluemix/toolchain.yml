@@ -56,10 +56,10 @@ services:
       repo_name: 'secure-kube-toolchain-toolchain-{{timestamp}}'
       repo_url: >
         $env.type === 'link' ?
-          $env.app_repo : 'https://github.com/huayuenh/althelm'
+          $env.app_repo : 'https://github.com/open-toolchain/simple-helm-toolchain'
       source_repo_url: >
         $env.type === 'fork' || $env.type === 'clone' ?
-          $env.app_repo : 'https://github.com/huayuenh/althelm'
+          $env.app_repo : 'https://github.com/open-toolchain/simple-helm-toolchain'
       type: $env.type || 'link'
       has_issues: false
       enable_traceability: false
