@@ -32,7 +32,7 @@ spec:
     - apiVersion: v1
       kind: PersistentVolumeClaim
       metadata:
-        name: secure-kube-$(uid)-pvc
+        name: simple-helm-$(uid)-pvc
       spec:
         resources:
           requests:
@@ -43,10 +43,10 @@ spec:
     - apiVersion: tekton.dev/v1beta1
       kind: PipelineRun
       metadata:
-        name: secure-kube-$(uid)
+        name: simple-helm-$(uid)
       spec:
         pipelineRef:
-          name: secure-kube-pipeline
+          name: simple-helm-pipeline
         params:
           - name: repository
             value: $(params.repository)
@@ -73,7 +73,7 @@ spec:
         workspaces:
           - name: pipeline-ws
             persistentVolumeClaim:
-              claimName: secure-kube-$(uid)-pvc
+              claimName: simple-helm-$(uid)-pvc
 ---
 apiVersion: tekton.dev/v1beta1
 kind: TriggerBinding
@@ -119,7 +119,7 @@ spec:
     - binding:
         name: github-commit
       template:
-        name: trigger-template-secure-kube
+        name: trigger-template-simple-helm
 ---
 apiVersion: tekton.dev/v1beta1
 kind: TriggerBinding
@@ -143,7 +143,7 @@ spec:
     - binding:
         name: grit-or-gitlab-commit
       template:
-        name: trigger-template-secure-kube
+        name: trigger-template-simple-helm
 ---
 apiVersion: tekton.dev/v1beta1
 kind: TriggerBinding
@@ -167,4 +167,4 @@ spec:
     - binding:
         name: bitbucket-commit
       template:
-        name: trigger-template-secure-kube
+        name: trigger-template-simple-helm

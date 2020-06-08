@@ -2,7 +2,7 @@
 apiVersion: tekton.dev/v1beta1
 kind: Pipeline
 metadata:
-  name: secure-kube-pipeline
+  name: simple-helm-pipeline
 spec:
   params:
     - name: repository
