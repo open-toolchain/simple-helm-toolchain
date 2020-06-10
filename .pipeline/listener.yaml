@@ -2,7 +2,7 @@
 apiVersion: tekton.dev/v1beta1
 kind: TriggerTemplate
 metadata:
-  name: trigger-template-secure-kube
+  name: trigger-template-simple-helm
 spec:
   params:
     - name: repository
@@ -26,6 +26,8 @@ spec:
       default: "0"
     - name: cluster-name
       description: the name of the cluster to target
+    - name: dev-region
+    - name: dev-resource-group
     - name: dev-cluster-namespace
       description: namespace dev
   resourcetemplates:
@@ -64,6 +66,10 @@ spec:
             value: $(params.path-to-dockerfile)
           - name: apikey
             value: $(params.apikey)
+          - name: dev-region
+            value: $(params.dev-region)
+          - name: dev-resource-group
+            value: $(params.dev-resource-group)
           - name: cluster-name
             value: $(params.cluster-name)
           - name: dev-cluster-namespace
@@ -95,7 +101,7 @@ spec:
     - binding:
         name: trigger-binding-manual
       template:
-        name: trigger-template-secure-kube
+        name: trigger-template-simple-helm
 ---
 apiVersion: tekton.dev/v1beta1
 kind: TriggerBinding
