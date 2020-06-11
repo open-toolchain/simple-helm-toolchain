@@ -28,7 +28,7 @@ toolchain:
      $ref: "#/messages/template.gettingStarted"
 services:
   repo:
-    service_id: bitbucketgit
+    service_id: githubconsolidated
     parameters:
       repo_name: 'hello-helm-{{timestamp}}'
       repo_url: >
