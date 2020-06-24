@@ -37,10 +37,6 @@ inputs:
     service: ${TEKTON_CATALOG_REPO}
     path: tester
   - type: git
-    branch: master
-    service: ${TEKTON_CATALOG_REPO}
-    path: toolchain
-  - type: git
     branch: trialv1
     service: ${TEKTON_CATALOG_REPO}
     path: utils
