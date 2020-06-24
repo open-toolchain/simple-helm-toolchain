@@ -27,23 +27,23 @@ inputs:
   - type: git
     branch: trialv1
     service: ${TEKTON_CATALOG_REPO}
-    path: temp/docker
+    path: linter
   - type: git
     branch: trialv1
     service: ${TEKTON_CATALOG_REPO}
-    path: temp/iks
+    path: delete/iks
   - type: git
     branch: trialv1
     service: ${TEKTON_CATALOG_REPO}
-    path: temp/tests
+    path: tester
+  - type: git
+    branch: master
+    service: ${TEKTON_CATALOG_REPO}
+    path: toolchain
   - type: git
     branch: trialv1
     service: ${TEKTON_CATALOG_REPO}
-    path: temp/toolchain
-  - type: git
-    branch: trialv1
-    service: ${TEKTON_CATALOG_REPO}
-    path: temp/utils
+    path: utils
 triggers:
   - type: manual
     name: Manual Trigger
