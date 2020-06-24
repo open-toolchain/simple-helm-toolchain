@@ -58,6 +58,7 @@ services:
       type: "link"
       has_issues: false
       enable_traceability: false
+      kind: ['pipeline']
   tekton-catalog-repo:
     service_id: >
       $env.pipeline_type === 'tekton' ? 'githubconsolidated' : ''
@@ -66,6 +67,7 @@ services:
       type: "link"
       has_issues: false
       enable_traceability: false
+      kind: ['pipeline']
   build:
     service_id: pipeline
     parameters:
