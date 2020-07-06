@@ -12,8 +12,21 @@ spec:
     - name: revision
       description: the git revision/commit for the git repo
       default: ""
+    - name: fail-on-lint-errors
+      description: force failure of task when docker lint errors are found
+      default: "true"
+    - name: fail-on-scanned-issues
+      description: force failure of task when vulnerability advisor scan issues are found
+      default: "true"
+    - name: path-to-context
+      default: "."
     - name: path-to-dockerfile
-      default: '.'
+      default: "."
+    - name: dockerfile
+      default: "Dockerfile"
+    - name: build-args
+      description: ibmcloud cr build argument list in the format 'KEY=VALUE' with a key-value pair per line.
+      default: ""
     - name: registry-region
       description: The IBM Cloud region for image registry
     - name: registry-namespace
@@ -88,12 +101,14 @@ spec:
       taskRef:
         name: linter-docker-lint
       params:
-        # - name: hadolint-ignored-rules
-        #   value: "DL3017,DL3020,DL3003"
+        - name: path-to-dockerfile
+          value: $(params.path-to-dockerfile)
+        - name: dockerfile
+          value: $(params.dockerfile)
+        - name: fail-on-lint-errors
+          value: $(params.fail-on-lint-errors)
         - name: pipeline-debug
           value: $(params.pipeline-debug)
-        - name: fail-on-lint-errors
-          value: "false"
       workspaces:
         - name: workspace
           workspace: pipeline-ws
@@ -128,11 +143,13 @@ spec:
         - name: image-name
           value: $(params.image-name)
         - name: path-to-context
-          value: $(params.path-to-dockerfile)
+          value: $(params.path-to-context)
         - name: path-to-dockerfile
           value: $(params.path-to-dockerfile)
-        # - name: additional-tags
-        #  value: 'latest'
+        - name: dockerfile
+          value: $(params.dockerfile)
+        - name: build-args
+          value: $(params.build-args)
         - name: additional-tags-script
           value: |
             # Minting image tag using format: BUILD_NUMBER-BRANCH-COMMIT_ID-TIMESTAMP
@@ -164,12 +181,8 @@ spec:
           value: "apikey"
         - name: scan-report-file
           value: 'app-image-va-report.json'
-        # - name: max-iteration
-        #   value: '5'
-        # - name: sleep-time
-        #   value: '3'
-        # - name: fail-on-scanned-issues
-        #   value: 'false'
+        - name: fail-on-scanned-issues
+          value: $(params.fail-on-scanned-issues)
         - name: pipeline-debug
           value: $(params.pipeline-debug)
         - name: image-url
@@ -232,9 +245,6 @@ spec:
             export IMAGE_TAG=$IMAGE_TAGS
             # Keep it in build.properties shuttle file
             echo "IMAGE_TAG=$IMAGE_TAGS" >> build.properties
-            echo "================"
-            cat build.properties
-            echo "================"
         - name: script
           value: |
             # uncomment to debug the script
@@ -253,7 +263,6 @@ spec:
           value: |
             # Keep APP_URL in build.properties shuttle file
             echo "APP_URL=$APP_URL" >> build.properties
-            cat build.properties
         - name: pipeline-debug
           value: $(params.pipeline-debug)
       workspaces:
