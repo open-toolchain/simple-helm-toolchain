@@ -35,6 +35,11 @@ spec:
       description: application name
     - name: image-name
       description: image name
+    - name: helm-chart-path
+      description: |
+        path to the folder containing the helm chart content (at least Chart.yaml).
+        If not specified, it will default to first folder in /chart
+      default: ""
     - name: dev-region
     - name: dev-resource-group
     - name: cluster-name
@@ -235,7 +240,7 @@ spec:
         - name: setup-script
           value: |
             export CLUSTER_NAMESPACE="$(params.dev-cluster-namespace)"
-            export DEPLOYMENT_FILE="deployment.yml"
+            export CHART_PATH="$(params.helm-chart-path)"
             # pipeline build number is the doi build record id (if any)
             export SOURCE_BUILD_NUMBER=$BUILD_NUMBER
             echo "SOURCE_BUILD_NUMBER=$BUILD_NUMBER" >> build.properties

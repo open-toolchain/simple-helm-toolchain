@@ -35,6 +35,11 @@ spec:
     - name: fail-on-scanned-issues
       description: force failure of task when vulnerability advisor scan issues are found
       default: "false"
+    - name: helm-chart-path
+      description: |
+        path to the folder containing the helm chart content (at least Chart.yaml).
+        If not specified, it will default to first folder in /chart
+      default: ""
     - name: pipeline-debug
       default: "0"
     - name: cluster-name
@@ -89,6 +94,8 @@ spec:
             value: $(params.build-args)
           - name: fail-on-scanned-issues
             value: $(params.fail-on-scanned-issues)
+          - name: helm-chart-path
+            value: $(params.helm-chart-path)
           - name: dev-region
             value: $(params.dev-region)
           - name: dev-resource-group
