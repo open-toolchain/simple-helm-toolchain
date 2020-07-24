@@ -22,7 +22,7 @@ template:
 toolchain:
   name: >
     $env.toolchainName ? '{{toolchainName}}' :
-      'helm-toolchain-{{timestamp}}'
+      'helm3-toolchain-{{timestamp}}'
   template:
     getting_started:
      $ref: "#/messages/template.gettingStarted"
