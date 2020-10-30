@@ -126,7 +126,7 @@ spec:
           - name: scm-type
             value: $(params.scm-type)
           - name: project-id
-      value: $(params.project-id)
+            value: $(params.project-id)
         workspaces:
           - name: pipeline-ws
             persistentVolumeClaim:
