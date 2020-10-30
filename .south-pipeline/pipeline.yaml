@@ -50,6 +50,12 @@ spec:
       description: the namespace
     - name: pipeline-debug
       default: "0"
+    - name: pr-url
+      description: pr url
+    - name: commit-timestamp
+    - name: scm-type
+    - name: project-id
+      default: ""
   workspaces:
     - name: pipeline-ws
   tasks:
