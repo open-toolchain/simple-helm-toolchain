@@ -49,16 +49,16 @@ spec:
     - name: dev-resource-group
     - name: dev-cluster-namespace
       description: namespace dev
-    - name: apikey
-      value: $(params.apikey)
     - name: pr-url
-      value: $(params.pr-url)
+      description: PR url
+    - name: apikey
     - name: commit-timestamp
-      value: $(params.commit-timestamp)
+      description: commit timestamp
     - name: scm-type
-      value: $(params.scm-type)
+      description: source code type used (github, github-ent, gitlab)
     - name: project-id
-      value: $(params.project-id)
+      description: project id
+      default: ""
   resourcetemplates:
     - apiVersion: v1
       kind: PersistentVolumeClaim
