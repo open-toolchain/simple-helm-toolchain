@@ -70,7 +70,6 @@ services:
       services:
         - repo
         - tekton-catalog-repo
-        - tekton-gitsecure
       name: 'pr-pipeline'
       type: >
         $env.pipeline_type === 'tekton' ? 'tekton': 'classic'
@@ -92,7 +91,6 @@ services:
           APP_REPO: repo
           API_KEY: '{{form.pipeline.parameters.api-key}}'
           APP_NAME: "{{form.pipeline.parameters.app-name}}"
-          TEKTON_GITSECURE: tekton-gitsecure
           ARTIFACTORY_DOCKER_CONFIG_JSON: '{{form.artifactoryComp.parameters.docker_config_json}}'
           PRIVATE_WORKER: '{{services.privateWorker.parameters.name}}'
           PIPELINE_REPO_BRANCH: >
@@ -118,7 +116,7 @@ services:
     parameters:
       services:
         - repo
-      name: "{{services.repo.parameters.repo_name}}"
+      name: 'ci-pipeline'
       ui-pipeline: true
       type: >
         $env.pipeline_type === 'tekton' ? 'tekton': 'classic'
