@@ -36,3 +36,4 @@ It implements the following best practices:
 * [Documentation](https://cloud.ibm.com/docs/services/ContinuousDelivery/index.html?pos=2)
 * Helm chart development [tips and tricks](https://kubernetes.io/docs/tasks/configure-pod-container/pull-image-private-registry/)
 * Helm Classic [Guide](https://kubernetes.io/docs/concepts/containers/images/#using-a-private-registry)
+test
