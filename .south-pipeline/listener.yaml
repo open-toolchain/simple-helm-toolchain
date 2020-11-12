@@ -153,15 +153,47 @@ spec:
 apiVersion: tekton.dev/v1beta1
 kind: TriggerBinding
 metadata:
+  name: github-ent-commit
+spec:
+  params:
+    - name: branch
+      value: $(event.ref)
+    - name: commit-id
+      value: $(event.after)
+    - name: commit-timestamp
+      value: $(event.repository.pushed_at)
+    - name: repository
+      value: $(event.repository.html_url)
+    - name: scm-type
+      value: "github-ent"
+---        
+apiVersion: tekton.dev/v1beta1
+kind: EventListener
+metadata:
+  name: github-ent-commit
+spec:
+  triggers:
+    - bindings: 
+        - name: github-ent-commit   
+      template:
+        name: trigger-template-simple-helm
+---
+apiVersion: tekton.dev/v1beta1
+kind: TriggerBinding
+metadata:
   name: github-commit
 spec:
   params:
-    - name: repository
-      value: "$(event.repository.url)"
     - name: branch
-      value: "$(event.ref)"
-    - name: revision
-      value: "$(event.head_commit.id)"
+      value: $(event.ref)
+    - name: commit-id
+      value: $(event.after)
+    - name: commit-timestamp
+      value: $(event.repository.updated_at)
+    - name: repository
+      value: $(event.repository.html_url)
+    - name: scm-type
+      value: "github"
 ---
 apiVersion: tekton.dev/v1beta1
 kind: EventListener
@@ -169,8 +201,8 @@ metadata:
   name: github-commit
 spec:
   triggers:
-    - binding:
-        name: github-commit
+    - bindings:  
+        - name: github-commit   
       template:
         name: trigger-template-simple-helm
 ---
@@ -180,12 +212,16 @@ metadata:
   name: grit-or-gitlab-commit
 spec:
   params:
-    - name: repository
-      value: "$(event.repository.git_http_url)"
     - name: branch
-      value: "$(event.ref)"
-    - name: revision
-      value: "$(event.checkout_sha)"
+      value: $(event.ref)
+    - name: commit-id
+      value: $(event.checkout_sha)
+    - name: commit-timestamp
+      value: $(event.commits[0].timestamp)
+    - name: repository
+      value: $(event.project.http_url)
+    - name: scm-type
+      value: "gitlab"
 ---
 apiVersion: tekton.dev/v1beta1
 kind: EventListener
@@ -193,8 +229,8 @@ metadata:
   name: grit-or-gitlab-commit
 spec:
   triggers:
-    - binding:
-        name: grit-or-gitlab-commit
+    - bindings:   
+        - name: grit-or-gitlab-commit
       template:
         name: trigger-template-simple-helm
 ---
@@ -210,6 +246,12 @@ spec:
       value: "$(event.push.changes[0].new.target.hash)"
     - name: branch
       value: "$(event.push.changes[0].new.name)"
+    - name: commit-timestamp
+      value: "$(event.pull_request.head.repo.pushed_at)"
+    - name: commit-id
+      value: "$(event.pull_request.head.sha)"
+    - name: scm-type
+      value: "bitbucket"
 ---
 apiVersion: tekton.dev/v1beta1
 kind: EventListener
