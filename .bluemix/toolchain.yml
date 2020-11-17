@@ -126,7 +126,7 @@ services:
           $text: >
             if ( $env.pipeline_type === 'tekton' ) {
               if ( $env.env_id === 'ibm:yp:us-south' ) {
-                "pipeline_tekton.yml"
+                "south_pipeline_tekton.yml"
               } else {
                 "pipeline_tekton.yml"
               }
@@ -146,8 +146,8 @@ services:
           APP_REPO_FULL: >
             if ( $env.source_provider === 'githubconsolidated' ) {
               "https://github.com/{{services.repo.parameters.owner_id}}/{{services.repo.parameters.repo_name}}";
-            } else if ( $env.source_provider === 'hostedgit' ) {
-              "https://us-south.git.cloud.ibm.com/{{services.repo.parameters.owner_id}}/{{services.repo.parameters.repo_name}}"
+            } else if ( $env.source_provider === 'hostedgit' && $env.env_id === 'ibm:yp:au-syd' ) {
+              "https://au-syd.git.cloud.ibm.com/{{services.repo.parameters.owner_id}}/{{services.repo.parameters.repo_name}}"
             } else if ( $env.source_provider === 'gitlab' ) {
               "https://gitlab.com/{{services.repo.parameters.owner_id}}/{{services.repo.parameters.repo_name}}";
             } else if ( $env.source_provider === 'bitbucketgit' ) {
@@ -155,7 +155,7 @@ services:
             } else if ( $env.source_provider === 'github_integrated' ) {
               "https://github.ibm.com/{{services.repo.parameters.owner_id}}/{{services.repo.parameters.repo_name}}";
             } else {
-              "https://us-south.git.cloud.ibm.com/{{services.repo.parameters.owner_id}}/{{services.repo.parameters.repo_name}}";
+              "https://us-south.git.cloud.ibm.com/{{services.repo.parameters.owner_id}}/{{services.repo.parameters.repo_name}}"
             }
           PIPELINE_REPO: pipeline-repo
           PIPELINE_REPO_BRANCH: >
@@ -163,15 +163,15 @@ services:
           TEKTON_CATALOG_REPO: tekton-catalog-repo
           GIT_COMMIT_EVENT_LISTENER_NAME: >
             if ( $env.source_provider === 'githubconsolidated' ) {
-              'github-ci-listener';
+              'github-commit';
             } else if ( $env.source_provider === 'gitlab' ) {
-              'gitlab-ci-listener';
+              'grit-or-gitlab-commit';
             } else if ( $env.source_provider === 'bitbucketgit' ) {
               'bitbucket-commit';
             } else if ( $env.source_provider === 'github_integrated' ) {
-              'github-ent-ci-listener';
+              'github-ent-commit';
             } else {
-              'gitlab-ci-listener';
+              'grit-or-gitlab-commit';
             }
         execute: >
           $env.pipeline_type === 'tekton' ? 'manual-run' : true
