@@ -25,7 +25,9 @@ template:
         "(" + $env.repository +
           "/tree/" + $env.branch + ")"
 toolchain:
-  name: "helm-toolchain-{{timestamp}}"
+  name: >
+    $env.toolchainName ? '{{toolchainName}}' :
+      'helm3-toolchain-{{timestamp}}'
   template:
     getting_started:
       $ref: "#/messages/template.gettingStarted"
