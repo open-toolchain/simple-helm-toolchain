@@ -12,7 +12,7 @@ stages:
   inputs:
   - type: git
     branch: master
-    service: ${APP_REPO}    
+    service: ${GIT_REPO}    
   triggers:
   - type: commit
   properties:
