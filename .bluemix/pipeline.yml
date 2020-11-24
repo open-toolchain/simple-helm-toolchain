@@ -147,7 +147,7 @@ stages:
       # This script does build a Docker image into IBM Container Service private image registry.
       # Minting image tag using format: BUILD_NUMBER-BRANCH-COMMIT_ID-TIMESTAMP
       # Also copies information into a build.properties file, so they can be reused later on by other scripts (e.g. image url, chart name, ...)
-      source <(curl -sSL "https://raw.githubusercontent.com/open-toolchain/commons/master/scripts/build_image.sh")
+      source <(curl -sSL "https://raw.githubusercontent.com/open-toolchain/commons/master/scripts/build_image_buildkit.sh")
   - name: Check vulnerabilities
     type: tester
     test_type: vulnerabilityadvisor
@@ -189,7 +189,7 @@ stages:
     value: ''
     type: text  
   jobs:
-  - name: Deploy with Helm
+  - name: Deploy with Helm 3
     type: deployer
     target:
       region_id: ${PROD_REGION_ID}
@@ -199,16 +199,16 @@ stages:
       #!/bin/bash
       # uncomment to debug the script
       # set -x
-      # copy the script below into your app code repo (e.g. ./scripts/check_and_deploy_helm.sh) and 'source' it from your pipeline job
+      # copy the script below into your app code repo (e.g. ./scripts/check_and_deploy_helm3.sh) and 'source' it from your pipeline job
       #    source ./scripts/check_and_deploy_helm.sh
       # alternatively, you can source it from online script:
-      #    source <(curl -sSL "https://raw.githubusercontent.com/open-toolchain/commons/master/scripts/check_and_deploy_helm.sh")
+      #    source <(curl -sSL "https://raw.githubusercontent.com/open-toolchain/commons/master/scripts/check_and_deploy_helm3.sh")
       # ------------------
-      # source: https://raw.githubusercontent.com/open-toolchain/commons/master/scripts/check_and_deploy_helm.sh
+      # source: https://raw.githubusercontent.com/open-toolchain/commons/master/scripts/check_and_deploy_helm3.sh
 
       # This script checks the IBM Container Service cluster is ready, has a namespace configured with access to the private
-      # image registry (using an IBM Cloud API Key), perform a Helm deploy of container image and check on outcome.
-      source <(curl -sSL "https://raw.githubusercontent.com/open-toolchain/commons/master/scripts/check_and_deploy_helm.sh")
+      # image registry (using an IBM Cloud API Key), perform a Helm 3 deploy of container image and check on outcome.
+      source <(curl -sSL "https://raw.githubusercontent.com/open-toolchain/commons/master/scripts/check_and_deploy_helm3.sh")
   - name: Check health
     type: deployer
     target:
