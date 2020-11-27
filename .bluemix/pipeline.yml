@@ -60,7 +60,7 @@ stages:
           for i in "${!locations[@]}"
           do
             echo "$i ${locations[i]} ${types[i]}"
-            ibmcloud doi publishtestrecord --logicalappname="$APP_NAME" --buildnumber=$BUILD_NUMBER --filelocation=${locations[i]} --type=${types[i]}
+            ibmcloud doi publishtestrecord --logicalappname=${IMAGE_NAME} --buildnumber=$BUILD_NUMBER --filelocation=${locations[i]} --type=${types[i]}
           done
         fi
       else
