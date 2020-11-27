@@ -130,8 +130,8 @@ services:
       configuration:
         content:
           $text: >
-            if ( $env.pipeline_type === 'tekton' || $env.env_id === 'ibm:yp:au-syd') {
-              if ( $env.env_id === 'ibm:yp:us-south' ) {
+            if ( $env.pipeline_type === 'tekton') {
+              if ( $env.env_id === 'ibm:yp:us-south' || $env.env_id === 'ibm:yp:au-syd') {
                 "south_pipeline_tekton.yml"
               } else {
                 "pipeline_tekton.yml"
