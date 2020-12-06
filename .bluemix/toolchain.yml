@@ -57,7 +57,7 @@ services:
     parameters:
       repo_url: >
         $env.repository
-      type: "link"
+      type: $env.type || 'clone'
       has_issues: false
       enable_traceability: false
       kind: ['pipeline']
