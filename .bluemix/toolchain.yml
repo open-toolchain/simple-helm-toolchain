@@ -58,6 +58,7 @@ services:
       repo_name: "simple-helm-toolchain-{{timestamp}}"
       repo_url: >
         $env.repository
+      source_repo_url: "https://github.com/open-toolchain/simple-helm-toolchain" 
       type: $env.type || 'clone'
       has_issues: false
       enable_traceability: false
