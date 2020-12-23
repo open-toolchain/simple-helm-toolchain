@@ -41,14 +41,17 @@ spec:
         path to the folder containing the helm chart content (at least Chart.yaml).
         If not specified, it will default to first folder in /chart
       default: ""
-    - name: pipeline-debug
-      default: "0"
     - name: cluster-name
       description: the name of the cluster to target
     - name: dev-region
     - name: dev-resource-group
     - name: dev-cluster-namespace
       description: namespace dev
+    - name: helm-upgrade-extra-args
+      description: complementary argument for the helm upgrade command
+      default: ""
+    - name: pipeline-debug
+      default: "0"
     - name: pr-url
       description: PR url
     - name: apikey
@@ -115,6 +118,8 @@ spec:
             value: $(params.cluster-name)
           - name: dev-cluster-namespace
             value: $(params.dev-cluster-namespace)
+          - name: helm-upgrade-extra-args
+            value: $(params.helm-upgrade-extra-args)
           - name: pipeline-debug
             value: $(params.pipeline-debug)
           - name: apikey
