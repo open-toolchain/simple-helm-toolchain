@@ -48,6 +48,9 @@ spec:
       description: the name of the cluster to target
     - name: dev-cluster-namespace
       description: the namespace
+    - name: helm-upgrade-extra-args
+      description: complementary argument for the helm upgrade command
+      default: ""
     - name: pipeline-debug
       default: "0"
     - name: pr-url
@@ -374,6 +377,7 @@ spec:
           value: |
             export CLUSTER_NAMESPACE="$(params.dev-cluster-namespace)"
             export CHART_PATH="$(params.helm-chart-path)"
+            export HELM_UPGRADE_EXTRA_ARGS="$(params.helm-upgrade-extra-args)"
             # pipeline build number is the doi build record id (if any)
             export SOURCE_BUILD_NUMBER=$BUILD_NUMBER
             echo "SOURCE_BUILD_NUMBER=$BUILD_NUMBER" >> build.properties
