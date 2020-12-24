@@ -48,7 +48,7 @@ spec:
     - name: dev-cluster-namespace
       description: namespace dev
     - name: helm-upgrade-extra-args
-      description: complementary argument for the helm upgrade command
+      description: complementary argument for the helm upgrade command. Can be used to specify an additional values file
       default: ""
     - name: pipeline-debug
       default: "0"
