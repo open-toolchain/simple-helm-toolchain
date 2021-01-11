@@ -27,7 +27,10 @@ stages:
     script: |+
       #!/bin/bash
       # set -x
-
+      export match=`echo $IDS_URL | grep test`
+      if [ $match ]; then
+          ibmcloud api test.cloud.ibm.com
+      fi
       # Git repo cloned at $WORKING_DIR, copy into $ARCHIVE_DIR
       mkdir -p $ARCHIVE_DIR
       cp -R -n ./ $ARCHIVE_DIR/ || true
@@ -51,6 +54,10 @@ stages:
     script: |-
       #!/bin/bash
       # set -x
+      export match=`echo $IDS_URL | grep test`
+      if [ $match ]; then
+          ibmcloud api test.cloud.ibm.com
+      fi
       if [ -f ./test/run-tests.sh ]; then
         source ./test/run-tests.sh
         ibmcloud login --apikey $IBM_CLOUD_API_KEY --no-region
