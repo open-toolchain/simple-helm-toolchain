@@ -55,7 +55,8 @@ services:
     service_id: >
       $env.pipeline_type === 'tekton' ? $env.source_provider ? $env.source_provider : 'hostedgit' : ''
     parameters:
-      repo_name: $env.toolchainName ? '{{toolchainName}}-pipeline' : "simple-helm-toolchain-{{timestamp}}"
+      repo_name: >
+        $env.toolchainName ? '{{toolchainName}}-pipeline' : 'simple-helm-toolchain-{{timestamp}}'
       repo_url: >
         $env.repository
       source_repo_url: "https://github.com/open-toolchain/simple-helm-toolchain"
