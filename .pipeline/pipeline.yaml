@@ -340,6 +340,8 @@ spec:
           value: $(tasks.deploy-to-kubernetes.results.cluster-id)
         - name: deployable-rg-id
           value: $(tasks.deploy-to-kubernetes.results.resource-group-id)
+        - name: deployable-url
+          value: $(tasks.deploy-to-kubernetes.results.app-url)
         - name: environment-label
           value: "$(params.cluster-name) namespace:$(params.dev-cluster-namespace)"
         - name: git-inputs

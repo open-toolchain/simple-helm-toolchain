@@ -164,7 +164,7 @@ spec:
         - name: scm-type
           value: $(params.scm-type)
         - name: project-id
-          value: $(params.project-id) 
+          value: $(params.project-id)
     - name: cra-cis-check
       taskRef:
         name: cra-cis-check
@@ -199,7 +199,7 @@ spec:
         - name: artifacts
           workspace: pipeline-ws
         - name: secrets
-          workspace: pipeline-ws          
+          workspace: pipeline-ws
       params:
         - name: repository
           value: $(tasks.extract-repository-url.results.extracted-value)
@@ -212,7 +212,7 @@ spec:
         - name: target-branch
           value: $(params.branch)
         - name: target-commit-id
-          value: $(tasks.git-clone.results.git-commit)      
+          value: $(tasks.git-clone.results.git-commit)
         - name: scm-type
           value: $(params.scm-type)
         - name: project-id
@@ -442,6 +442,8 @@ spec:
           value: $(tasks.deploy-to-kubernetes.results.cluster-id)
         - name: deployable-rg-id
           value: $(tasks.deploy-to-kubernetes.results.resource-group-id)
+        - name: deployable-url
+          value: $(tasks.deploy-to-kubernetes.results.app-url)
         - name: environment-label
           value: "$(params.cluster-name) namespace:$(params.dev-cluster-namespace)"
         - name: git-inputs
