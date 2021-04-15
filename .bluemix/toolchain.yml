@@ -68,6 +68,8 @@ services:
     service_id: >
       $env.pipeline_type === 'tekton' ? $env.source_provider ? $env.source_provider : 'hostedgit' : ''
     parameters:
+      repo_name: >
+        $env.toolchainName ? '{{toolchainName}}-tekton-catalog' : 'simple-helm-toolchain-{{timestamp}}'
       repo_url: "https://github.com/open-toolchain/tekton-catalog"
       source_repo_url: "https://github.com/open-toolchain/tekton-catalog"
       type: $env.type || 'clone'
