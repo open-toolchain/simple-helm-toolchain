@@ -1,5 +1,5 @@
 ---
-version: "2"
+version: "3"
 messages:
   $i18n: locales.yml
 template:
@@ -12,10 +12,6 @@ template:
   required:
     - build
     - repo
-  $configuration:
-    ENABLE_EXTENSIONS: true
-    ENABLE_IF_ELSE: true
-    EXPRESSION_MAXLENGTH: 1000
   info:
     git url: >
       "[" + $env.repository + "]" +
@@ -24,6 +20,8 @@ template:
       "[" + $env.branch + "]" +
         "(" + $env.repository +
           "/tree/" + $env.branch + ")"
+  wizard:
+    $ref: wizard.yml
 toolchain:
   name: >
     $env.toolchainName ? '{{toolchainName}}' :
