@@ -49,6 +49,7 @@ services:
       has_issues: true
       enable_traceability: true
       legal: true
+      source_provider: 'hostedgit'
   pipeline-repo:
     service_id: >
       $env.pipeline_type === 'tekton' ? $env.source_provider ? $env.source_provider : 'hostedgit' : ''
