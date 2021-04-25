@@ -41,6 +41,7 @@
     }
   },
   "form": [
-    "webide"
+    "webide",
+    "devops-insights"
   ]
 }
