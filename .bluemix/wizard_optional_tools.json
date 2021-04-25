@@ -26,7 +26,7 @@
         "$ref": "#/messages/wizard.optional.tools.webide.description"
       }
     },
-    "doi": {
+    "devops-insights": {
       "type": "boolean",
       "display": {
         "component": "toggle",
