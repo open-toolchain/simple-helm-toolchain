@@ -73,6 +73,7 @@ form:
   wizard_optional_tools:
     parameters:
       webide: true
+      doi: true
     schema:
       $ref: wizard_optional_tools.json
 
