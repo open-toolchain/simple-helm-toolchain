@@ -188,6 +188,32 @@ services:
         $env.env_id !== 'ibm:ys1:us-south' ? 'draservicebroker' : ''
   webide:
     service_id: orion
+  prod-env:
+    service_id: 'environment'
+    parameters:
+      name: 'prod-env'
+      properties:
+        - name: 'api-key'
+          type: 'SECURE'
+          value: '{{form.pipeline.parameters.api-key}}'
+        - name: 'region'
+          type: 'TEXT'
+          value: '{{form.pipeline.parameters.prod-region}}'
+        - name: 'resource-group'
+          type: 'TEXT'
+          value: '{{form.pipeline.parameters.prod-resource-group}}'
+        - name: 'cluster-namespace'
+          type: 'TEXT'
+          value: '{{form.pipeline.parameters.prod-cluster-namespace}}'
+        - name: 'cluster-name'
+          type: 'TEXT'
+          value: '{{form.pipeline.parameters.prod-cluster-name}}'
+        - name: 'registry-region'
+          type: 'TEXT'
+          value: '{{form.pipeline.parameters.registry-region}}'
+        - name: 'registry-namespace'
+          type: 'TEXT'
+          value: '{{form.pipeline.parameters.registry-namespace}}'
 form:
   pipeline:
     parameters:
