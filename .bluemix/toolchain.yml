@@ -57,10 +57,9 @@ services:
     parameters:
       repo_name: >
         $env.toolchainName ? '{{toolchainName}}-pipeline' : 'simple-helm-toolchain-{{timestamp}}'
-      repo_url: >
-        $env.repository
+      repo_url: "https://github.com/open-toolchain/simple-helm-toolchain"
       source_repo_url: "https://github.com/open-toolchain/simple-helm-toolchain"
-      type: $env.type || 'clone'
+      type: 'clone'
       has_issues: false
       enable_traceability: false
       kind: ['pipeline']
@@ -72,7 +71,7 @@ services:
         $env.toolchainName ? '{{toolchainName}}-tekton-catalog' : 'tekton-catalog-{{timestamp}}'
       repo_url: "https://github.com/open-toolchain/tekton-catalog"
       source_repo_url: "https://github.com/open-toolchain/tekton-catalog"
-      type: "link"
+      type: 'clone'
       has_issues: false
       enable_traceability: false
       kind: ['pipeline']
