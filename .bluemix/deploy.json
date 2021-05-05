@@ -242,7 +242,7 @@
             "display": {
                 "style": "info",
                 "title": "Environment",
-                "subtitle": "An environment containing the settings above will be automatically created for you. You can customize its name below"
+                "subtitle": "An environment comprising the parameters above will be automatically created for you. You can customize its name below."
             }
         },
         "env-name"
