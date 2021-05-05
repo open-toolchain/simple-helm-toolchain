@@ -92,6 +92,11 @@
             },
             "type": "string",
             "pattern": "\\S"
+        },
+        "env-name": {
+            "type": "string",
+            "title": "Environment name",
+            "key": "env-name"
         }
     },
     "required": ["app-name", "api-key", "registry-region", "registry-namespace", "prod-region", "prod-resource-group", "prod-cluster-name", "prod-cluster-namespace"],
@@ -146,10 +151,6 @@
                     "$ref": "#/messages/deploy.imgregNs"
                 },
                 "key": "registry-namespace"
-            }, {
-                "type": "text",
-                "title": "Environment name",
-                "key": "env-name"
             }]
         }, {
             "type": "table",

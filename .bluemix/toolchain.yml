@@ -191,7 +191,7 @@ services:
   prod-env:
     service_id: 'environment'
     parameters:
-      name: 'prod-env'
+      name: '{{form.pipeline.parameters.env-name}}'
       properties:
         - name: 'api-key'
           type: 'SECURE'
