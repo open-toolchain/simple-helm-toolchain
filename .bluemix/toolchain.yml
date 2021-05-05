@@ -229,5 +229,6 @@ form:
       prod-region: '{{prodRegion}}'
       prod-resource-group: '{{prodResourceGroup}}'
       prod-cluster-name: '{{prodClusterName}}'
+      env-name: 'prod-env'
     schema:
       $ref: deploy.json
