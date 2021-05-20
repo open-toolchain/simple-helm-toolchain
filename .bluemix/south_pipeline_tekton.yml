@@ -52,18 +52,22 @@ triggers:
     eventListener: manual-run
     properties: []
 properties:
-  - type: secure
-    name: toolchain-apikey
-    value: ${API_KEY}
+  - name: toolchain-apikey
+    value: prod-env
+    type: INTEGRATION
+    path: parameters.properties.api-key
   - name: apikey
-    value: ${API_KEY}
-    type: SECURE
+    value: prod-env
+    type: INTEGRATION
+    path: parameters.properties.api-key
   - name: registry-region
-    value: ${REGISTRY_REGION_ID}
-    type: text
+    value: prod-env
+    type: INTEGRATION
+    path: parameters.properties.registry-region
   - name: registry-namespace
-    value: ${REGISTRY_NAMESPACE}
-    type: text
+    value: prod-env
+    type: INTEGRATION
+    path: parameters.properties.registry-namespace
   - name: image-name
     value: ${APP_NAME}
     type: text
@@ -71,14 +75,18 @@ properties:
     value: ${APP_NAME}
     type: text
   - name: dev-cluster-namespace
-    value: ${PROD_CLUSTER_NAMESPACE}
-    type: text
+    value: prod-env
+    type: INTEGRATION
+    path: parameters.properties.cluster-namespace
   - name: dev-region
-    value: ${PROD_REGION_ID}
-    type: text
+    value: prod-env
+    type: INTEGRATION
+    path: parameters.properties.region
   - name: cluster-name
-    value: ${PROD_CLUSTER_NAME}
-    type: text
+    value: prod-env
+    type: INTEGRATION
+    path: parameters.properties.cluster-name
   - name: dev-resource-group
-    value: ${PROD_RESOURCE_GROUP}
-    type: text
+    value: prod-env
+    type: INTEGRATION
+    path: parameters.properties.resource-group
