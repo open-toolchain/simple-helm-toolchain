@@ -122,6 +122,12 @@ services:
             } else {
               'gitlab-pr-listener';
             }
+          IBMCLOUD_API: >
+            if ( $env.env_id === 'ibm:ys1:us-south') {
+              "https://test.cloud.ibm.com"
+            } else {
+              "https://cloud.ibm.com"
+            }
         execute: false
   build:
     service_id: pipeline
@@ -183,6 +189,12 @@ services:
               'github-ent-commit';
             } else {
               'grit-or-gitlab-commit';
+            }
+          IBMCLOUD_API: >
+            if ( $env.env_id === 'ibm:ys1:us-south') {
+              "https://test.cloud.ibm.com"
+            } else {
+              "https://cloud.ibm.com"
             }
         execute: >
           $env.pipeline_type === 'tekton' ? 'manual-run' : true
