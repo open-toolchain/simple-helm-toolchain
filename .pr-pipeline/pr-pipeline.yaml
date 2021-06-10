@@ -5,6 +5,9 @@ metadata:
   name: pr-pipeline
 spec:
   params:
+    - name: ibmcloud-api
+      description: the ibmcloud api
+      default: https://cloud.ibm.com
     - name: target-repository
       description: the git repo
     - name: target-branch
@@ -51,6 +54,8 @@ spec:
       taskRef:
         name: git-clone-repo
       params:
+        - name: ibmcloud-api
+          value: $(params.ibmcloud-api)
         - name: continuous-delivery-context-secret
           value: "secure-properties"
         - name: ibmcloud-apikey-secret-key

@@ -5,6 +5,9 @@ metadata:
   name: pr-template
 spec:
   params:
+    - name: ibmcloud-api
+      description: the ibmcloud api
+      default: https://cloud.ibm.com
     - name: target-branch
       description: target branch
     - name: target-commit-id
@@ -51,6 +54,8 @@ spec:
             persistentVolumeClaim:
               claimName: pipelinerun-$(uid)-pvc
         params:
+          - name: ibmcloud-api
+            value: $(params.ibmcloud-api)
           - name: target-repository
             value: $(params.target-repository)
           - name: target-branch
