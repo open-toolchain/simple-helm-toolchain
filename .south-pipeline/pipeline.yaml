@@ -296,6 +296,8 @@ spec:
       taskRef:
         name: icr-execute-in-dind
       params:
+        - name: ibmcloud-api
+          value: $(params.ibmcloud-api)
         - name: continuous-delivery-context-secret
           value: "secure-properties"
         - name: container-registry-apikey-secret-key
