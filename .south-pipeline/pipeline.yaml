@@ -116,6 +116,8 @@ spec:
       taskRef:
         name: doi-publish-buildrecord
       params:
+        - name: ibmcloud-api
+          value: $(params.ibmcloud-api)
         - name: toolchain-apikey-secret-key
           value: "toolchain-apikey"
         - name: app-name
@@ -276,6 +278,8 @@ spec:
       taskRef:
         name: doi-publish-testrecord
       params:
+        - name: ibmcloud-api
+          value: $(params.ibmcloud-api)
         - name: toolchain-apikey-secret-key
           value: "toolchain-apikey"
         - name: build-number
@@ -373,6 +377,8 @@ spec:
       taskRef:
         name: doi-publish-testrecord
       params:
+        - name: ibmcloud-api
+          value: $(params.ibmcloud-api)
         - name: toolchain-apikey-secret-key
           value: "toolchain-apikey"
         - name: build-number
