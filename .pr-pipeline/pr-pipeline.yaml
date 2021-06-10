@@ -38,6 +38,8 @@ spec:
         - name: artifacts
           workspace: pipeline-ws
       params:
+        - name: ibmcloud-api
+          value: $(params.ibmcloud-api)
         - name: repository
           value: $(params.target-repository)
         - name: revision
@@ -98,6 +100,8 @@ spec:
         - name: artifacts
           workspace: pipeline-ws
       params:
+        - name: ibmcloud-api
+          value: $(params.ibmcloud-api)
         - name: repository
           value: $(params.target-repository)
         - name: revision
