@@ -445,6 +445,8 @@ spec:
       taskRef:
         name: toolchain-publish-deployable-mapping
       params:
+        - name: ibmcloud-api
+          value: $(params.ibmcloud-api)
         - name: deployable-type
           value: "kubernetes_cluster"
         - name: deployable-region-id
