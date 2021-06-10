@@ -362,6 +362,8 @@ spec:
         name: iks-deploy-to-kubernetes
       runAfter: [deploy-to-kubernetes]
       params:
+        - name: ibmcloud-api
+          value: $(params.ibmcloud-api)
         - name: shuttle-properties-file
           value: "build.properties"
         - name: cluster-region
