@@ -62,6 +62,8 @@ spec:
     - name: registry-create-namespace
       description: create container registry namespace if it doesn't already exists
       default: "true"
+    - name: commons-hosted-region
+      default: ""
   workspaces:
     - name: pipeline-ws
   tasks:
@@ -413,13 +415,19 @@ spec:
             # copy the script below into your app code repo (e.g. ./scripts/check_and_deploy_helm3.sh) and 'source' it from your pipeline job
             #    source ./scripts/check_and_deploy_helm3.sh
             # alternatively, you can source it from online script:
-            #    source <(curl -sSL "https://raw.githubusercontent.com/open-toolchain/commons/master/scripts/check_and_deploy_helm3.sh")
+            #    source <(curl -sSL "https://${REGION}.git.cloud.ibm.com/open-toolchain/commons/-/raw/master/scripts/check_and_deploy_helm3.sh")
             # ------------------
-            # source: https://raw.githubusercontent.com/open-toolchain/commons/master/scripts/check_and_deploy_helm3.sh
 
             # This script checks the IBM Container Service cluster is ready, has a namespace configured with access to the private
             # image registry (using an IBM Cloud API Key), perform a kubectl deploy of container image and check on outcome.
-            source <(curl -sSL "https://raw.githubusercontent.com/open-toolchain/commons/master/scripts/check_and_deploy_helm3.sh")
+            if [ "$(params.commons-hosted-region)" ]; then
+              REGION=$(echo "$(params.commons-hosted-region)" | awk -F ':' '{print $3;}')
+              echo "USING HOSTED"
+              source <(curl -sSL "https://${REGION}.git.cloud.ibm.com/huayuenh/commons/-/raw/master/scripts/check_and_deploy_helm3.sh")
+            else
+              echo "USING DEFAULT"
+              source <(curl -sSL "https://raw.githubusercontent.com/open-toolchain/commons/master/scripts/check_and_deploy_helm3.sh")
+            fi
         - name: post-execution-script
           value: |
             # Keep APP_URL in build.properties shuttle file
@@ -473,11 +481,16 @@ spec:
             # copy the script below into your app code repo (e.g. ./scripts/check_health.sh) and 'source' it from your pipeline job
             #    source ./scripts/check_health.sh
             # alternatively, you can source it from online script:
-            #    source <(curl -sSL "https://raw.githubusercontent.com/open-toolchain/commons/master/scripts/check_health.sh")
-            # ------------------
-            # source: https://raw.githubusercontent.com/open-toolchain/commons/master/scripts/check_health.sh
-            # Check liveness and readiness probes to confirm application is healthy
-            source <(curl -sSL "https://raw.githubusercontent.com/open-toolchain/commons/master/scripts/check_health.sh")
+            #    source <(curl -sSL "https://${REGION}.git.cloud.ibm.com/open-toolchain/commons/-/raw/master/scripts/check_health.sh")
+            # Check liveness and readiness probes to confirm application is healthy")
+            if [ "$(params.commons-hosted-region)" ]; then
+              REGION=$(echo "$(params.commons-hosted-region)" | awk -F ':' '{print $3;}')
+              echo "USING HOSTED"
+              source <(curl -sSL "https://${REGION}.git.cloud.ibm.com/huayuenh/commons/-/raw/master/scripts/check_health.sh")
+            else
+              echo "USING DEFAULT"
+              source <(curl -sSL "https://raw.githubusercontent.com/open-toolchain/commons/master/scripts/check_health.sh")
+            fi
         - name: pipeline-debug
           value: $(params.pipeline-debug)
       workspaces:

@@ -24,8 +24,9 @@ template:
       "[" + $env.branch + "]" +
         "(" + $env.repository +
           "/tree/" + $env.branch + ")"
+    hosted_region: ""
 toolchain:
-  name: >
+  name
     $env.toolchainName ? '{{toolchainName}}' :
       'helm-toolchain-{{timestamp}}'
   template:
@@ -42,10 +43,12 @@ services:
       repo_url: >
         $env.type === 'link' ? $env.app_repo :
           $env.sourceZipUrl ? '{{sourceZipUrl}}' :
+            $env.template.info.hosted_region !== "" ? 'https://{{template.info.hosted_region}}.git.cloud.ibm.com/huayuenh/hello-helm':
             'https://github.com/open-toolchain/hello-helm'
       source_repo_url: >
         $env.type === 'fork' || $env.type === 'clone' ? $env.app_repo :
           $env.sourceZipUrl ? '{{sourceZipUrl}}' :
+            $env.template.info.hosted_region !== "" ? 'https://{{template.info.hosted_region}}.git.cloud.ibm.com/huayuenh/hello-helm':
             'https://github.com/open-toolchain/hello-helm'
       type: $env.type || 'clone'
       has_issues: true
@@ -57,8 +60,18 @@ services:
     parameters:
       repo_name: >
         $env.toolchainName ? '{{toolchainName}}-pipeline' : 'simple-helm-toolchain-{{timestamp}}'
-      repo_url: "https://github.com/open-toolchain/simple-helm-toolchain"
-      source_repo_url: "https://github.com/open-toolchain/simple-helm-toolchain"
+      repo_url: >
+        if ( $env.template.info.hosted_region !== "" ) {
+          "https://{{template.info.hosted_region}}.git.cloud.ibm.com/huayuenh/simple-helm-toolchain"
+        } else {
+          "https://github.com/open-toolchain/simple-helm-toolchain"
+        }
+      source_repo_url: >
+        if ( $env.template.info.hosted_region !== "" ) {
+          "https://{{template.info.hosted_region}}.git.cloud.ibm.com/huayuenh/simple-helm-toolchain"
+        } else {
+          "https://github.com/open-toolchain/simple-helm-toolchain"
+        }
       type: 'clone'
       has_issues: false
       enable_traceability: false
@@ -69,8 +82,18 @@ services:
     parameters:
       repo_name: >
         $env.toolchainName ? '{{toolchainName}}-tekton-catalog' : 'tekton-catalog-{{timestamp}}'
-      repo_url: "https://github.com/open-toolchain/tekton-catalog"
-      source_repo_url: "https://github.com/open-toolchain/tekton-catalog"
+      repo_url: >
+        if ( $env.template.info.hosted_region !== "" ) {
+          "https://{{template.info.hosted_region}}.git.cloud.ibm.com/huayuenh/tekton-catalog"
+        } else {
+          "https://github.com/open-toolchain/tekton-catalog"
+        }
+      source_repo_url: >
+        if ( $env.template.info.hosted_region !== "" ) {
+          "https://{{template.info.hosted_region}}.git.cloud.ibm.com/huayuenh/tekton-catalog"
+        } else {
+          "https://github.com/open-toolchain/tekton-catalog"
+        }
       type: 'clone'
       has_issues: false
       enable_traceability: false
@@ -122,6 +145,8 @@ services:
             } else {
               'gitlab-pr-listener';
             }
+          COMMONS_HOSTED_REGION: >
+            $env.template.info.hosted_region !== "" ? '{{template.info.hosted_region}}':''
         execute: false
   build:
     service_id: pipeline
@@ -184,6 +209,8 @@ services:
             } else {
               'grit-or-gitlab-commit';
             }
+          COMMONS_HOSTED_REGION: >
+            $env.template.info.hosted_region !== "" ? '{{template.info.hosted_region}}':''
         execute: >
           $env.pipeline_type === 'tekton' ? 'manual-run' : true
   devops-insights:

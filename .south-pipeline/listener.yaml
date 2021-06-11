@@ -62,6 +62,8 @@ spec:
     - name: project-id
       description: project id
       default: ""
+    - name: commons-hosted-region
+      default: ""
   resourcetemplates:
     - apiVersion: v1
       kind: PersistentVolumeClaim
@@ -132,6 +134,8 @@ spec:
             value: $(params.scm-type)
           - name: project-id
             value: $(params.project-id)
+          - name: commons-hosted-region
+            value: $(params.commons-hosted-region)
         workspaces:
           - name: pipeline-ws
             persistentVolumeClaim:
