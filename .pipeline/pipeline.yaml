@@ -354,7 +354,7 @@ spec:
         - name: deployable-type
           value: "kubernetes_cluster"
         - name: deployable-region-id
-          value: $(tasks.deploy-to-kubernetes.results.region)
+          value: $(params.dev-region)
         - name: deployable-guid
           value: $(tasks.deploy-to-kubernetes.results.cluster-id)
         - name: deployable-rg-id
