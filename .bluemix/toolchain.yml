@@ -26,7 +26,7 @@ template:
           "/tree/" + $env.branch + ")"
     hosted_region: ""
 toolchain:
-  name
+  name: >
     $env.toolchainName ? '{{toolchainName}}' :
       'helm-toolchain-{{timestamp}}'
   template:
