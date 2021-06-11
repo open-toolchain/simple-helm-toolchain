@@ -421,11 +421,10 @@ spec:
             # This script checks the IBM Container Service cluster is ready, has a namespace configured with access to the private
             # image registry (using an IBM Cloud API Key), perform a kubectl deploy of container image and check on outcome.
             if [ "$(params.commons-hosted-region)" ]; then
-              REGION=$(echo "$(params.commons-hosted-region)" | awk -F ':' '{print $3;}')
-              echo "USING HOSTED"
-              source <(curl -sSL "https://${REGION}.git.cloud.ibm.com/huayuenh/commons/-/raw/master/scripts/check_and_deploy_helm3.sh")
+              echo "USING HOSTED SCRIPTS"
+              source <(curl -sSL "https://$(params.commons-hosted-region).git.cloud.ibm.com/huayuenh/commons/-/raw/master/scripts/check_and_deploy_helm3.sh")
             else
-              echo "USING DEFAULT"
+              echo "USING DEFAULT SCRIPT"
               source <(curl -sSL "https://raw.githubusercontent.com/open-toolchain/commons/master/scripts/check_and_deploy_helm3.sh")
             fi
         - name: post-execution-script
@@ -484,11 +483,10 @@ spec:
             #    source <(curl -sSL "https://${REGION}.git.cloud.ibm.com/open-toolchain/commons/-/raw/master/scripts/check_health.sh")
             # Check liveness and readiness probes to confirm application is healthy")
             if [ "$(params.commons-hosted-region)" ]; then
-              REGION=$(echo "$(params.commons-hosted-region)" | awk -F ':' '{print $3;}')
-              echo "USING HOSTED"
-              source <(curl -sSL "https://${REGION}.git.cloud.ibm.com/huayuenh/commons/-/raw/master/scripts/check_health.sh")
+              echo "USING HOSTED SCRIPT"
+              source <(curl -sSL "https://$(params.commons-hosted-region).git.cloud.ibm.com/huayuenh/commons/-/raw/master/scripts/check_health.sh")
             else
-              echo "USING DEFAULT"
+              echo "USING DEFAULT SCRIPT"
               source <(curl -sSL "https://raw.githubusercontent.com/open-toolchain/commons/master/scripts/check_health.sh")
             fi
         - name: pipeline-debug

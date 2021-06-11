@@ -131,8 +131,10 @@ stages:
       # This script checks presence of registry namespace.
       source <(curl -sSL "https://raw.githubusercontent.com/open-toolchain/commons/master/scripts/check_registry.sh")
       if [ "${COMMONS_HOSTED_REGION}" ]; then
+        echo "RUNNING HOSTED"
         source <(curl -sSL "https://${COMMONS_HOSTED_REGION}.git.cloud.ibm.com/huayuenh/commons/-/raw/master/scripts/check_registry.sh")
       else
+        echo "RUNNING DEFAULT"
         source <(curl -sSL "https://raw.githubusercontent.com/open-toolchain/commons/master/scripts/check_registry.sh")
       fi
   - name: Build container image
