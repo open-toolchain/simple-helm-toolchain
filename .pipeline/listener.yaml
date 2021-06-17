@@ -5,6 +5,9 @@ metadata:
   name: trigger-template-simple-helm
 spec:
   params:
+    - name: ibmcloud-api
+      description: the ibmcloud api
+      default: https://cloud.ibm.com
     - name: repository
       description: The git repo
     - name: branch
@@ -74,6 +77,8 @@ spec:
         pipelineRef:
           name: simple-helm-pipeline
         params:
+          - name: ibmcloud-api
+            value: $(params.ibmcloud-api)
           - name: repository
             value: $(params.repository)
           - name: branch
