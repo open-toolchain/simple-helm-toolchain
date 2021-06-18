@@ -151,6 +151,8 @@ services:
             'https://raw.githubusercontent.com/open-toolchain/commons/master'
           DEFINITIONS_BRANCH: >
             $env.template.info.hosted_region !== "" ? 'main': 'master'
+          APP_REPO_BRANCH: >
+            $env.template.info.hosted_region !== "" ? 'main': 'master'
           IBMCLOUD_API: >
             if ( $env.env_id === 'ibm:ys1:us-south') {
               "https://test.cloud.ibm.com"
@@ -224,6 +226,8 @@ services:
             $env.template.info.hosted_region !== "" ? 'https://{{template.info.hosted_region}}.git.cloud.ibm.com/open-toolchain/commons/-/raw/main':
             'https://raw.githubusercontent.com/open-toolchain/commons/master'
           DEFINITIONS_BRANCH: >
+            $env.template.info.hosted_region !== "" ? 'main': 'master'
+          APP_REPO_BRANCH: >
             $env.template.info.hosted_region !== "" ? 'main': 'master'
           IBMCLOUD_API: >
             if ( $env.env_id === 'ibm:ys1:us-south') {
