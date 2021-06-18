@@ -55,6 +55,8 @@ spec:
       default: ""
     - name: pipeline-debug
       default: "0"
+    - name: commons-hosted-region
+      default: ""
   resourcetemplates:
     - apiVersion: v1
       kind: PersistentVolumeClaim
@@ -117,6 +119,8 @@ spec:
             value: $(params.helm-upgrade-extra-args)
           - name: pipeline-debug
             value: $(params.pipeline-debug)
+          - name: commons-hosted-region
+            value: $(params.commons-hosted-region)
         workspaces:
           - name: pipeline-ws
             persistentVolumeClaim:
