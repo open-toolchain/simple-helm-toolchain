@@ -19,7 +19,7 @@ stages:
 - name: BUILD
   inputs:
   - type: git
-    branch: {APP_REPO_BRANCH}
+    branch: ${APP_REPO_BRANCH}
     service: ${APP_REPO}    
   triggers:
   - type: commit
