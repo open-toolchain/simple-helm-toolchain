@@ -152,7 +152,11 @@ services:
           DEFINITIONS_BRANCH: >
             $env.template.info.hosted_region !== "" ? 'main': 'master'
           APP_REPO_BRANCH: >
-            $env.template.info.hosted_region !== "" ? 'main': 'master'
+            if ($env.template.info.hosted_region === "" || $env.sourceZipUrl) {
+              'master'
+            } else {
+              'main'
+            }
           IBMCLOUD_API: >
             if ( $env.env_id === 'ibm:ys1:us-south') {
               "https://test.cloud.ibm.com"
@@ -228,7 +232,11 @@ services:
           DEFINITIONS_BRANCH: >
             $env.template.info.hosted_region !== "" ? 'main': 'master'
           APP_REPO_BRANCH: >
-            $env.template.info.hosted_region !== "" ? 'main': 'master'
+            if ($env.template.info.hosted_region === "" || $env.sourceZipUrl) {
+              'master'
+            } else {
+              'main'
+            }
           IBMCLOUD_API: >
             if ( $env.env_id === 'ibm:ys1:us-south') {
               "https://test.cloud.ibm.com"
