@@ -152,7 +152,9 @@ services:
           DEFINITIONS_BRANCH: >
             $env.template.info.hosted_region !== "" ? 'main': 'master'
           APP_REPO_BRANCH: >
-            if ($env.template.info.hosted_region === "" || $env.sourceZipUrl) {
+            if ($env.appRepoBranch) {
+              '{{appRepoBranch}}'
+            } else if ($env.template.info.hosted_region === "" || $env.sourceZipUrl) {
               'master'
             } else {
               'main'
@@ -232,7 +234,9 @@ services:
           DEFINITIONS_BRANCH: >
             $env.template.info.hosted_region !== "" ? 'main': 'master'
           APP_REPO_BRANCH: >
-            if ($env.template.info.hosted_region === "" || $env.sourceZipUrl) {
+            if ($env.appRepoBranch) {
+              '{{appRepoBranch}}'
+            } else if ($env.template.info.hosted_region === "" || $env.sourceZipUrl) {
               'master'
             } else {
               'main'
