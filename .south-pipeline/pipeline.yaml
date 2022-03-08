@@ -138,6 +138,8 @@ spec:
       params:
         - name: pipeline-debug
           value: $(params.pipeline-debug)
+        - name: ibmcloud-api
+          value: $(params.ibmcloud-api)
       workspaces:
         - name: artifacts
           workspace: pipeline-ws
