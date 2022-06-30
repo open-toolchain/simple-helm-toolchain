@@ -9,6 +9,8 @@ spec:
       description: The ibmcloud api
     - name: ibmcloud-region
       description: (Optional) ibmcloud region to use
+    - name: git-token
+      description: access token for the git repo
     - name: pipeline-debug
       description: Toggles debug mode for the pipeline
     - name: registry-region
@@ -108,6 +110,8 @@ spec:
           value: $(params.ibmcloud-api)
         - name: ibmcloud-apikey-secret-key
           value: "apikey"
+        - name: git-access-token
+          value: $(params.git-token)
         - name: pipeline-debug
           value: $(params.pipeline-debug)
         - name: pr-branch

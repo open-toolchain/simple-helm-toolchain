@@ -64,6 +64,8 @@ properties:
   - name: apikey
     value: ${API_KEY}
     type: SECURE
+  - name: git-token
+    type: secure
   - name: registry-region
     value: ${REGISTRY_REGION_ID}
     type: text
