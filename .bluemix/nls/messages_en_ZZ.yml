@@ -38,7 +38,6 @@ headerSVG.gitlab1: "[G'GitLabฏูİı｜]"
 headerSVG.repository: "[G'ＲEPOSITORYฏูİı｜]"
 headerSVG.gitlab2: "[G'GitLabฏูİı｜]"
 headerSVG.pipeline: "[G'PIPELINEฏูİı｜]"
-headerSVG.webIde: "[G'WEB IDEฏูİı｜]"
 headerSVG.ibmCloud: "[G'IBM Cloudฏูİı｜]"
 #Note on the following two translation. Together read "Kubernetes with Helm" but need to be split  as text wrap not supported in SVG. On screen it will look like:
 #Kubernetes
@@ -81,7 +80,5 @@ wizard.vault.hashicorp.description: "[G'ＨａｓｈｉＣｏｒｐ Ｖａｕｌ
 wizard.vault.info: "[G'Ｐｌｅａｓｅ ｉｄｅｎｔｉｆy the secrets providers containing your secrets:ฏูİı｜]"
 wizard.optional.tools.title: "[G'Ｏｔher Toolsฏูİı｜]"
 wizard.optional.tools.longDescription: "[G'Ｔｈｅｓｅ ａｒｅ ｏｐｔｉｏnal tools that can be included in your toolchain.ฏูİı｜]"
-wizard.optional.tools.webide.title: "[G'Ｏｒｉｏｎ ＷｅｂＩＤＥ (no configuration required)ฏูİı｜]"
-wizard.optional.tools.webide.description: "[G'Ｄｅｖｅｌｏｐ ｆｏｒ ｔｈｅ ｗｅｂ ａｎｄ ｔhe cloud in this browser-based integrated development environment (IDE).ฏูİı｜]"
 wizard.optional.tools.doi.title: "[G'ＤｅｖＯｐｓ Ｉｎｓｉｇhts (no configuration required)ฏูİı｜]"
 wizard.optional.tools.doi.description: "[G'ＤｅｖＯｐｓ Ｉｎｓｉｇｈｔｓ ｐｒｏｖｉｄｅｓ ｃｏｍｐｒｅｈｅｎｓｉｖｅ ｉｎｓｉｇｈｔｓ ｆrom popular continuous integration and continuous delivery tools to increase the speed and control of your application delivery.ฏูİı｜]"

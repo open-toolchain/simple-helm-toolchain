@@ -38,7 +38,6 @@ headerSVG.gitlab1: "GitLab"
 headerSVG.repository: "儲存庫"
 headerSVG.gitlab2: "GitLab"
 headerSVG.pipeline: "管線"
-headerSVG.webIde: "WEB IDE"
 headerSVG.ibmCloud: "IBM Cloud"
 #Note on the following two translation. Together read "Kubernetes with Helm" but need to be split  as text wrap not supported in SVG. On screen it will look like:
 #Kubernetes
@@ -81,7 +80,5 @@ wizard.vault.hashicorp.description: "「HashiCorp 加密配置檔」是一個密
 wizard.vault.info: "請識別包含您密鑰的密鑰提供者："
 wizard.optional.tools.title: "其他工具"
 wizard.optional.tools.longDescription: "這些是可包括在您的工具鏈中的選用工具。"
-wizard.optional.tools.webide.title: "Orion WebIDE（不需要配置）"
-wizard.optional.tools.webide.description: "在此瀏覽器型的整合開發環境 (IDE) 中開發 Web 及雲端。"
 wizard.optional.tools.doi.title: "DevOps Insights（不需要配置）"
 wizard.optional.tools.doi.description: "DevOps Insights 可以從熱門的連續整合及 Continuous Delivery 工具中，提供全方位的洞察以提升應用程式交付的速度及控制。"
