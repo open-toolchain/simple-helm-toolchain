@@ -39,10 +39,6 @@
 <g>
 	<circle id="svg_2" class="st1" cx="45" cy="87.1" r="26.5"/>
 </g>
-<rect id="svg_3" x="1" y="1" class="st2" width="83.5" height="4.5"/>
-<rect id="svg_4" x="90.7" y="1" class="st3" width="83.5" height="4.5"/>
-<rect id="svg_5" x="180.7" y="1" class="st4" width="83.5" height="4.5"/>
-<rect id="svg_6" x="269.8" y="1" class="st5" width="83.5" height="4.5"/>
 <circle id="svg_7" class="st1" cx="222.1" cy="87.5" r="26.5"/>
 <line id="svg_9" class="st6" x1="44.8" y1="43" x2="131.5" y2="43"/>
 <g id="svg_10">
@@ -103,10 +99,6 @@
 </g>
 <text id="headerSVG.issueTracker" transform="matrix(0.927 0 0 1 2.9888 131.2939)" class="st14 st15">ISSUE TRACKER</text>
 
-<text id="headerSVG.think" transform="matrix(1 0 0 1 0.6431 18.7948)" class="st14 st15">THINK</text>
-<text id="headerSVG.code" transform="matrix(1 0 0 1 90.3682 18.7948)" class="st14 st15">CODE</text>
-<text id="headerSVG.deliver" transform="matrix(1 0 0 1 180.1318 18.7948)" class="st14 st15">DELIVER</text>
-<text id="headerSVG.run" transform="matrix(1 0 0 1 268.856 18.7948)" class="st14 st15">RUN</text>
 <text id="headerSVG.repository" transform="matrix(0.927 0 0 1 101.605 131.2939)" class="st14 st15">REPOSITORY</text>
 
 <text id="headerSVG.pipeline" transform="matrix(0.927 0 0 1 200.5088 131.2939)" class="st14 st15">PIPELINE</text>
