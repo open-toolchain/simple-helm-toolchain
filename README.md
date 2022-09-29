@@ -29,8 +29,7 @@ It implements the following best practices:
 ---
 ### Learn more 
 
-* Blog [Continuously deliver your app to Kubernetes with IBM Cloud](https://admin.blogs.prd.ibm.event.ibm.com/blogs/bluemix/?p=114624&preview=1&_ppp=ac27c51c93)
-* [Step-by-step tutorial](https://www.ibm.com/cloud/garage/tutorials/tc-simple-kube-helm)
+* [Step-by-step tutorial](https://www.ibm.com/cloud/architecture/tutorials/use-develop-kubernetes-app-with-helm-toolchain)
 * [Getting started with IBM Cloud clusters](https://cloud.ibm.com/docs/containers/container_index.html?pos=2)
 * [Getting started](https://cloud.ibm.com/devops/getting-started) with toolchains
 * [Documentation](https://cloud.ibm.com/docs/services/ContinuousDelivery/index.html?pos=2)
