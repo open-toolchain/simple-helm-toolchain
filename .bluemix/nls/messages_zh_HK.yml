@@ -1,8 +1,8 @@
 ---
 #The format for creating a link with a URL and text is [link text](link url) with no spaces or characters between the two sets of brackets- []()
 template.name: "使用 Helm 3 來開發 Kubernetes 應用程式"
-template.description: "透過此工具鏈，您可以在來源控制中一起開發 Docker 應用程式及其 Helm Chart，並自動對其進行建置並部署到 Kubernetes 叢集中。此工具鏈會先執行例行性檢查，然後才會進行建置或部署，並透過使用專用容器登錄、容器登錄的名稱空間及 Kubernetes 叢集來確保隱私權。此工具鏈還正在善用[程式碼風險分析器](https://cloud.ibm.com/docs/ContinuousDelivery?topic=ContinuousDelivery-cd-configure-cra-repos)及[漏洞顧問](https://cloud.ibm.com/docs/services/va?topic=va-va_index)，以確保只會部署安全的映像檔。\n\n依預設，此工具鏈會使用範例 Node.js \"Hello World\" 應用程式，但只要您自己的 Git 儲存庫具有 Dockerfile 和 Helm Chart，您便能改為鏈結至您自己的 Git 儲存庫。\n\n您可以在[主控台](https://cloud.ibm.com/containers-kubernetes/clusters)中管理您的 IBM Cloud Container 叢集。\n\n此工具鏈使用 Continuous Delivery 服務的部分工具。當您按一下**建立**時，如果資源群組或組織中尚未具有該服務的實例，則會自動新增實例，而不收取費用。如需相關資訊及條款，請參閱 [IBM Cloud 型錄](/catalog/services/continuous-delivery/)。\n\n若要開始，請按一下**建立**。\n\n如需逐步指示，請遵循[典型指導教學](https://www.ibm.com/cloud/architecture/tutorials/use-develop-kubernetes-app-with-helm-toolchain)或 [Tekton 指導教學](https://www.ibm.com/cloud/architecture/tutorials/use-develop-kubernetes-app-helm-toolchain-with-tekton-pipelines)。"
-template.gettingStarted: " **您的工具鏈已備妥！**\n**快速入門：** 將變更確定至 Git 儲存庫中以觸發新的 Docker 映像檔建置，其將加以掃描以找出漏洞並搭配 Helm 3 部署到您的 Kubernetes 叢集中。如需逐步指示，請參閱此工具鏈的 [指導教學](https://www.ibm.com/cloud/architecture/tutorials/use-develop-kubernetes-app-with-helm-toolchain?task=2)。"
+template.description: "透過此工具鏈，您可以在來源控制中一起開發 Docker 應用程式及其 Helm Chart，並自動對其進行建置並部署到 Kubernetes 叢集中。 此工具鏈會先執行正常性檢查，然後才會進行建置或部署，並透過使用專用容器登錄、容器登錄的名稱空間及 Kubernetes 叢集來確保隱私權。 此工具鏈也會運用 [Code Risk Analyzer](https://cloud.ibm.com/docs/ContinuousDelivery?topic=ContinuousDelivery-cd-configure-cra-repos) 及 [Vulnerability Advisor](https://cloud.ibm.com/docs/services/va?topic=va-va_index)，以確保只部署安全映像檔。\n\n依預設，工具鏈會使用範例 Node.js \"Hello World\" 應用程式，但您可以改為鏈結至自己的 Git 儲存庫，只要它具有 Dockerfile 及 Helm 圖表即可。\n\n 您可以在 [主控台](https://cloud.ibm.com/containers-kubernetes/clusters) 中管理 IBM Cloud Container 叢集。\n\n 此工具鏈使用屬於 Continuous Delivery 服務的工具。 當您按一下**建立**時，如果資源群組或組織中尚未具有該服務的實例，則會自動新增實例，而不收取費用。 如需相關資訊和術語，請參閱 [IBM Cloud 型錄](/catalog/services/continuous-delivery/)。\n\n若要開始使用，請按一下 **建立**。\n\n如需逐步指示，請遵循 [classic-tutorial](https://www.ibm.com/cloud/architecture/tutorials/use-develop-kubernetes-app-with-helm-toolchain) 或 [tekton-tutorial](https://www.ibm.com/cloud/architecture/tutorials/use-develop-kubernetes-app-helm-toolchain-with-tekton-pipelines)。"
+template.gettingStarted: " **您的工具鏈已備妥！**\n**快速入門：** 確定 Git 儲存庫的變更，以觸發新的 Docker 映像檔建置，將對該建置進行掃描以尋找漏洞，並與 Helm 3 一起部署至 Kubernetes 叢集。 如需逐步指示，請參閱此工具鏈的 [指導教學](https://www.ibm.com/cloud/architecture/tutorials/use-develop-kubernetes-app-with-helm-toolchain?task=2)。"
 deploy.title: "Hello World 部署階段"
 deploy.description: "hello-world 簡式工具鏈"
 deploy.longDescription: "Delivery Pipeline 會自動化連續建置、測試及部署 Docker 應用程式。"
@@ -81,4 +81,4 @@ wizard.vault.info: "請識別包含您密鑰的密鑰提供者："
 wizard.optional.tools.title: "其他工具"
 wizard.optional.tools.longDescription: "這些是可包括在您的工具鏈中的選用工具。"
 wizard.optional.tools.doi.title: "DevOps Insights（不需要配置）"
-wizard.optional.tools.doi.description: "DevOps Insights 可以從熱門的連續整合及 Continuous Delivery 工具中，提供全方位的洞察以提升應用程式交付的速度及控制。"
+wizard.optional.tools.doi.description: "DevOps Insights 可以從廣受歡迎的連續整合及 Continuous Delivery 工具中，提供全方位的洞察以提升應用程式交付的速度及控制。"
