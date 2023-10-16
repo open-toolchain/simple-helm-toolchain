@@ -18,6 +18,10 @@ spec:
     - name: resource-group
       description: (Optional) Target resource group (name or id) for the ibmcloud login operation
 
+    - name: build-script
+      description: The command(s) to run the build in run-build step. It will override the default commands
+      default: ""
+
     # Event params
     - name: branch
       description: The git branch
@@ -85,6 +89,12 @@ spec:
     # User control params
     - name: cra-scan-image
       description: Image to use for `scan` task. Default to `icr.io/continuous-delivery/pipeline/pipeline-base-ubi:3.29`
+    - name: toolchain-build-image
+      description: Image to use for `build` task
+      default: "icr.io/continuous-delivery/pipeline/pipeline-base-ubi:3.29"
+    - name: tester-tests-image
+      description: Image to use for `unit-test` task
+      default: "icr.io/continuous-delivery/pipeline/pipeline-base-ubi:3.29"
   workspaces:
     - name: artifacts
 
@@ -125,11 +135,27 @@ spec:
       workspaces:
         - name: output
           workspace: artifacts
-    - name: unit-tests
+    - name: build
       runAfter: [git-clone]
+      taskRef:
+        name: toolchain-build
+      params:
+        - name: run-build-image
+          value: $(params.toolchain-build-image)
+        - name: custom-script
+          value: $(params.build-script)
+        - name: pipeline-debug
+          value: $(params.pipeline-debug)
+      workspaces:
+        - name: output
+          workspace: artifacts
+    - name: unit-tests
+      runAfter: [build]
       taskRef:
         name: tester-run-tests
       params:
+        - name: tests-image
+          value: $(params.tester-tests-image)
         - name: tests-script
           value: |
             if [ -f ./test/run-tests.sh ]; then

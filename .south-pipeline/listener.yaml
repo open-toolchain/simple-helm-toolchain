@@ -24,6 +24,14 @@ spec:
     - name: fail-on-lint-errors
       description: force failure of task when docker lint errors are found
       default: "true"
+    - name: custom-image-registry-dockerconfigjson
+      description: |
+        dockerconfigjson for custom images used in pipeline tasks.
+        See https://cloud.ibm.com/docs/devsecops?topic=devsecops-troubleshoot-devsecops#troubleshoot-pipe-abort-early
+      default: "eyJhdXRocyI6e319" # ie. {"auths":{}} base64 encoded
+    - name: build-script
+      description: The command(s) to run the build in run-build step. It will override the default commands
+      default: ""
     - name: registry-region
       description: The IBM Cloud region for image registry
     - name: registry-namespace
@@ -145,6 +153,12 @@ spec:
     - name: cra-scan-image
       description: Image to use for `scan` task
       default: "icr.io/continuous-delivery/pipeline/pipeline-base-ubi:3.29"
+    - name: toolchain-build-image
+      description: Image to use for `build` task
+      default: "icr.io/continuous-delivery/pipeline/pipeline-base-ubi:3.29"
+    - name: tester-tests-image
+      description: Image to use for `unit-test` task
+      default: "icr.io/continuous-delivery/pipeline/pipeline-base-ubi:3.29"
 
   resourcetemplates:
     - apiVersion: v1
@@ -166,6 +180,13 @@ spec:
       stringData:
         API_KEY: $(params.apikey)
         DOCKER_SECRET: $(params.docker-registry-secret)
+    - apiVersion: v1
+      kind: Secret
+      data:
+        .dockerconfigjson: $(params.custom-image-registry-dockerconfigjson)
+      metadata:
+        name: custom-image-registry-pull-secret
+      type: kubernetes.io/dockerconfigjson
     - apiVersion: tekton.dev/v1beta1
       kind: PipelineRun
       metadata:
@@ -269,10 +290,19 @@ spec:
             value: $(params.vulnerability-report)
           - name: cra-scan-image
             value: $(params.cra-scan-image)
+          - name: toolchain-build-image
+            value: $(params.toolchain-build-image)
+          - name: build-script
+            value: $(params.build-script)
+          - name: tester-tests-image
+            value: $(params.tester-tests-image)
         workspaces:
           - name: pipeline-ws
             persistentVolumeClaim:
               claimName: simple-helm-$(uid)-pvc
+        podTemplate:
+          imagePullSecrets:
+            - name: custom-image-registry-pull-secret
 ---
 apiVersion: tekton.dev/v1beta1
 kind: TriggerBinding
