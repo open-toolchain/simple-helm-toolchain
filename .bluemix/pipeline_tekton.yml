@@ -21,10 +21,6 @@ inputs:
     branch: ${DEFINITIONS_BRANCH}
     path: toolchain
   - type: git
-    service: ${TEKTON_CATALOG_REPO}
-    branch: ${DEFINITIONS_BRANCH}
-    path: devops-insights
-  - type: git
     branch: ${DEFINITIONS_BRANCH}
     service: ${TEKTON_CATALOG_REPO}
     path: linter
