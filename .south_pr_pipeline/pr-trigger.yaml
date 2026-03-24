@@ -5,8 +5,6 @@ metadata:
   name: pr-template
 spec:
   params:
-    - name: apikey
-      description: The ibmcloud api key
     - name: ibmcloud-api
       description: The ibmcloud api
       default: "https://cloud.ibm.com"
@@ -14,11 +12,11 @@ spec:
       description: access token for the git repo
       default: ""
     - name: pipeline-debug
-      description: Toggles debug mode for the pipeline
+      description: Pipeline debug mode. Value can be 0 or 1.    
       default: "0"
 
     - name: custom-image-registry-dockerconfigjson
-      description: |
+      description: >-
         dockerconfigjson for custom images used in pipeline tasks.
         See https://cloud.ibm.com/docs/devsecops?topic=devsecops-troubleshoot-devsecops#troubleshoot-pipe-abort-early
       default: "eyJhdXRocyI6e319" # ie. {"auths":{}} base64 encoded
@@ -61,13 +59,6 @@ spec:
         volumeMode: Filesystem
         accessModes:
           - ReadWriteOnce
-    - apiVersion: v1
-      kind: Secret
-      metadata:
-        name: cd-secret
-      type: Opaque
-      stringData:
-        API_KEY: $(params.apikey)
     - apiVersion: v1
       kind: Secret
       data:

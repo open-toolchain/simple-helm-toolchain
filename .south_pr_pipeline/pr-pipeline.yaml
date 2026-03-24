@@ -10,7 +10,7 @@ spec:
     - name: git-token
       description: access token for the git repo
     - name: pipeline-debug
-      description: Toggles debug mode for the pipeline
+      description: Pipeline debug mode. Value can be 0 or 1.    
 
     - name: build-script
       description: The command(s) to run the build in run-build step. It will override the default commands
